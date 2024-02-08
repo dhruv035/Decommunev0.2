@@ -1,7 +1,7 @@
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useDisconnect } from "wagmi";
-import { YourApp } from "../General/ConnectButton";
+import { ConnectButton } from "../General";
 import { Icon, Image } from "@chakra-ui/react";
 import Logo from "../../public/DC2.jpg";
 import { MdGroupAdd } from "react-icons/md";
@@ -63,11 +63,11 @@ const handleClick = (view:Views)=>{
         </p>
       </div>*/}
       <div className="bg-black flex flex-col h-full py-6 px-4 min-w-[6vw]">
-        <Image className="hover:cursor-pointer" onClick={()=>flowContext.handleChange("home")} src={Logo.src} boxSize={14} rounded="full" />
+        <Image className="hover:cursor-pointer" onClick={()=>handleClick(Views.HOME)} src={Logo.src} boxSize={14} rounded="full" />
         <div className="mt-32">
           <ul className="space-y-10">
             <li>
-              <YourApp />
+              <ConnectButton />
             </li>
             <li>
               <Icon
@@ -76,7 +76,6 @@ const handleClick = (view:Views)=>{
                 boxSize={14}
                 color={!session ? "red.400" : "teal.400"}
                 backgroundColor="gray.800"
-                
                 onClick={()=>{handleClick(Views.NETWORK)}}
               />
             </li>
@@ -87,6 +86,7 @@ const handleClick = (view:Views)=>{
                 boxSize={14}   
                 color={!session ? "red.400" : "teal.400"}
                 backgroundColor="gray.800"
+                onClick={()=>{handleClick(Views.CREATE)}}
               />
             </li>
           </ul>
