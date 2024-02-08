@@ -44,7 +44,7 @@ export const YourApp = () => {
                     as={RiWallet3Line}
                     boxSize={14}
                     borderRadius="50%"
-                    color="teal.400"
+                    color="red.400"
                     backgroundColor="gray.800"
                     padding={2}
                     onClick={() => openConnectModal()}
@@ -59,7 +59,7 @@ export const YourApp = () => {
                     as={GiTerror}
                     boxSize={14}
                     borderRadius="full"
-                    color="teal.400"
+                    color="red.400"
                     backgroundColor="gray.800"
                     padding={2}
                     onClick={() => openChainModal()}

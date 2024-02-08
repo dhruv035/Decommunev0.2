@@ -2,19 +2,27 @@ import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useDisconnect } from "wagmi";
 import { YourApp } from "../General/ConnectButton";
-import { Icon } from "@chakra-ui/react";
-import { Image } from "@chakra-ui/react";
+import { Icon, Image } from "@chakra-ui/react";
 import Logo from "../../public/DC2.jpg";
 import { MdGroupAdd } from "react-icons/md";
 import { FaPeopleGroup } from "react-icons/fa6";
+import { useRouter } from "next/router";
+import { useContext } from "react";
+import { Views, FlowContext } from "../../pages/_app";
 // The approach used in this component shows how to build a sign in and sign out
 // component that works on pages which support both client and server side
 // rendering, and avoids any flash incorrect content on initial page load.
 export default function Sidebar() {
+  const flowContext = useContext(FlowContext)
   const { data: session, status } = useSession();
   const loading = status === "loading";
+  console.log("Session", session);
   const { disconnect } = useDisconnect();
+console.log("flowContext",flowContext)
 
+const handleClick = (view:Views)=>{
+  flowContext.handleChange(view)
+}
   return (
     <div>
       {/* <div className="bg-blue-300 flex flex-col max-w-[30px]">
@@ -54,8 +62,8 @@ export default function Sidebar() {
           )}
         </p>
       </div>*/}
-      <div className="bg-black flex flex-col h-full py-6 px-4 min-w-[6vw]" >
-        <Image src={Logo.src} boxSize={14} rounded="full" />
+      <div className="bg-black flex flex-col h-full py-6 px-4 min-w-[6vw]">
+        <Image className="hover:cursor-pointer" onClick={()=>flowContext.handleChange("home")} src={Logo.src} boxSize={14} rounded="full" />
         <div className="mt-32">
           <ul className="space-y-10">
             <li>
@@ -63,29 +71,27 @@ export default function Sidebar() {
             </li>
             <li>
               <Icon
-                className="hover:cursor-pointer"
+                className={"hover:cursor-pointer rounded-full p-2"}
                 as={FaPeopleGroup}
                 boxSize={14}
-                borderRadius="50%"
-                color="teal.400"
+                color={!session ? "red.400" : "teal.400"}
                 backgroundColor="gray.800"
-                padding={2}
+                
+                onClick={()=>{handleClick(Views.NETWORK)}}
               />
             </li>
             <li>
               <Icon
-                className="hover:cursor-pointer"
+                className="hover:cursor-pointer rounded-full p-2"
                 as={MdGroupAdd}
-                boxSize={14}
-                borderRadius="50%"
-                color="teal.400"
+                boxSize={14}   
+                color={!session ? "red.400" : "teal.400"}
                 backgroundColor="gray.800"
-                padding={2}
               />
             </li>
           </ul>
         </div>
       </div>
-   </div>
+    </div>
   );
 }

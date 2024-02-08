@@ -1,58 +1,85 @@
 import { YourApp } from "../components/General/ConnectButton";
+import dynamic from "next/dynamic";
 import type { NextPage } from "next";
 import { useMemo } from "react";
-import { Sidebar } from "../components/HUD";
 import { Box, SimpleGrid } from "@chakra-ui/react";
-import { useContractRead, useContractWrite } from "wagmi";
+import { useContractRead,useContractReads, useContractWrite } from "wagmi";
 import {Card, CardBody, Image, Stack, Heading, Text, Divider, CardFooter, ButtonGroup, Button} from '@chakra-ui/react'
-import {abi as Factory} from "../abi/MembershipFactory"
-import { useEffect } from "react";
+import {Factory, NFT} from "../abi"
+import { useContext } from "react";
+import { FlowContext } from "./_app";
+import Search from "../components/Search";
+
 const Home: NextPage = () => {
 
-
-console.log("ADDRESS",process.env.NEXT_PUBLIC_FACTORY_ADDRESS)
+  const flowContext = useContext(FlowContext)
   const {data, error, isLoading} = useContractRead({
         address: process.env.NEXT_PUBLIC_FACTORY_ADDRESS as `0x${string}`,
-        abi:[...Factory],
+        abi:Factory,
         functionName:"getAllMemberships"
   })
 
+  
   const memberships = useMemo(()=>{
    if(data?.length&&data.length>0)
    return data
    else return [] 
   },[data])
-  if(data?.length)
-  console.log("data",data)
+  if(flowContext.flow==="home")
   return (
-    <div className=" flex flex-row bg-[url('/background.jpg')] w-full min-w-[94vw] bg-cover text-yellow-300">
+    <div className=" pt-6 flex flex-col w-full min-w-[94vw] bg-cover">
+     <div className="flex justify-center">
+      <Search/>
+      </div>
       <SimpleGrid className="mt-10 ml-10 " columns={[1, 5]} spacing={12}>
         {
-          (memberships.map((membership)=>{
-            return <>
+          (memberships.map((membership,index)=>{
+            return <div key={index}>
               <MarketCard address={membership}/>
-            </>
+            </div>
           })  )
         }
       </SimpleGrid>
     </div>
   );
 };
-export default Home;
+export default dynamic(() => Promise.resolve(Home), {
+  ssr: false,
+});
 
-type CardProps = {
-  image?:string
-  address:`0x${string}`
-}
 const MarketCard = ({
-  image,
   address
-}:CardProps) => {
+}:{address:`0x${string}`}) => {
 
+  const nftContract = {
+    address:address,
+    abi:NFT
+  }
+  const {data, isLoading, error} = useContractReads({
+    contracts:[
+      {
+        ...nftContract,
+        functionName:"baseURI"
+      },
+      {
+        ...nftContract,
+        functionName:"currentPrice"
+      }
+    ]
+  })
+
+  const metadata=useMemo(async()=>{
+    if(data && typeof data[0].result==='string')
+    {
+     const res = await fetch(data[0].result)
+     console.log("Res",res)
+    }
+  },[data])
+  const image=0;
   return <Card maxW='sm'>
   <CardBody>
     <Image
-      src='https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'
+      src={image?image:'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'}
       alt='Green double couch with wooden legs'
       borderRadius='lg'
     />

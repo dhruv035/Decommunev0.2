@@ -15,7 +15,20 @@ import {
   extendBaseTheme,
   theme as chakraTheme,
 } from '@chakra-ui/react'
+import { createContext, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+export enum Views {
+  HOME="home",
+  CREATE="create",
+  NETWORK="network"
+}
+
+type FlowContextType={
+  flow?:Views,
+  handleChange?:any
+}
+
+export const FlowContext = createContext({} as FlowContextType)
 const { Button } = chakraTheme.components
 
 const theme = extendBaseTheme({
@@ -49,13 +62,19 @@ const getSiweMessageOptions: GetSiweMessageOptions = () => ({
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [flow,setFlow] = useState<Views>(Views.HOME)
+  const handleChange = (newFlow:Views)=>{
+    setFlow(newFlow)
+  }
   return (
+    <FlowContext.Provider value={{flow:flow,handleChange}}>
     <WagmiConfig config={wagmiConfig}>
       <SessionProvider refetchInterval={0} session={pageProps.session}>
         <RainbowKitSiweNextAuthProvider getSiweMessageOptions={getSiweMessageOptions}>
       <RainbowKitProvider chains={chains}>
         <ChakraBaseProvider theme={theme}>
-        <div className='flex flex-row min-h-[100vh] w-full'>
+          
+        <div className="flex flex-row min-h-[100vh] w-full bg-[url('/background.jpg')] bg-cover">
         <Sidebar/>
         <Component {...pageProps} />
         </div>
@@ -64,6 +83,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       </RainbowKitSiweNextAuthProvider>
         </SessionProvider>
     </WagmiConfig>
+    </FlowContext.Provider>
   );
 }
 
