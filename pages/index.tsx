@@ -47,18 +47,7 @@ const Home: NextPage = () => {
   const toast = useToast();
   const [pendingTx, setPendingTx] = useState<`0x${string}` | undefined>();
   const [isTxDisabled, setIsTxDisabled] = useState<boolean>(false);
-  const datas = {
-    abc: "def",
-  };
-  useEffect(() => {
-    async function check() {
-      const res = await fetch("http://localhost:3000/api/collection", {
-        method: "POST",
-        body: JSON.stringify(datas),
-      });
-    }
-    check();
-  }, []);
+
   useWaitForTransaction({
     hash: pendingTx,
     onReplaced: async (data: any) => {},
