@@ -1,4 +1,4 @@
-### Decommune Membership Marketplace
+# Decommune Membership Marketplace
 ## Setup
 
 To run locally, install the packages using the following command:
