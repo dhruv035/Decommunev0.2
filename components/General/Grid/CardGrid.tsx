@@ -16,18 +16,18 @@ const CardGrid: NextPage<CardGridProps> = ({ memberships, isFilter }) => {
   const getMembershipData = useCallback(async () => {
     const contracts = await Promise.all(
       memberships.map(async (membership) => {
-        const balance = async() => {
+        const balance = async () => {
           let data;
           try {
             data = await readContract({
               address: membership,
               abi: NFT,
               functionName: "balanceOf",
-              args: [address??"" as `0x${string}`],
+              args: [address ?? ("" as `0x${string}`)],
             });
             return data;
           } catch (error) {
-            return BigInt(0)
+            return BigInt(0);
           }
         };
         const currentPrice = readContract({
@@ -41,10 +41,9 @@ const CardGrid: NextPage<CardGridProps> = ({ memberships, isFilter }) => {
           functionName: "baseURI",
         });
         console.log("HERE1");
-        return Promise.all([balance, currentPrice, baseURI, membership]);
+        return Promise.all([balance(), currentPrice, baseURI, membership]);
       })
     ).then((res) => {
-        console.log("HERE2")
       if (isFilter)
         return res.filter((element) => {
           return Number(element[0]) > 0;
@@ -67,7 +66,6 @@ const CardGrid: NextPage<CardGridProps> = ({ memberships, isFilter }) => {
           res.map(async (element) => {
             if (!element) return;
             if (element.status === 200) {
-              let data;
               try {
                 return element.json();
               } catch (error) {}
@@ -85,13 +83,12 @@ const CardGrid: NextPage<CardGridProps> = ({ memberships, isFilter }) => {
           };
         });
       });
-
     setMembershipData(metaDatas);
-  }, [memberships, isFilter]);
+  }, [memberships, isFilter, address]);
 
   useEffect(() => {
     getMembershipData();
-  }, [memberships]);
+  }, [memberships, isFilter, address]);
   return (
     <div>
       <SimpleGrid className="mt-10 ml-10 " columns={[1, 3]} spacing={12}>
