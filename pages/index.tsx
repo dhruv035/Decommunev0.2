@@ -100,7 +100,7 @@ const Home: NextPage = () => {
     }
   }, [pendingTx]);
   return (
-    <div className=" pt-6 flex flex-col w-full max-w-[94vw] bg-cover items-center">
+    <div className=" pt-6 flex flex-col w-full flex-wrap max-w-[vw] bg-cover items-center">
       <TxContext.Provider
         value={{ pendingTx, setPendingTx, isTxDisabled, setIsTxDisabled }}
       >
@@ -292,20 +292,20 @@ const Network = ({
     getMembershipData();
   }, [memberships]);
   return (
-    <div className=" pt-6 flex flex-col w-full min-w-[94vw] bg-cover">
-      <div className="flex justify-center">
-        <Search />
-      </div>
-      <SimpleGrid className="mt-10 ml-10 " columns={[1, 3]} spacing={12}>
-        {membershipData.map((membership, index) => {
-          return (
-            <div key={index}>
-              {<MarketCard membership={membership} owned={true} />}
-            </div>
-          );
-        })}
-      </SimpleGrid>
+    <div className=" pt-6 flex flex-col w-full max-w-[94vw] bg-cover">
+    <div className="flex justify-center">
+      <Search />
     </div>
+    <SimpleGrid className="mt-10 ml-10 " columns={[1, 3]} spacing={12}>
+      {membershipData.map((membership, index) => {
+        return (
+          <div key={index}>
+            <MarketCard membership={membership} />
+          </div>
+        );
+      })}
+    </SimpleGrid>
+  </div>
   );
 };
 
