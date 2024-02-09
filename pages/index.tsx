@@ -152,19 +152,24 @@ const Listing = ({
     );
 
     const metaDatas = await Promise.all(
-      contracts.map((contract) => {
-        return fetch(contract[2]);
+      contracts.map(async (contract) => {
+        try {
+          const data = await fetch(contract[2]);
+          return data;
+        } catch (error) {
+          return undefined;
+        }
       })
     )
       .then(async (res) => {
         return await Promise.all(
           res.map(async (element) => {
+            if (!element) return {};
             if (element.status === 200) {
               let data;
               try {
                 return element.json();
-              } catch (error) {
-              }
+              } catch (error) {}
             }
           })
         );
@@ -240,7 +245,7 @@ const Network = ({
       })
     ).then((res) => {
       return res.filter((element) => {
-        return Number(element[0])>0;
+        return Number(element[0]) > 0;
       });
     });
 
@@ -256,8 +261,7 @@ const Network = ({
               let data;
               try {
                 return element.json();
-              } catch (error) {
-              }
+              } catch (error) {}
             }
           })
         );
@@ -288,9 +292,7 @@ const Network = ({
         {membershipData.map((membership, index) => {
           return (
             <div key={index}>
-              {
-                <MarketCard membership={membership} owned={true}/>
-              }
+              {<MarketCard membership={membership} owned={true} />}
             </div>
           );
         })}
