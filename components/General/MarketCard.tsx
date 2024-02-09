@@ -9,17 +9,22 @@ import {
   CardFooter,
   ButtonGroup,
   Button,
+  useToast,
 } from "@chakra-ui/react";
 import { useAccount, useContractReads, useContractWrite } from "wagmi";
 import { NFT } from "../../abi";
-import { useMemo } from "react";
+import { useContext, useMemo } from "react";
 import { formatEther } from "viem";
-
+import { TxContext } from "../../pages";
 type Membership = {
   contractData: any;
   metaData: any;
 };
 const MarketCard = ({ membership,owned=false }: { membership: Membership,owned?:boolean }) => {
+
+    const toast = useToast();
+    const { pendingTx, setPendingTx, isTxDisabled, setIsTxDisabled } =
+    useContext(TxContext);
   const { address } = useAccount();
   const nftContract = {
     address: membership.contractData[3],
@@ -43,22 +48,40 @@ const MarketCard = ({ membership,owned=false }: { membership: Membership,owned?:
     functionName: "safeMint",
   });
 
-  console.log("ABC",membership)
   const image = 0;
   const handleBuy = async () => {
     if (!address) return;
     if(!data || !data[1]) return;
     if(typeof data[1].result!=='bigint')
     return;
+    setIsTxDisabled(true)
     let hash;
     try {
       const { hash: txHash } = await buy({
         args: [address],
         value:data[1].result
       });
-      let hash = txHash;
+        hash = txHash;
+        toast({
+            position: "top-right",
+            title: "Transaction Submitted",
+            description: "Your transaction has been submitted",
+            status: "loading",
+            isClosable: true,
+            duration: 5000,
+          });
     } catch (error) {
+        toast({
+            position: "top-right",
+            title: "Transaction error",
+            description: "Error submitting your transaction",
+            status: "error",
+            isClosable: true,
+            duration: 5000,
+          });
+          setIsTxDisabled(false)
     }
+    setPendingTx(hash)
   };
   return (
     <Card
@@ -99,6 +122,7 @@ const MarketCard = ({ membership,owned=false }: { membership: Membership,owned?:
               handleBuy();
             }}
             colorScheme="blue"
+            isDisabled={isTxDisabled}
           >
             Buy now
           </Button>

@@ -392,6 +392,7 @@ const Create = () => {
           isClosable: true,
           duration: 5000,
         });
+        setIsTxDisabled(false);
         return;
       }
 
