@@ -294,7 +294,10 @@ const Network = ({
   }, [memberships]);
   return (
     <div className=" pt-6 flex flex-col w-full max-w-[94vw] bg-cover">
-      <div className="flex justify-center">
+      <div className="flex flex-col items-center">
+      <div className="text-transparent font-kenia bg-clip-text bg-velvetSun text-[44px] sm:text-[52px] text-center md:text-[60px] font-bold">
+          Your Network
+        </div>
         <Search />
       </div>
       <SimpleGrid className="mt-10 ml-10 " columns={[1, 3]} spacing={12}>
@@ -401,7 +404,7 @@ const Create = () => {
 
   return (
     <div className=" pt-6 flex flex-col w-full max-w-[94vw] bg-cover items-center">
-      <div className="text-transparent font-poppins bg-clip-text bg-kyoto text-[30px] sm:text-[40px] text-center md:text-[50px] font-bold">
+      <div className="text-transparent font-kenia bg-clip-text bg-kyoto text-[30px] sm:text-[40px] text-center md:text-[50px] font-bold">
         Create a New Membership
       </div>
 
