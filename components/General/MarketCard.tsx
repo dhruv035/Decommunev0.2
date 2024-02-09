@@ -82,7 +82,7 @@ const MarketCard = ({ membership,owned=false }: { membership: Membership,owned?:
           <Heading size="md">{membership?.contractData[3]}</Heading>
           <Text>
            {
-            membership.metaData.desc
+            membership?.metaData?.desc
            }
           </Text>
           <Text color="blue.600" fontSize="2xl">
