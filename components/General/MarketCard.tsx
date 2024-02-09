@@ -15,7 +15,7 @@ import { useAccount, useContractReads, useContractWrite } from "wagmi";
 import { NFT } from "../../abi";
 import { useContext, useMemo } from "react";
 import { formatEther } from "viem";
-import { TxContext } from "../../pages";
+import { AppContext,AppContextType } from "../../contexts/appContext";
 type Membership = {
   contractData: any;
   metaData: any;
@@ -29,7 +29,7 @@ const MarketCard = ({
 }) => {
   const toast = useToast();
   const { pendingTx, setPendingTx, isTxDisabled, setIsTxDisabled } =
-    useContext(TxContext);
+    useContext(AppContext) as AppContextType;
   const { address } = useAccount();
   const nftContract = {
     address: membership.contractData[3],

@@ -26,7 +26,7 @@ import {
   useRef,
   useState,
 } from "react";
-
+import AppProvider from "../contexts/appContext";
 export enum Views {
   HOME = "home",
   CREATE = "create",
@@ -79,7 +79,7 @@ const getSiweMessageOptions: GetSiweMessageOptions = () => ({
 function MyApp({ Component, pageProps }: AppProps) {
   const [flow, setFlow] = useState<Views>(Views.HOME);
   return (
-    <FlowContext.Provider value={{ flow, setFlow }}>
+    
       <WagmiConfig config={wagmiConfig}>
         <SessionProvider refetchInterval={0} session={pageProps.session}>
           <RainbowKitSiweNextAuthProvider
@@ -87,16 +87,20 @@ function MyApp({ Component, pageProps }: AppProps) {
           >
             <RainbowKitProvider chains={chains}>
               <ChakraBaseProvider theme={theme}>
+              <FlowContext.Provider value={{ flow, setFlow }}>
+                <AppProvider>
                 <div className="flex flex-row min-h-[100vh] w-full bg-[url('/background.jpg')] bg-cover">
                   <Sidebar />
                   <Component {...pageProps} />
                 </div>
+                </AppProvider>
+                </FlowContext.Provider>
               </ChakraBaseProvider>
             </RainbowKitProvider>
           </RainbowKitSiweNextAuthProvider>
         </SessionProvider>
       </WagmiConfig>
-    </FlowContext.Provider>
+   
   );
 }
 
