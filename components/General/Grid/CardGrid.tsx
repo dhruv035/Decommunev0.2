@@ -14,15 +14,22 @@ const CardGrid: NextPage<CardGridProps> = ({ memberships, isFilter }) => {
   const { address } = useAccount();
   const [membershipData, setMembershipData] = useState<any[]>([]);
   const getMembershipData = useCallback(async () => {
-    if (!address) return;
     const contracts = await Promise.all(
       memberships.map(async (membership) => {
-        const balance = readContract({
-          address: membership,
-          abi: NFT,
-          functionName: "balanceOf",
-          args: [address],
-        });
+        const balance = async() => {
+          let data;
+          try {
+            data = await readContract({
+              address: membership,
+              abi: NFT,
+              functionName: "balanceOf",
+              args: [address??"" as `0x${string}`],
+            });
+            return data;
+          } catch (error) {
+            return BigInt(0)
+          }
+        };
         const currentPrice = readContract({
           address: membership,
           abi: NFT,
@@ -33,9 +40,11 @@ const CardGrid: NextPage<CardGridProps> = ({ memberships, isFilter }) => {
           abi: NFT,
           functionName: "baseURI",
         });
+        console.log("HERE1");
         return Promise.all([balance, currentPrice, baseURI, membership]);
       })
     ).then((res) => {
+        console.log("HERE2")
       if (isFilter)
         return res.filter((element) => {
           return Number(element[0]) > 0;

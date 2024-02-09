@@ -1,11 +1,6 @@
-import { useCallback, useContext, useEffect, useState } from "react";
-import { useAccount } from "wagmi";
+import { useContext } from "react";
 import { AppContext, AppContextType } from "../contexts/appContext";
-import { readContract } from "@wagmi/core";
-import { NFT } from "../abi";
 import Search from "../components/Search";
-import { SimpleGrid } from "@chakra-ui/react";
-import { MarketCard } from "../components/General";
 import CardGrid from "../components/General/Grid/CardGrid";
 const Network = () => {
   const { memberships } = useContext(AppContext) as AppContextType;
