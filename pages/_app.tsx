@@ -33,12 +33,7 @@ export enum Views {
   NETWORK = "network",
 }
 
-type FlowContextType = {
-  flow: Views;
-  setFlow: Dispatch<SetStateAction<Views>>;
-};
 
-export const FlowContext = createContext({} as FlowContextType);
 const { Button, FormLabel, Input, Form, Textarea, Checkbox, Alert } =
   chakraTheme.components;
 
@@ -77,7 +72,6 @@ const getSiweMessageOptions: GetSiweMessageOptions = () => ({
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [flow, setFlow] = useState<Views>(Views.HOME);
   return (
     
       <WagmiConfig config={wagmiConfig}>
@@ -87,14 +81,12 @@ function MyApp({ Component, pageProps }: AppProps) {
           >
             <RainbowKitProvider chains={chains}>
               <ChakraBaseProvider theme={theme}>
-              <FlowContext.Provider value={{ flow, setFlow }}>
                 <AppProvider>
                 <div className="flex flex-row min-h-[100vh] w-full bg-[url('/background.jpg')] bg-cover">
                   <Sidebar />
                   <Component {...pageProps} />
                 </div>
                 </AppProvider>
-                </FlowContext.Provider>
               </ChakraBaseProvider>
             </RainbowKitProvider>
           </RainbowKitSiweNextAuthProvider>

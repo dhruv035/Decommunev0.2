@@ -12,10 +12,10 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useAccount, useContractReads, useContractWrite } from "wagmi";
-import { NFT } from "../../abi";
+import { NFT } from "../../../abi";
 import { useContext, useMemo } from "react";
 import { formatEther } from "viem";
-import { AppContext,AppContextType } from "../../contexts/appContext";
+import { AppContext,AppContextType } from "../../../contexts/appContext";
 type Membership = {
   contractData: any;
   metaData: any;

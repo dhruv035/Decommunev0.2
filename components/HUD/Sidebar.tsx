@@ -1,14 +1,11 @@
-import { signOut, useSession } from "next-auth/react";
-import Link from "next/link";
-import { useDisconnect } from "wagmi";
+import { useSession } from "next-auth/react";
 import { ConnectButton } from "../General";
 import { Icon, Image } from "@chakra-ui/react";
 import Logo from "../../public/DC2.jpg";
 import { MdGroupAdd } from "react-icons/md";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { useRouter } from "next/router";
-import { useContext } from "react";
-import { Views, FlowContext } from "../../pages/_app";
+
 // The approach used in this component shows how to build a sign in and sign out
 // component that works on pages which support both client and server side
 // rendering, and avoids any flash incorrect content on initial page load.
