@@ -10,12 +10,19 @@ import {
   ButtonGroup,
   Button,
 } from "@chakra-ui/react";
-import { useContractReads, useContractWrite } from "wagmi";
+import { useAccount, useContractReads, useContractWrite } from "wagmi";
 import { NFT } from "../../abi";
 import { useMemo } from "react";
-const MarketCard = ({ address }: { address: `0x${string}` }) => {
+import { formatEther } from "viem";
+
+type Membership = {
+  contractData: any;
+  metaData: any;
+};
+const MarketCard = ({ membership,owned=false }: { membership: Membership,owned?:boolean }) => {
+  const { address } = useAccount();
   const nftContract = {
-    address: address,
+    address: membership.contractData[3],
     abi: NFT,
   };
   const { data, isLoading, error } = useContractReads({
@@ -30,24 +37,37 @@ const MarketCard = ({ address }: { address: `0x${string}` }) => {
       },
     ],
   });
-  
-  const {writeAsync:buy} = useContractWrite({
+
+  const { writeAsync: buy } = useContractWrite({
     ...nftContract,
-    functionName:"safeMint",
-  })
+    functionName: "safeMint",
+  });
 
-  const metadata = useMemo(async () => {
-    if (data && typeof data[0].result === "string") {
-      const res = await fetch(data[0].result);
-      console.log("Res", res);
-    }
-  }, [data]);
+  console.log("ABC",membership)
   const image = 0;
-  const handleBuy = async()=>{
-
-  }
+  const handleBuy = async () => {
+    if (!address) return;
+    if(!data || !data[1]) return;
+    if(typeof data[1].result!=='bigint')
+    return;
+    let hash;
+    try {
+      const { hash: txHash } = await buy({
+        args: [address],
+        value:data[1].result
+      });
+      let hash = txHash;
+    } catch (error) {
+    }
+  };
   return (
-    <Card maxW="sm" backgroundColor='black' padding={2} textColor='red.400' opacity={0.8}>
+    <Card
+      maxW="sm"
+      backgroundColor="black"
+      padding={2}
+      textColor="red.400"
+      opacity={0.8}
+    >
       <CardBody>
         <Image
           src={
@@ -59,28 +79,31 @@ const MarketCard = ({ address }: { address: `0x${string}` }) => {
           borderRadius="lg"
         />
         <Stack mt="6" spacing="3" opacity={0.4}>
-          <Heading size="md">{address}</Heading>
+          <Heading size="md">{membership?.contractData[3]}</Heading>
           <Text>
-            This sofa is perfect for modern tropical spaces, baroque inspired
-            spaces, earthy toned spaces and for people who love a chic design
-            with a sprinkle of vintage design.
+           {
+            membership.metaData.desc
+           }
           </Text>
           <Text color="blue.600" fontSize="2xl">
-            $450
+           {formatEther(membership.contractData[1])} MATIC
           </Text>
         </Stack>
       </CardBody>
       <Divider />
-      <CardFooter>
+      {!owned&&<CardFooter>
         <ButtonGroup spacing="2">
-          <Button variant="solid" onClick={()=>{handleBuy()}} colorScheme="blue">
+          <Button
+            variant="solid"
+            onClick={() => {
+              handleBuy();
+            }}
+            colorScheme="blue"
+          >
             Buy now
           </Button>
-          <Button variant="ghost" colorScheme="blue">
-            Add to cart
-          </Button>
         </ButtonGroup>
-      </CardFooter>
+      </CardFooter>}
     </Card>
   );
 };

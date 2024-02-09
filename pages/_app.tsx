@@ -17,6 +17,8 @@ import {
   theme as chakraTheme,
 } from "@chakra-ui/react";
 import {
+  Dispatch,
+  SetStateAction,
   createContext,
   useCallback,
   useEffect,
@@ -32,8 +34,8 @@ export enum Views {
 }
 
 type FlowContextType = {
-  flow?: Views;
-  handleChange?: any;
+  flow: Views;
+  setFlow: Dispatch<SetStateAction<Views>>;
 };
 
 export const FlowContext = createContext({} as FlowContextType);
@@ -75,11 +77,8 @@ const getSiweMessageOptions: GetSiweMessageOptions = () => ({
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [flow, setFlow] = useState<Views>(Views.HOME);
-  const handleChange = (newFlow: Views) => {
-    setFlow(newFlow);
-  };
   return (
-    <FlowContext.Provider value={{ flow: flow, handleChange }}>
+    <FlowContext.Provider value={{ flow, setFlow }}>
       <WagmiConfig config={wagmiConfig}>
         <SessionProvider refetchInterval={0} session={pageProps.session}>
           <RainbowKitSiweNextAuthProvider

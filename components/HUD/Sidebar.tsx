@@ -16,12 +16,9 @@ export default function Sidebar() {
   const flowContext = useContext(FlowContext)
   const { data: session, status } = useSession();
   const loading = status === "loading";
-  console.log("Session", session);
-  const { disconnect } = useDisconnect();
-console.log("flowContext",flowContext)
 
 const handleClick = (view:Views)=>{
-  flowContext.handleChange(view)
+  flowContext.setFlow(view)
 }
   return (
     <div>

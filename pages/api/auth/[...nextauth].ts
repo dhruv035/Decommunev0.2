@@ -28,13 +28,11 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
         try {
           const siwe = new SiweMessage(JSON.parse(credentials?.message || "{}"))
           const nextAuthUrl = new URL(process.env.NEXTAUTH_URL)
-          console.log("ABAC")
           const result = await siwe.verify({
             signature: credentials?.signature || "",
             domain: nextAuthUrl.host,
             nonce: await getCsrfToken({ req }),
           })
-          console.log("ABC",result)
           if (result.success) {
             return {
               id: siwe.address,
@@ -71,6 +69,5 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
       },
     },
   })
-  console.log("HERE",data)
   return data
 }
