@@ -34,7 +34,7 @@ export enum Views {
 }
 
 
-const { Button, FormLabel, Input, Form, Textarea, Checkbox, Alert } =
+const { Button, FormLabel, Input, Form, Textarea, Checkbox, Alert, Tooltip } =
   chakraTheme.components;
 
 const theme = extendBaseTheme({
@@ -46,6 +46,7 @@ const theme = extendBaseTheme({
     Textarea,
     Checkbox,
     Alert,
+    Tooltip
   },
 });
 

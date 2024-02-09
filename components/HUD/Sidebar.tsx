@@ -1,6 +1,6 @@
 import { useSession } from "next-auth/react";
 import { ConnectButton } from "../General";
-import { Icon, Image } from "@chakra-ui/react";
+import { Icon, Image, Tooltip } from "@chakra-ui/react";
 import Logo from "../../public/DC2.jpg";
 import { MdGroupAdd } from "react-icons/md";
 import { FaPeopleGroup } from "react-icons/fa6";
@@ -10,7 +10,6 @@ import { useRouter } from "next/router";
 // component that works on pages which support both client and server side
 // rendering, and avoids any flash incorrect content on initial page load.
 export default function Sidebar() {
- 
   const { data: session, status } = useSession();
   const router = useRouter();
   const loading = status === "loading";
@@ -56,7 +55,7 @@ export default function Sidebar() {
       <div className="bg-black flex flex-col h-full py-6 px-4 min-w-[6vw]">
         <Image
           className="hover:cursor-pointer"
-          onClick={() => router.push('/')}
+          onClick={() => router.push("/")}
           src={Logo.src}
           boxSize={14}
           rounded="full"
@@ -67,16 +66,36 @@ export default function Sidebar() {
               <ConnectButton />
             </li>
             <li>
-              <Icon
-                className={"hover:cursor-pointer rounded-full p-2"}
-                as={FaPeopleGroup}
-                boxSize={14}
-                color={!session ? "red.400" : "teal.400"}
-                backgroundColor="gray.800"
-                onClick={() => {
-                 router.push('/network')
-                }}
-              />
+              <Tooltip label="My Network">
+                <span>
+                  <Icon
+                    className={"hover:cursor-pointer rounded-full p-2"}
+                    as={FaPeopleGroup}
+                    boxSize={14}
+                    color={!session ? "red.400" : "teal.400"}
+                    backgroundColor="gray.800"
+                    onClick={() => {
+                      router.push("/network");
+                    }}
+                  />
+                </span>
+              </Tooltip>
+            </li>
+            <li>
+              <Tooltip label="Create a Membership NFT">
+                <span>
+                  <Icon
+                    className="hover:cursor-pointer rounded-full p-2"
+                    as={MdGroupAdd}
+                    boxSize={14}
+                    color={!session ? "red.400" : "teal.400"}
+                    backgroundColor="gray.800"
+                    onClick={() => {
+                      router.push("/create");
+                    }}
+                  />
+                </span>
+              </Tooltip>
             </li>
             <li>
               <Icon
@@ -85,21 +104,7 @@ export default function Sidebar() {
                 boxSize={14}
                 color={!session ? "red.400" : "teal.400"}
                 backgroundColor="gray.800"
-                onClick={() => {
-                  router.push('/create');
-                }}
-              />
-            </li>
-            <li>
-              <Icon
-                className="hover:cursor-pointer rounded-full p-2"
-                as={MdGroupAdd}
-                boxSize={14}
-                color={!session ? "red.400" : "teal.400"}
-                backgroundColor="gray.800"
-                onClick={() => {
-                 
-                }}
+                onClick={() => {}}
               />
             </li>
           </ul>
