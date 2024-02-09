@@ -4,7 +4,7 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
- 
+
     // Or if using `src` directory:
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
@@ -12,11 +12,11 @@ module.exports = {
     extend: {
       backgroundImage: {
         buttonGradient: `linear-gradient(94deg, #1387D5 -5.94%, #1A91FA 115.34%)`,
-        redStrain:`linear-gradient(to right, #870000, #190a05);`,
-        candy:`linear-gradient(to right, #d3959b, #bfe6ba);`,
-        winter:`linear-gradient(to right, #e6dada, #274046);`,
-        foreverLost:`linear-gradient(to right, #5d4157, #a8caba);`,
-        mistyMeadow:`linear-gradient(to right, #215f00, #e4e4d9);`,
+        redStrain: `linear-gradient(to right, #870000, #190a05);`,
+        candy: `linear-gradient(to right, #d3959b, #bfe6ba);`,
+        winter: `linear-gradient(to right, #e6dada, #274046);`,
+        foreverLost: `linear-gradient(to right, #5d4157, #a8caba);`,
+        mistyMeadow: `linear-gradient(to right, #215f00, #e4e4d9);`,
         kyoto: `linear-gradient(to right, #c21500, #ffc500)`,
         blueSkies: `linear-gradient(to right, #56ccf2, #2f80ed); `,
         pinkFlavor: `linear-gradient(to right, #800080, #ffc0cb);`,
@@ -30,15 +30,13 @@ module.exports = {
         margo: `linear-gradient(to right, #ffefba, #ffffff);`,
       },
       fontFamily: {
-        'poppins': ['Poppins'],
-        'outfit':['Outfit'],
-        'kenia':['KENIA'],
-        'comfort':['Comfortaa'],
-        'caps':['SixCaps'],
-        
-      }
+        poppins: ["Poppins"],
+        outfit: ["Outfit"],
+        kenia: ["KENIA"],
+        comfort: ["Comfortaa"],
+        caps: ["SixCaps"],
+      },
     },
   },
   plugins: [],
-}
-
+};

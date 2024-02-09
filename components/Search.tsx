@@ -44,7 +44,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch = () => {} }) => {
       <div className="text-green-400">
         {query ? (
           <Icon
-          className="rounded-full bg-transparent text-white"
+            className="rounded-full bg-transparent text-white"
             as={IoMdCloseCircleOutline}
             boxSize={6}
             rounded="full"

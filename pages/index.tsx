@@ -148,7 +148,7 @@ const Listing = ({
           functionName: "baseURI",
         });
         return Promise.all([balance, currentPrice, baseURI, membership]);
-      })
+      }),
     );
 
     const metaDatas = await Promise.all(
@@ -159,7 +159,7 @@ const Listing = ({
         } catch (error) {
           return undefined;
         }
-      })
+      }),
     )
       .then(async (res) => {
         return await Promise.all(
@@ -171,7 +171,7 @@ const Listing = ({
                 return element.json();
               } catch (error) {}
             }
-          })
+          }),
         );
       })
       .then((res) => {
@@ -198,9 +198,9 @@ const Listing = ({
   return (
     <div className=" pt-6 flex flex-col w-full max-w-[94vw] bg-cover">
       <div className="flex flex-col items-center">
-      <div className="text-transparent font-kenia bg-clip-text bg-pinkFlavor text-[44px] sm:text-[52px] text-center md:text-[60px] font-bold">
-        DeCommune
-      </div>
+        <div className="text-transparent font-kenia bg-clip-text bg-pinkFlavor text-[44px] sm:text-[52px] text-center md:text-[60px] font-bold">
+          DeCommune
+        </div>
         <Search />
       </div>
       <SimpleGrid className="mt-10 ml-10 " columns={[1, 3]} spacing={12}>
@@ -245,7 +245,7 @@ const Network = ({
           functionName: "baseURI",
         });
         return Promise.all([balance, currentPrice, baseURI, membership]);
-      })
+      }),
     ).then((res) => {
       return res.filter((element) => {
         return Number(element[0]) > 0;
@@ -253,28 +253,26 @@ const Network = ({
     });
 
     const metaDatas = await Promise.all(
-      contracts.map(async(contract) => {
+      contracts.map(async (contract) => {
         try {
-          const data = await fetch(contract[2])
-          return data
+          const data = await fetch(contract[2]);
+          return data;
+        } catch (error) {
+          return undefined;
         }
-        catch(error){
-          return undefined
-        }
-      })
+      }),
     )
       .then(async (res) => {
         return await Promise.all(
           res.map(async (element) => {
-            if(!element)
-            return
+            if (!element) return;
             if (element.status === 200) {
               let data;
               try {
                 return element.json();
               } catch (error) {}
             }
-          })
+          }),
         );
       })
       .then((res) => {
@@ -296,19 +294,19 @@ const Network = ({
   }, [memberships]);
   return (
     <div className=" pt-6 flex flex-col w-full max-w-[94vw] bg-cover">
-    <div className="flex justify-center">
-      <Search />
+      <div className="flex justify-center">
+        <Search />
+      </div>
+      <SimpleGrid className="mt-10 ml-10 " columns={[1, 3]} spacing={12}>
+        {membershipData.map((membership, index) => {
+          return (
+            <div key={index}>
+              <MarketCard membership={membership} />
+            </div>
+          );
+        })}
+      </SimpleGrid>
     </div>
-    <SimpleGrid className="mt-10 ml-10 " columns={[1, 3]} spacing={12}>
-      {membershipData.map((membership, index) => {
-        return (
-          <div key={index}>
-            <MarketCard membership={membership} />
-          </div>
-        );
-      })}
-    </SimpleGrid>
-  </div>
   );
 };
 
@@ -340,7 +338,7 @@ const Create = () => {
         {
           method: "POST",
           body: JSON.stringify(values),
-        }
+        },
       );
       const data = await res.json();
       setCollectionId(data.id);

@@ -13,13 +13,13 @@ import { Views, FlowContext } from "../../pages/_app";
 // component that works on pages which support both client and server side
 // rendering, and avoids any flash incorrect content on initial page load.
 export default function Sidebar() {
-  const flowContext = useContext(FlowContext)
+  const flowContext = useContext(FlowContext);
   const { data: session, status } = useSession();
   const loading = status === "loading";
 
-const handleClick = (view:Views)=>{
-  flowContext.setFlow(view)
-}
+  const handleClick = (view: Views) => {
+    flowContext.setFlow(view);
+  };
   return (
     <div>
       {/* <div className="bg-blue-300 flex flex-col max-w-[30px]">
@@ -60,7 +60,13 @@ const handleClick = (view:Views)=>{
         </p>
       </div>*/}
       <div className="bg-black flex flex-col h-full py-6 px-4 min-w-[6vw]">
-        <Image className="hover:cursor-pointer" onClick={()=>handleClick(Views.HOME)} src={Logo.src} boxSize={14} rounded="full" />
+        <Image
+          className="hover:cursor-pointer"
+          onClick={() => handleClick(Views.HOME)}
+          src={Logo.src}
+          boxSize={14}
+          rounded="full"
+        />
         <div className="mt-32">
           <ul className="space-y-10">
             <li>
@@ -73,17 +79,21 @@ const handleClick = (view:Views)=>{
                 boxSize={14}
                 color={!session ? "red.400" : "teal.400"}
                 backgroundColor="gray.800"
-                onClick={()=>{handleClick(Views.NETWORK)}}
+                onClick={() => {
+                  handleClick(Views.NETWORK);
+                }}
               />
             </li>
             <li>
               <Icon
                 className="hover:cursor-pointer rounded-full p-2"
                 as={MdGroupAdd}
-                boxSize={14}   
+                boxSize={14}
                 color={!session ? "red.400" : "teal.400"}
                 backgroundColor="gray.800"
-                onClick={()=>{handleClick(Views.CREATE)}}
+                onClick={() => {
+                  handleClick(Views.CREATE);
+                }}
               />
             </li>
           </ul>

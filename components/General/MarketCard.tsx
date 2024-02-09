@@ -20,10 +20,15 @@ type Membership = {
   contractData: any;
   metaData: any;
 };
-const MarketCard = ({ membership,owned=false }: { membership: Membership,owned?:boolean }) => {
-
-    const toast = useToast();
-    const { pendingTx, setPendingTx, isTxDisabled, setIsTxDisabled } =
+const MarketCard = ({
+  membership,
+  owned = false,
+}: {
+  membership: Membership;
+  owned?: boolean;
+}) => {
+  const toast = useToast();
+  const { pendingTx, setPendingTx, isTxDisabled, setIsTxDisabled } =
     useContext(TxContext);
   const { address } = useAccount();
   const nftContract = {
@@ -51,37 +56,36 @@ const MarketCard = ({ membership,owned=false }: { membership: Membership,owned?:
   const image = 0;
   const handleBuy = async () => {
     if (!address) return;
-    if(!data || !data[1]) return;
-    if(typeof data[1].result!=='bigint')
-    return;
-    setIsTxDisabled(true)
+    if (!data || !data[1]) return;
+    if (typeof data[1].result !== "bigint") return;
+    setIsTxDisabled(true);
     let hash;
     try {
       const { hash: txHash } = await buy({
         args: [address],
-        value:data[1].result
+        value: data[1].result,
       });
-        hash = txHash;
-        toast({
-            position: "top-right",
-            title: "Transaction Submitted",
-            description: "Your transaction has been submitted",
-            status: "loading",
-            isClosable: true,
-            duration: 5000,
-          });
+      hash = txHash;
+      toast({
+        position: "top-right",
+        title: "Transaction Submitted",
+        description: "Your transaction has been submitted",
+        status: "loading",
+        isClosable: true,
+        duration: 5000,
+      });
     } catch (error) {
-        toast({
-            position: "top-right",
-            title: "Transaction error",
-            description: "Error submitting your transaction",
-            status: "error",
-            isClosable: true,
-            duration: 5000,
-          });
-          setIsTxDisabled(false)
+      toast({
+        position: "top-right",
+        title: "Transaction error",
+        description: "Error submitting your transaction",
+        status: "error",
+        isClosable: true,
+        duration: 5000,
+      });
+      setIsTxDisabled(false);
     }
-    setPendingTx(hash)
+    setPendingTx(hash);
   };
   return (
     <Card
@@ -103,31 +107,29 @@ const MarketCard = ({ membership,owned=false }: { membership: Membership,owned?:
         />
         <Stack mt="6" spacing="3" opacity={0.4}>
           <Heading size="md">{membership?.contractData[3]}</Heading>
-          <Text>
-           {
-            membership?.metaData?.desc
-           }
-          </Text>
+          <Text>{membership?.metaData?.desc}</Text>
           <Text color="blue.600" fontSize="2xl">
-           {formatEther(membership.contractData[1])} MATIC
+            {formatEther(membership.contractData[1])} MATIC
           </Text>
         </Stack>
       </CardBody>
       <Divider />
-      {!owned&&<CardFooter>
-        <ButtonGroup spacing="2">
-          <Button
-            variant="solid"
-            onClick={() => {
-              handleBuy();
-            }}
-            colorScheme="blue"
-            isDisabled={isTxDisabled}
-          >
-            Buy now
-          </Button>
-        </ButtonGroup>
-      </CardFooter>}
+      {!owned && (
+        <CardFooter>
+          <ButtonGroup spacing="2">
+            <Button
+              variant="solid"
+              onClick={() => {
+                handleBuy();
+              }}
+              colorScheme="blue"
+              isDisabled={isTxDisabled}
+            >
+              Buy now
+            </Button>
+          </ButtonGroup>
+        </CardFooter>
+      )}
     </Card>
   );
 };

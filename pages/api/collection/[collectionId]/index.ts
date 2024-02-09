@@ -27,15 +27,16 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     } else {
       res.status(200).json(data);
     }
-  }
-  else if (req.method === "PUT") {
-    const body = JSON.parse(req.body)
+  } else if (req.method === "PUT") {
+    const body = JSON.parse(req.body);
     const token = await getToken({ req });
     if (!token) return res.status(403).json({ message: "Auth Token Missing" });
     if (token.sub !== data?.owner)
       return res.status(403).json({ message: "Access Denied" });
-    const updateOp = await db.collection("Collections").updateOne({_id:object},{$set:{...body}})
-    res.status(200).json({message:"Updated"})
+    const updateOp = await db
+      .collection("Collections")
+      .updateOne({ _id: object }, { $set: { ...body } });
+    res.status(200).json({ message: "Updated" });
   }
   return;
 };

@@ -69,36 +69,34 @@ export default function WalletButton() {
 
               return (
                 <div className="flex flex-col bg-gray-900 rounded-[40px] ">
-                
                   <Icon
                     className="hover:cursor-pointer"
                     as={RiWallet3Line}
                     boxSize={14}
                     color="teal.400"
                     padding={2}
-                    rounded='full'
+                    rounded="full"
                     onClick={() => openAccountModal()}
                   />
-                    {chain.hasIcon && chain.iconUrl && (
+                  {chain.hasIcon && chain.iconUrl && (
                     //<img alt={chain.name ?? "Chain icon"} src={chain.iconUrl} style={{ width: 12, height: 12 }}/>
-                    
+
                     <Image
                       alt={chain.name ?? "Chain icon"}
                       src={chain.iconUrl}
                       boxSize={14}
                       backgroundColor="gray.800"
                       onClick={openChainModal}
-                      rounded='full'
+                      rounded="full"
                       padding={2}
                     />
                   )}
                 </div>
               );
-              
             })()}
           </div>
         );
       }}
     </ConnectButton.Custom>
   );
-};
+}

@@ -39,7 +39,8 @@ type FlowContextType = {
 };
 
 export const FlowContext = createContext({} as FlowContextType);
-const { Button, FormLabel, Input, Form, Textarea, Checkbox, Alert } = chakraTheme.components;
+const { Button, FormLabel, Input, Form, Textarea, Checkbox, Alert } =
+  chakraTheme.components;
 
 const theme = extendBaseTheme({
   components: {
@@ -49,13 +50,13 @@ const theme = extendBaseTheme({
     Form,
     Textarea,
     Checkbox,
-    Alert
+    Alert,
   },
 });
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [polygonMumbai],
-  [publicProvider()]
+  [publicProvider()],
 );
 
 const { connectors } = getDefaultWallets({

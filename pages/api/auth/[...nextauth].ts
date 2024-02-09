@@ -1,8 +1,8 @@
-import { NextApiRequest, NextApiResponse } from "next"
-import NextAuth from "next-auth"
-import CredentialsProvider from "next-auth/providers/credentials"
-import { getCsrfToken } from "next-auth/react"
-import { SiweMessage } from "siwe"
+import { NextApiRequest, NextApiResponse } from "next";
+import NextAuth from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { getCsrfToken } from "next-auth/react";
+import { SiweMessage } from "siwe";
 
 // For more information on each option (and a full list of options) go to
 // https://next-auth.js.org/configuration/options
@@ -23,35 +23,36 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
         },
       },
       async authorize(credentials) {
-        if(!process.env.NEXTAUTH_URL)
-        return null
+        if (!process.env.NEXTAUTH_URL) return null;
         try {
-          const siwe = new SiweMessage(JSON.parse(credentials?.message || "{}"))
-          const nextAuthUrl = new URL(process.env.NEXTAUTH_URL)
+          const siwe = new SiweMessage(
+            JSON.parse(credentials?.message || "{}"),
+          );
+          const nextAuthUrl = new URL(process.env.NEXTAUTH_URL);
           const result = await siwe.verify({
             signature: credentials?.signature || "",
             domain: nextAuthUrl.host,
             nonce: await getCsrfToken({ req }),
-          })
+          });
           if (result.success) {
             return {
               id: siwe.address,
-            }
+            };
           }
-          return null
+          return null;
         } catch (e) {
-          return null
+          return null;
         }
       },
     }),
-  ]
+  ];
 
   const isDefaultSigninPage =
-    req.method === "GET" && req.query.nextauth?.includes("signin")
+    req.method === "GET" && req.query.nextauth?.includes("signin");
 
   // Hide Sign-In with Ethereum from default sign page
   if (isDefaultSigninPage) {
-    providers.pop()
+    providers.pop();
   }
 
   const data = await NextAuth(req, res, {
@@ -63,11 +64,11 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
     secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
       async session({ session, token }: { session: any; token: any }) {
-        session.address = token.sub
-        session.user.name = token.sub
-        return session
+        session.address = token.sub;
+        session.user.name = token.sub;
+        return session;
       },
     },
-  })
-  return data
+  });
+  return data;
 }
