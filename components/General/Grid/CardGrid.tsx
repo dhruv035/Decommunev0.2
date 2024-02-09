@@ -40,8 +40,17 @@ const CardGrid: NextPage<CardGridProps> = ({ memberships, isFilter }) => {
           abi: NFT,
           functionName: "baseURI",
         });
-        console.log("HERE1");
-        return Promise.all([balance(), currentPrice, baseURI, membership]);
+        const tokenName = readContract({
+            address: membership,
+            abi: NFT,
+            functionName: "name",
+          });
+          const tokenSymbol = readContract({
+            address: membership,
+            abi: NFT,
+            functionName: "symbol",
+          });
+        return Promise.all([balance(), currentPrice, baseURI, membership,tokenName,tokenSymbol]);
       })
     ).then((res) => {
       if (isFilter)
@@ -90,12 +99,12 @@ const CardGrid: NextPage<CardGridProps> = ({ memberships, isFilter }) => {
     getMembershipData();
   }, [memberships, isFilter, address]);
   return (
-    <div>
-      <SimpleGrid className="mt-10 ml-10 " columns={[1, 3]} spacing={12}>
+    <div className="p-5">
+      <SimpleGrid columns={[1,1 ,3]} spacing={12}>
         {membershipData.map((membership, index) => {
           return (
             <div key={index}>
-              <MarketCard membership={membership} />
+              <MarketCard membership={membership} owned={isFilter}/>
             </div>
           );
         })}

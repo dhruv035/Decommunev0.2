@@ -10,12 +10,13 @@ import {
   ButtonGroup,
   Button,
   useToast,
+  FormLabel,
 } from "@chakra-ui/react";
 import { useAccount, useContractReads, useContractWrite } from "wagmi";
 import { NFT } from "../../../abi";
 import { useContext } from "react";
 import { formatEther } from "viem";
-import { AppContext,AppContextType } from "../../../contexts/appContext";
+import { AppContext, AppContextType } from "../../../contexts/appContext";
 type Membership = {
   contractData: any;
   metaData: any;
@@ -27,9 +28,11 @@ const MarketCard = ({
   membership: Membership;
   owned?: boolean;
 }) => {
+  console.log("MEMBERSHIPDATA", membership);
   const toast = useToast();
-  const { pendingTx, setPendingTx, isTxDisabled, setIsTxDisabled } =
-    useContext(AppContext) as AppContextType;
+  const { pendingTx, setPendingTx, isTxDisabled, setIsTxDisabled } = useContext(
+    AppContext
+  ) as AppContextType;
   const { address } = useAccount();
   const nftContract = {
     address: membership.contractData[3],
@@ -91,9 +94,9 @@ const MarketCard = ({
     <Card
       maxW="sm"
       backgroundColor="black"
-      padding={2}
-      textColor="red.400"
-      opacity={0.8}
+      padding={[2,3,4]}
+      textColor="teal.400"
+      rounded={10}
     >
       <CardBody>
         <Image
@@ -105,10 +108,16 @@ const MarketCard = ({
           alt="Green double couch with wooden legs"
           borderRadius="lg"
         />
-        <Stack mt="6" spacing="3" opacity={0.4}>
-          <Heading size="md">{membership?.contractData[3]}</Heading>
-          <Text>{membership?.metaData?.desc}</Text>
-          <Text color="blue.600" fontSize="2xl">
+        <Stack mt="6" spacing="3">
+          <Heading fontWeight="bold" fontSize={["lg","xl","4xl"]}>
+            {membership.contractData[4]}
+          </Heading>
+          <Heading color={"yellow.300"} fontWeight="bold" fontSize={["sm","md","xl"]}>
+            ${membership.contractData[5]}
+          </Heading>
+          <FormLabel color="green.200" fontSize={["md",null,"3xl"]}>Description</FormLabel>
+          <Text>{membership?.metaData?.desc }</Text>
+          <Text color="green.200" fontSize={["sm","lg","2xl"]} fontWeight={"bold"}>
             {formatEther(membership.contractData[1])} MATIC
           </Text>
         </Stack>
