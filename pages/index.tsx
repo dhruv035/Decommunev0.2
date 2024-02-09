@@ -250,13 +250,21 @@ const Network = ({
     });
 
     const metaDatas = await Promise.all(
-      contracts.map((contract) => {
-        return fetch(contract[2]);
+      contracts.map(async(contract) => {
+        try {
+          const data = await fetch(contract[2])
+          return data
+        }
+        catch(error){
+          return undefined
+        }
       })
     )
       .then(async (res) => {
         return await Promise.all(
           res.map(async (element) => {
+            if(!element)
+            return
             if (element.status === 200) {
               let data;
               try {
