@@ -33,7 +33,7 @@ module.exports = {
       fontFamily: {
         poppins: ["Poppins"],
         outfit: ["Outfit"],
-        kenia: ["KENIA"],
+        kenia: ["Kenia"],
         comfort: ["Comfortaa"],
         caps: ["SixCaps"],
       },
