@@ -63,7 +63,7 @@ export default function WalletButton() {
                       <Icon
                         className="hover:cursor-pointer"
                         as={GiTerror}
-                        boxSize={14}
+                        boxSize={[10,14]}
                         borderRadius="full"
                         color="red.400"
                         backgroundColor="gray.800"
@@ -82,7 +82,7 @@ export default function WalletButton() {
                       <Icon
                         className="hover:cursor-pointer"
                         as={RiWallet3Line}
-                        boxSize={14}
+                        boxSize={[10,14]}
                         color="teal.400"
                         padding={2}
                         rounded="full"
@@ -97,7 +97,7 @@ export default function WalletButton() {
                     <Image
                       alt={chain.name ?? "Chain icon"}
                       src={chain.iconUrl}
-                      boxSize={14}
+                      boxSize={[10,14]}
                       _hover={{cursor:"pointer"}}
                       backgroundColor="gray.800"
                       onClick={openChainModal}

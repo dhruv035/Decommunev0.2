@@ -52,12 +52,12 @@ export default function Sidebar() {
           )}
         </p>
       </div>*/}
-      <div className="bg-black flex flex-col h-full py-6 px-4 min-w-[6vw] fixed">
+      <div className="bg-black flex flex-col h-full py-6 px-2 sm:px-4 min-w-[3vw] items-center fixed">
         <Image
           className="hover:cursor-pointer"
           onClick={() => router.push("/")}
           src={Logo.src}
-          boxSize={14}
+          boxSize={[10,14]}
           rounded="full"
         />
         <div className="mt-32">
@@ -71,7 +71,7 @@ export default function Sidebar() {
                   <Icon
                     className={"hover:cursor-pointer rounded-full p-2"}
                     as={FaPeopleGroup}
-                    boxSize={14}
+                    boxSize={[10,14]}
                     color={!session ? "red.400" : "teal.400"}
                     backgroundColor="gray.800"
                     onClick={() => {
@@ -87,7 +87,7 @@ export default function Sidebar() {
                   <Icon
                     className="hover:cursor-pointer rounded-full p-2"
                     as={MdGroupAdd}
-                    boxSize={14}
+                    boxSize={[10,14]}
                     color={!session ? "red.400" : "teal.400"}
                     backgroundColor="gray.800"
                     onClick={() => {
@@ -101,7 +101,7 @@ export default function Sidebar() {
               <Icon
                 className="hover:cursor-pointer rounded-full p-2"
                 as={MdGroupAdd}
-                boxSize={14}
+                boxSize={[10,14]}
                 color={!session ? "red.400" : "teal.400"}
                 backgroundColor="gray.800"
                 onClick={() => {}}
