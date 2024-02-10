@@ -88,7 +88,8 @@ const AppProvider: NextPage<{ children: ReactNode }> = ({ children }) => {
     if (pendingTx) {
       setIsTxDisabled(true);
     } else {
-      const abc = localStorage.getItem("pendingTx");      //Using localStorage to persist pending transactions on refresh as well
+      //Using localStorage to persist pending transactions on refresh as well
+      const abc = localStorage.getItem("pendingTx");
       if (abc && abc !== "") {
         setPendingTx(abc as `0x${string}`);
         setIsTxDisabled(true);
