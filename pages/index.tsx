@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import type { NextPage } from "next";
 import { useContext, useState } from "react";
-import Search from "../components/Search";
+import TagInput from "../components/TagInput";
 import { AppContext, AppContextType } from "../contexts/appContext";
 import CardGrid from "../components/General/CardGrid";
 
@@ -14,7 +14,7 @@ const Home: NextPage = () => {
         <div className="text-transparent font-kenia bg-clip-text bg-pinkFlavor text-[44px] sm:text-[52px] text-center md:text-[60px] font-bold">
           DeCommune
         </div>
-        <Search tags={tags} setTags={setTags} onSearch={()=>{console.log("TRIGGERED")}}/>
+        <TagInput tags={tags} setTags={setTags} onSearch={()=>{console.log("TRIGGERED")}}/>
       </div>
       <CardGrid memberships={memberships} isFilter={false} pendingTx={pendingTx} />
     </div>
@@ -23,8 +23,3 @@ const Home: NextPage = () => {
 export default dynamic(() => Promise.resolve(Home), {
   ssr: false,
 });
-
-//Listing Section: Display all memberships available for purchase on the platform
-//Network: Your Memberships as Creator/Member
-
-//Create Section: Create New Memberships

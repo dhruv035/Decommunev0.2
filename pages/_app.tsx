@@ -16,16 +16,7 @@ import {
   extendBaseTheme,
   theme as chakraTheme,
 } from "@chakra-ui/react";
-import {
-  Dispatch,
-  SetStateAction,
-  createContext,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+
 import AppProvider from "../contexts/appContext";
 export enum Views {
   HOME = "home",

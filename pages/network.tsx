@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { AppContext, AppContextType } from "../contexts/appContext";
-import Search from "../components/Search";
+import Search from "../components/TagInput";
 import CardGrid from "../components/General/CardGrid";
 const Network = () => {
   const { memberships, pendingTx } = useContext(AppContext) as AppContextType;

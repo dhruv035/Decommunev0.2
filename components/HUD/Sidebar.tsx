@@ -6,9 +6,9 @@ import { MdGroupAdd } from "react-icons/md";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { useRouter } from "next/router";
 
-// The approach used in this component shows how to build a sign in and sign out
-// component that works on pages which support both client and server side
-// rendering, and avoids any flash incorrect content on initial page load.
+
+//Sidebar component, part of the hud and plugged directly to all rendered pages
+
 export default function Sidebar() {
   const { data: session, status } = useSession();
   const router = useRouter();

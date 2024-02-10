@@ -6,23 +6,33 @@ import { useAccount } from "wagmi";
 import { NFT } from "../../abi";
 import MarketCard from "./MarketCard";
 
+
+/*
+  This component takes a list of memberships on the contract and extracts necessary 
+  data to pass onto card component Renders a grid of cards.
+  NOTE: Consider if some of this should be moved out to seperate context for contracts
+*/
 type CardGridProps = {
   memberships: readonly `0x${string}`[];
   isFilter: boolean;
   pendingTx?: string;
 };
+
 const CardGrid: NextPage<CardGridProps> = ({
   memberships,
   isFilter,
   pendingTx,
 }) => {
-  console.log("isFIlter");
+
   const { address } = useAccount();
   const [membershipData, setMembershipData] = useState<any[]>([]);
+
+
   const getMembershipData = useCallback(async () => {
-    const contracts = await Promise.all(
+
+    const contracts = await Promise.all(      //Concurrently fetch membership data from all contracts.
       memberships.map(async (membership) => {
-        const balance = async () => {
+        const balance = async () => {       //This fetch may revert sometimes and therefore must be error handled
           let data;
           try {
             data = await readContract({
@@ -70,7 +80,9 @@ const CardGrid: NextPage<CardGridProps> = ({
             return "ax";
           }
         };
-        return Promise.all([
+
+        
+        return Promise.all([      //Returns a Promise.all with each data operation to run data fetch concurrently as a Promise for each membership
           balance(),
           currentPrice,
           baseURI,
@@ -80,15 +92,15 @@ const CardGrid: NextPage<CardGridProps> = ({
           tokenURI(),
         ]);
       })
-    ).then((res) => {
-      if (isFilter)
+    ).then((res) => { 
+      if (isFilter) //The isFilter will trigger filter to leave only owned memberships
         return res.filter((element) => {
           return Number(element[0]) > 0;
         });
       else return res;
     });
 
-    const metaDatas = await Promise.all(
+    const metaDatas = await Promise.all(  //Concurrently fetch metadata from database using baseURI from the contract
       contracts.map(async (contract) => {
         try {
           const data = await fetch(contract[2]);
@@ -98,7 +110,7 @@ const CardGrid: NextPage<CardGridProps> = ({
         }
       })
     )
-      .then(async (res) => {
+      .then(async (res) => {    //Collect metadata where it exists
         return await Promise.all(
           res.map(async (element) => {
             if (!element) return;
@@ -110,8 +122,8 @@ const CardGrid: NextPage<CardGridProps> = ({
           })
         );
       })
-      .then((res) => {
-        return res.map((element, index) => {
+      .then((res) => {  //Compose all the collected data from contracts and database and set in the membershipData state
+        return res.map((element, index) => { 
           const data = contracts[index];
 
           return {
@@ -123,7 +135,7 @@ const CardGrid: NextPage<CardGridProps> = ({
     setMembershipData(metaDatas);
   }, [memberships, isFilter, address]);
 
-  useEffect(() => {
+  useEffect(() => { 
     getMembershipData();
   }, [memberships, isFilter, address, pendingTx]);
 

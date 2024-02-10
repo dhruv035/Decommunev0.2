@@ -14,14 +14,22 @@ import { Factory } from "../abi";
 import { useFormik } from "formik";
 import { parseEther } from "viem";
 import { NextPage } from "next";
+import TagInput from "../components/TagInput";
 
-const Create = () => {
+const Create:NextPage = () => {
+
+
   const toast = useToast();
+  
   const [step, setStep] = useState<boolean>(false);
+  const [tags, setTags] = useState<string[]>([]);
   const { address } = useAccount();
-  const { pendingTx, setPendingTx, isTxDisabled, setIsTxDisabled } = useContext(
+  
+  
+  const { setPendingTx, isTxDisabled, setIsTxDisabled } = useContext(
     AppContext
   ) as AppContextType;
+  
   const { writeAsync: deployNFT } = useContractWrite({
     address: process.env.NEXT_PUBLIC_FACTORY_ADDRESS as `0x${string}`,
     abi: Factory,
@@ -50,12 +58,18 @@ const Create = () => {
       if (!address) return;
       if (!process.env.NEXT_PUBLIC_BASE_URL) return;
 
-      console.log("ABC")
+      console.log("ABC");
       setIsTxDisabled(true);
       let hash;
       try {
-        const res = await fetch(
-          process.env.NEXT_PUBLIC_BASE_URL + "/collection",
+
+        //Create database entry for metadata.
+        //BUG:Sometimes the data will be uploaded and transaction will fail
+        //TODO:Reuse previously uploaded collections for metadata in case of transaction reverts, handle uploaded metadata collections more elegantly
+        
+        
+        const res = await fetch(  
+          process.env.NEXT_PUBLIC_BASE_URL + "/collection", 
           {
             method: "POST",
             body: JSON.stringify(values),
@@ -109,6 +123,9 @@ const Create = () => {
 
       {!step ? (
         <form
+          onKeyDown={(e) => {
+            if (e.key === "Enter") e.preventDefault(); //Make the enter key work for the filter box only
+          }}
           className="mt-10 flex flex-col p-4 py-10 w-4/5 bg-candy min-h-[20vh] max-w-[500px] rounded-[40px] space-y-4"
           onSubmit={metaFormik.handleSubmit}
         >
@@ -153,6 +170,7 @@ const Create = () => {
               value={metaFormik.values.image}
             ></Input>
           </FormControl>
+          <TagInput tags={tags} setTags={setTags} placeholder={"Add a Tag"} />
           <Button type="submit">Proceed</Button>
         </form>
       ) : (

@@ -9,16 +9,25 @@ import {
 import { IoMdSearch, IoMdCloseCircleOutline } from "react-icons/io";
 import { NextPage } from "next";
 import TagBox from "./TagBox";
-interface SearchBarProps {
+
+/*
+  This is a component to generate a list of inputs from a single input box, can be used multipurposely
+
+  TODO: Add suggestions feature
+
+*/
+interface TagInputProps {
   onSearch?: (query: string) => void;
+  placeholder?:string;
   tags: string[];
   setTags: any;
 }
 
-const SearchBar: NextPage<SearchBarProps> = ({
+const TagInput: NextPage<TagInputProps> = ({
   onSearch,
   tags,
   setTags,
+  placeholder,
 }) => {
   const [query, setQuery] = useState<string>("");
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,13 +55,13 @@ const SearchBar: NextPage<SearchBarProps> = ({
     setTags([...copy]);
   };
   return (
-    <div className="flex flex-col h-full items-center flex-wrap">
+    <div className="flex flex-col items-center flex-wrap">
       <TagBox tags={tags} removeTag={removeTag} />
       <div className="max-w-[240px] flex justify-center mt-2 items-center bg-gray-800 opacity-80 rounded-full min-h-[40px]">
         <InputGroup height="full" alignContent="center">
           <Input
             type="text"
-            placeholder="Search"
+            placeholder={placeholder??"Search"}
             value={query}
             color="white"
             rounded="full"
@@ -97,4 +106,4 @@ const SearchBar: NextPage<SearchBarProps> = ({
   );
 };
 
-export default SearchBar;
+export default TagInput;

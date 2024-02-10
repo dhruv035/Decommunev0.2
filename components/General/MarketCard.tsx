@@ -29,14 +29,16 @@ const MarketCard = ({
   owned?: boolean;
 }) => {
   const toast = useToast();
-  const { pendingTx, setPendingTx, isTxDisabled, setIsTxDisabled } = useContext(
+  const { setPendingTx, isTxDisabled, setIsTxDisabled } = useContext(
     AppContext
   ) as AppContextType;
+
   const { address } = useAccount();
   const nftContract = {
     address: membership.contractData[3],
     abi: NFT,
   };
+
   const { data, isLoading, error } = useContractReads({
     contracts: [
       {
@@ -57,6 +59,7 @@ const MarketCard = ({
 
   const image = 0;
   const handleBuy = async () => {
+    //TODO: Add specific alerts for each of the missing data
     if (!address) return;
     if (!data || !data[1]) return;
     if (typeof data[1].result !== "bigint") return;
@@ -77,7 +80,6 @@ const MarketCard = ({
         duration: 5000,
       });
     } catch (error: any) {
-      console.log("ERR", error);
       const firstLine = error.message.split(".")[0];
       toast({
         position: "top-right",

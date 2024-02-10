@@ -3,6 +3,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { RiWallet3Line } from "react-icons/ri";
 import { GiTerror } from "react-icons/gi";
 
+//I basically picked the example code for a stripped down wallet button and modified it
 export default function WalletButton() {
   return (
     <ConnectButton.Custom>
