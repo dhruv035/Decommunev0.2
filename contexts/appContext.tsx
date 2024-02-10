@@ -43,11 +43,13 @@ const AppProvider: NextPage<{ children: ReactNode }> = ({ children }) => {
       setPendingTx(undefined);
       localStorage.setItem("pendingTx", "");
     },
-    onError: (data: any) => {
+    onError: (error: any) => {
+      console.log("ERR", error);
+      const firstLine = error.message.split(".")[0];
       toast({
         position: "top-right",
         title: "Transaction Reverted",
-        description: "Your transaction has failed. Please retry",
+        description: firstLine,
         status: "error",
         isClosable: true,
         duration: 5000,
@@ -60,8 +62,8 @@ const AppProvider: NextPage<{ children: ReactNode }> = ({ children }) => {
     address: process.env.NEXT_PUBLIC_FACTORY_ADDRESS as `0x${string}`,
     abi: Factory,
     functionName: "getAllMemberships",
-    cacheTime:1000*60*60*5,
-    staleTime:1000*60*60*5
+    cacheTime: 1000 * 60 * 60 * 5,
+    staleTime: 1000 * 60 * 60 * 5,
   });
 
   const memberships = data?.length && data.length > 0 ? data : [];
@@ -77,7 +79,7 @@ const AppProvider: NextPage<{ children: ReactNode }> = ({ children }) => {
       } else setIsTxDisabled(false);
     }
   }, [pendingTx]);
-  console.log("PendingTx")
+  console.log("PendingTx");
   return (
     <AppContext.Provider
       value={{

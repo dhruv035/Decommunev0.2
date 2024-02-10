@@ -76,11 +76,13 @@ const MarketCard = ({
         isClosable: true,
         duration: 5000,
       });
-    } catch (error) {
+    } catch (error: any) {
+      console.log("ERR", error);
+      const firstLine = error.message.split(".")[0];
       toast({
         position: "top-right",
         title: "Transaction error",
-        description: "Error submitting your transaction",
+        description: firstLine,
         status: "error",
         isClosable: true,
         duration: 5000,
