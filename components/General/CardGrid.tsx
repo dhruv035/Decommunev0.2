@@ -27,9 +27,11 @@ const CardGrid: NextPage<CardGridProps> = ({
   const { address } = useAccount();
   const [membershipData, setMembershipData] = useState<any[]>([]);
 
-
+  
   const getMembershipData = useCallback(async () => {
 
+    //TODO:Fetch only balances first and perform filter before fetching the rest of the contract data.
+    
     const contracts = await Promise.all(      //Concurrently fetch membership data from all contracts.
       memberships.map(async (membership) => {
         const balance = async () => {       //This fetch may revert sometimes and therefore must be error handled
