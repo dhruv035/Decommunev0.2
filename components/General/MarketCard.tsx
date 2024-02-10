@@ -123,7 +123,7 @@ const MarketCard = ({
           <FormLabel color="green.200" fontSize={["md", null, "3xl"]}>
             Description
           </FormLabel>
-          <Text noOfLines={3} minH={20}>
+          <Text noOfLines={3} minH={20} overflowY={"auto"}>
             {membership?.metaData?.desc ??
               "NAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaa"}
           </Text>
