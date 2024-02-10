@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
-import clientPromise from "../../../../db/database";
+import clientPromise from "../../../../backend-services/db/database";
 import { ObjectId } from "mongodb";
 import { getToken } from "next-auth/jwt";
 // For more information on each option (and a full list of options) go to

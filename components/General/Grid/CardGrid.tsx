@@ -11,6 +11,7 @@ type CardGridProps = {
   isFilter: boolean;
 };
 const CardGrid: NextPage<CardGridProps> = ({ memberships, isFilter }) => {
+  console.log("isFIlter")
   const { address } = useAccount();
   const [membershipData, setMembershipData] = useState<any[]>([]);
   const getMembershipData = useCallback(async () => {
@@ -98,9 +99,10 @@ const CardGrid: NextPage<CardGridProps> = ({ memberships, isFilter }) => {
   useEffect(() => {
     getMembershipData();
   }, [memberships, isFilter, address]);
+  
   return (
     <div className="p-5">
-      <SimpleGrid columns={[1,1 ,3]} spacing={12}>
+      <SimpleGrid columns={[1, null ,2, null, 3]} spacing={12} alignItems='center'>
         {membershipData.map((membership, index) => {
           return (
             <div key={index}>

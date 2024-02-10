@@ -103,7 +103,7 @@ const Create = () => {
         </div>
   
         {!step ? (
-          <div>
+          
             <form
               className="mt-10 flex flex-col p-4 py-10 w-4/5 bg-candy min-h-[20vh] max-w-[500px] rounded-[40px] space-y-4"
               onSubmit={metaFormik.handleSubmit}
@@ -151,7 +151,7 @@ const Create = () => {
               </FormControl>
               <Button type="submit">Proceed</Button>
             </form>
-          </div>
+        
         ) : (
           <form
             className="mt-10 flex flex-col p-4 py-10 w-4/5 bg-candy min-h-[20vh] max-w-[500px] rounded-[40px] space-y-4"

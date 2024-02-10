@@ -60,13 +60,11 @@ const AppProvider: NextPage<{ children: ReactNode }> = ({ children }) => {
     address: process.env.NEXT_PUBLIC_FACTORY_ADDRESS as `0x${string}`,
     abi: Factory,
     functionName: "getAllMemberships",
-    watch: true,
+    cacheTime:1000*60*60*5,
+    staleTime:1000*60*60*5
   });
 
-  const memberships = useMemo<readonly `0x${string}`[]>(() => {
-    if (data?.length && data.length > 0) return data;
-    else return [];
-  }, [data]);
+  const memberships = data?.length && data.length > 0 ? data : [];
 
   useEffect(() => {
     if (pendingTx) {
@@ -79,6 +77,7 @@ const AppProvider: NextPage<{ children: ReactNode }> = ({ children }) => {
       } else setIsTxDisabled(false);
     }
   }, [pendingTx]);
+  console.log("PendingTx")
   return (
     <AppContext.Provider
       value={{

@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import clientPromise from "../../../db/database";
+import clientPromise from "../../../backend-services/db/database";
 import { ObjectId } from "mongodb";
 import { getToken } from "next-auth/jwt";
 export default async function handler(
