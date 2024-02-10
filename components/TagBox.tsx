@@ -8,17 +8,17 @@ type TagBoxProps = {
 };
 const TagBox: NextPage<TagBoxProps> = ({ tags, removeTag }) => {
   return (
-    <div>
-      <SimpleGrid alignItems={"center"} columns = {8} spacing={1}>
+    <div className="w-[80%] justify-center flex flex-row flex-wrap spacing-x-2">
+     
         {tags.map((element: string, index: number) => {
           return (
-            <div key={index} className="flex flex-row border-[1px] px-1 bg-gray-300 rounded-full border-white items-center">
+            <div key={index} className="flex flex-row border-[1px] mx-2 my-[2px] px-2 bg-gray-300 rounded-full w-border-white items-center">
              { element}
               <Icon boxSize={4} m={1} color={"white"} onClick={()=>{removeTag(index)}} aria-label={"Button"+index} as={IoMdCloseCircleOutline} />
             </div>
           );
         })}
-      </SimpleGrid>
+   
     </div>
   );
 };
