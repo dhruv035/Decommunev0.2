@@ -5,17 +5,14 @@ import Logo from "../../public/DC2.jpg";
 import { MdGroupAdd } from "react-icons/md";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { useRouter } from "next/router";
-
+import { motion } from "framer-motion";
 
 //Sidebar component, part of the hud and plugged directly to all rendered pages
 
-export default function Sidebar() {
-  const { data: session, status } = useSession();
-  const router = useRouter();
-  const loading = status === "loading";
-  return (
-    <div>
-      {/* <div className="bg-blue-300 flex flex-col max-w-[30px]">
+
+
+/*My Reference for NextAuth and Siwe 
+  <div className="bg-blue-300 flex flex-col max-w-[30px]">
         <p
          
         >
@@ -51,8 +48,17 @@ export default function Sidebar() {
             </>
           )}
         </p>
-      </div>*/}
-      <div className="bg-black flex flex-col h-full py-6 px-2 sm:px-4 min-w-[3vw] items-center fixed">
+      </div>*/
+
+
+const Sidebar=()=> {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  const loading = status === "loading";
+  return (
+    
+      
+      <div className=" flex flex-col py-6 px-2 sm:px-4 bg-black h-full min-w-[3vw] items-center">
         <Image
           className="hover:cursor-pointer"
           onClick={() => router.push("/")}
@@ -110,6 +116,7 @@ export default function Sidebar() {
           </ul>
         </div>
       </div>
-    </div>
+    
   );
 }
+export default Sidebar

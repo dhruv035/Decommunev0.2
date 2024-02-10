@@ -30,8 +30,6 @@ const MarketCard = ({
   membership: Membership;
   owned?: boolean;
 }) => {
-
-
   const toast = useToast();
   const [imageError, setImageError] = useState(false);
   const { setPendingTx, isTxDisabled, setIsTxDisabled } = useContext(
@@ -63,13 +61,13 @@ const MarketCard = ({
       try {
         const response = await fetch(membership.metaData.image);
         if (!response.ok) {
-          throw new Error('Image not found');
+          throw new Error("Image not found");
         }
-        const contentType = response.headers.get('content-type');
-        if (contentType && contentType.startsWith('image')) {
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.startsWith("image")) {
           setImageError(false);
         } else {
-          throw new Error('Not an image');
+          throw new Error("Not an image");
         }
       } catch (error) {
         setImageError(true);
@@ -78,7 +76,6 @@ const MarketCard = ({
 
     // Call the function to check the image when the component mounts
     checkImage();
-
   }, []);
   const { writeAsync: buy } = useContractWrite({
     ...nftContract,
@@ -125,30 +122,34 @@ const MarketCard = ({
       maxW="sm"
       backgroundColor="rgb(0, 0, 0,0.7)"
       paddingX={[2, 3, 4]}
-      paddingY = {[6,8]}
+      paddingY={[6, 8]}
       textColor="teal.400"
       rounded={26}
     >
       <CardBody className="flex flex-col py-6 px-4">
-      <Heading fontWeight="bold" textAlign='center' noOfLines={2} minH={"120px"} fontSize={["9vw","4xl"]}>
-            {membership.contractData[4]}
-          </Heading>
-        <div className="flex flex-wrap w-[90%] aspect-square overflow-clip rounded-full self-center justify-center">
-        <Image
-        
-        loading="lazy"
-          src={
-            !imageError
-              ? membership.metaData?.image
-              : "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-          }
-          alt="Green double couch with wooden legs"
-        />
+        <Heading
+          fontWeight="bold"
+          textAlign="center"
+          noOfLines={2}
+          minH={"120px"}
+          fontSize={["9vw", "4xl"]}
+        >
+          {membership.contractData[4]}
+        </Heading>
+        <div className="flex flex-wrap w-[100%] aspect-square overflow-clip rounded-full self-center justify-center">
+          <Image
+            loading="lazy"
+            src={
+              !imageError
+                ? membership.metaData?.image
+                : "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+            }
+            alt="Green double couch with wooden legs"
+          />
         </div>
         <Stack mt="6" spacing="3">
-          
           <Heading
-          textAlign='center'
+            textAlign="center"
             color={"yellow.300"}
             fontWeight="bold"
             fontSize={["sm", "md", "xl"]}
@@ -176,8 +177,8 @@ const MarketCard = ({
         <CardFooter display="flex" justifyContent={"center"}>
           <ButtonGroup width={"90%"}>
             <Button
-            width="full"
-            rounded="full"
+              width="full"
+              rounded="full"
               variant="solid"
               colorScheme={"whatsapp"}
               onClick={() => {
