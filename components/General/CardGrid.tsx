@@ -156,7 +156,7 @@ const CardGrid: NextPage<CardGridProps> = ({
     <div className="p-5">
       <SimpleGrid
         columns={[1, null, 2, null, 3]}
-        spacing={12}
+        spacing="4vw"
         alignItems="center"
       >
         {membershipData.slice(0).reverse().map((membership, index) => {

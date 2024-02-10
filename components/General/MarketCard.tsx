@@ -11,6 +11,8 @@ import {
   Button,
   useToast,
   FormLabel,
+  Box,
+  Flex,
 } from "@chakra-ui/react";
 import { useAccount, useContractReads, useContractWrite } from "wagmi";
 import { NFT } from "../../abi";
@@ -58,7 +60,6 @@ const MarketCard = ({
   useEffect(() => {
     // Function to check if the URL points to an image
     const checkImage = async () => {
-      console.log("HEREIMAGE")
       try {
         const response = await fetch(membership.metaData.image);
         if (!response.ok) {
@@ -122,13 +123,18 @@ const MarketCard = ({
   return (
     <Card
       maxW="sm"
-      backgroundColor="black"
-      padding={[2, 3, 4]}
+      backgroundColor="rgb(0, 0, 0,0.7)"
+      padding={[2, 3, 8]}
       textColor="teal.400"
-      rounded={10}
+      rounded={26}
     >
-      <CardBody>
+      <CardBody className="flex flex-col py-10 px-4">
+      <Heading fontWeight="bold" textAlign='center' fontSize={["md", "2xl", "4xl"]}>
+            {membership.contractData[4]}
+          </Heading>
+        <div className="flex flex-wrap w-[90%] aspect-square overflow-clip rounded-full self-center justify-center">
         <Image
+        
         loading="lazy"
           src={
             !imageError
@@ -136,13 +142,12 @@ const MarketCard = ({
               : "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
           }
           alt="Green double couch with wooden legs"
-          borderRadius="lg"
         />
+        </div>
         <Stack mt="6" spacing="3">
-          <Heading fontWeight="bold" fontSize={["lg", "xl", "4xl"]}>
-            {membership.contractData[4]}
-          </Heading>
+          
           <Heading
+          textAlign='center'
             color={"yellow.300"}
             fontWeight="bold"
             fontSize={["sm", "md", "xl"]}
@@ -167,14 +172,16 @@ const MarketCard = ({
       </CardBody>
       <Divider />
       {!owned && (
-        <CardFooter>
-          <ButtonGroup spacing="2">
+        <CardFooter display="flex" justifyContent={"center"}>
+          <ButtonGroup width={"90%"}>
             <Button
-              variant="solid"
+            width="full"
+            rounded="full"
+              variant="outline"
+              colorScheme={"whatsapp"}
               onClick={() => {
                 handleBuy();
               }}
-              colorScheme="blue"
               isDisabled={isTxDisabled}
             >
               Buy now
