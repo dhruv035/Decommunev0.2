@@ -159,7 +159,7 @@ const CardGrid: NextPage<CardGridProps> = ({
         spacing={12}
         alignItems="center"
       >
-        {membershipData.map((membership, index) => {
+        {membershipData.slice(0).reverse().map((membership, index) => {
           return (
             <div key={index}>
               <MarketCard membership={membership} owned={isFilter} />
