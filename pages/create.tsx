@@ -29,16 +29,7 @@ const Create = () => {
         attributes: {},
       },
       onSubmit: async (values) => {
-        if (!process.env.NEXT_PUBLIC_BASE_URL) return;
-        const res = await fetch(
-          process.env.NEXT_PUBLIC_BASE_URL + "/collection",
-          {
-            method: "POST",
-            body: JSON.stringify(values),
-          }
-        );
-        const data = await res.json();
-        setCollectionId(data.id);
+  
         setStep(true);
       },
     });
@@ -56,6 +47,15 @@ const Create = () => {
         setIsTxDisabled(true);
         let hash;
         try {
+          
+          const res = await fetch(
+            process.env.NEXT_PUBLIC_BASE_URL + "/collection",
+            {
+              method: "POST",
+              body: JSON.stringify(values),
+            }
+          );
+          const data = await res.json();
           const { hash: txHash } = await deployNFT({
             args: [
               address,
@@ -63,7 +63,7 @@ const Create = () => {
               values.symbol,
               process.env.NEXT_PUBLIC_BASE_URL +
                 "/collection/" +
-                collectionId +
+                data.id +
                 "/",
               parseEther(values.price.toString()),
               values.incremental,
