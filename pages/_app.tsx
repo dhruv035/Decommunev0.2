@@ -76,7 +76,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <AppProvider>
                 <div className="fixed top-0 left-0 right-0 bottom-0 flex flex-row bg-[url('/background.jpg')] bg-cover overflow-hidden">
                   <Sidebar />
-                  <div className=" pl-[20vw] md:pl-[10vw] flex overflow-y-auto w-full">
+                  <div className=" pl-[20vw] md:pl-[10vw] scrollbar-hidden flex overflow-y-auto w-full">
                   <Component {...pageProps} />
                   </div>
                 </div>

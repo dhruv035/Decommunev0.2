@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { useAccount, useContractReads, useContractWrite } from "wagmi";
 import { NFT } from "../../abi";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { formatEther } from "viem";
 import { AppContext, AppContextType } from "../../contexts/appContext";
 type Membership = {
@@ -28,7 +28,10 @@ const MarketCard = ({
   membership: Membership;
   owned?: boolean;
 }) => {
+
+
   const toast = useToast();
+  const [imageError, setImageError] = useState(false);
   const { setPendingTx, isTxDisabled, setIsTxDisabled } = useContext(
     AppContext
   ) as AppContextType;
@@ -52,12 +55,35 @@ const MarketCard = ({
     ],
   });
 
+  useEffect(() => {
+    // Function to check if the URL points to an image
+    const checkImage = async () => {
+      console.log("HEREIMAGE")
+      try {
+        const response = await fetch(membership.metaData.image);
+        if (!response.ok) {
+          throw new Error('Image not found');
+        }
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.startsWith('image')) {
+          setImageError(false);
+        } else {
+          throw new Error('Not an image');
+        }
+      } catch (error) {
+        setImageError(true);
+      }
+    };
+
+    // Call the function to check the image when the component mounts
+    checkImage();
+
+  }, []);
   const { writeAsync: buy } = useContractWrite({
     ...nftContract,
     functionName: "safeMint",
   });
 
-  const image = 0;
   const handleBuy = async () => {
     //TODO: Add specific alerts for each of the missing data
     if (!address) return;
@@ -103,9 +129,10 @@ const MarketCard = ({
     >
       <CardBody>
         <Image
+        loading="lazy"
           src={
-            image
-              ? image
+            !imageError
+              ? membership.metaData?.image
               : "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
           }
           alt="Green double couch with wooden legs"
