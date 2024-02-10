@@ -72,7 +72,7 @@ const Create:NextPage = () => {
           process.env.NEXT_PUBLIC_BASE_URL + "/collection", 
           {
             method: "POST",
-            body: JSON.stringify(values),
+            body: JSON.stringify(metaFormik.values),
           }
         );
         const data = await res.json();
