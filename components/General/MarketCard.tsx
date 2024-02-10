@@ -13,10 +13,10 @@ import {
   FormLabel,
 } from "@chakra-ui/react";
 import { useAccount, useContractReads, useContractWrite } from "wagmi";
-import { NFT } from "../../../abi";
+import { NFT } from "../../abi";
 import { useContext } from "react";
 import { formatEther } from "viem";
-import { AppContext, AppContextType } from "../../../contexts/appContext";
+import { AppContext, AppContextType } from "../../contexts/appContext";
 type Membership = {
   contractData: any;
   metaData: any;
@@ -28,7 +28,6 @@ const MarketCard = ({
   membership: Membership;
   owned?: boolean;
 }) => {
-  console.log("MEMBERSHIPDATA", membership);
   const toast = useToast();
   const { pendingTx, setPendingTx, isTxDisabled, setIsTxDisabled } = useContext(
     AppContext
@@ -94,7 +93,7 @@ const MarketCard = ({
     <Card
       maxW="sm"
       backgroundColor="black"
-      padding={[2,3,4]}
+      padding={[2, 3, 4]}
       textColor="teal.400"
       rounded={10}
     >
@@ -109,15 +108,28 @@ const MarketCard = ({
           borderRadius="lg"
         />
         <Stack mt="6" spacing="3">
-          <Heading fontWeight="bold" fontSize={["lg","xl","4xl"]}>
+          <Heading fontWeight="bold" fontSize={["lg", "xl", "4xl"]}>
             {membership.contractData[4]}
           </Heading>
-          <Heading color={"yellow.300"} fontWeight="bold" fontSize={["sm","md","xl"]}>
+          <Heading
+            color={"yellow.300"}
+            fontWeight="bold"
+            fontSize={["sm", "md", "xl"]}
+          >
             ${membership.contractData[5]}
           </Heading>
-          <FormLabel color="green.200" fontSize={["md",null,"3xl"]}>Description</FormLabel>
-          <Text>{membership?.metaData?.desc }</Text>
-          <Text color="green.200" fontSize={["sm","lg","2xl"]} fontWeight={"bold"}>
+          <FormLabel color="green.200" fontSize={["md", null, "3xl"]}>
+            Description
+          </FormLabel>
+          <Text noOfLines={3} minH={20}>
+            {membership?.metaData?.desc ??
+              "NAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaa"}
+          </Text>
+          <Text
+            color="green.200"
+            fontSize={["sm", "lg", "2xl"]}
+            fontWeight={"bold"}
+          >
             {formatEther(membership.contractData[1])} MATIC
           </Text>
         </Stack>

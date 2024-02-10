@@ -3,14 +3,14 @@ import type { NextPage } from "next";
 import { useContext } from "react";
 import Search from "../components/Search";
 import { AppContext, AppContextType } from "../contexts/appContext";
-import CardGrid from "../components/General/Grid/CardGrid";
+import CardGrid from "../components/General/CardGrid";
 
 const Home: NextPage = () => {
   const { memberships } = useContext(AppContext) as AppContextType;
   return (
     <div className=" pt-6 flex flex-col w-full max-w-[94vw] bg-cover">
       <div className="flex flex-col items-center">
-        <div className="text-transparent font-kenia bg-clip-text bg-pinkFlavor text-[44px] sm:text-[52px] text-center md:text-[60px] font-bold spacing-2">
+        <div className="text-transparent font-kenia bg-clip-text bg-pinkFlavor text-[44px] sm:text-[52px] text-center md:text-[60px] font-bold">
           DeCommune
         </div>
         <Search />

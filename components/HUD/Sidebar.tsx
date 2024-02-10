@@ -52,7 +52,7 @@ export default function Sidebar() {
           )}
         </p>
       </div>*/}
-      <div className="bg-black flex flex-col h-full py-6 px-4 min-w-[6vw]">
+      <div className="bg-black flex flex-col h-full py-6 px-4 min-w-[6vw] fixed">
         <Image
           className="hover:cursor-pointer"
           onClick={() => router.push("/")}

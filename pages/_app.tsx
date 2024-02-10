@@ -83,9 +83,11 @@ function MyApp({ Component, pageProps }: AppProps) {
             <RainbowKitProvider chains={chains}>
               <ChakraBaseProvider theme={theme}>
                 <AppProvider>
-                <div className="flex flex-row min-h-[100vh] w-full bg-[url('/background.jpg')] bg-cover">
+                <div className="fixed top-0 left-0 right-0 bottom-0 flex flex-row bg-[url('/background.jpg')] bg-cover overflow-hidden">
                   <Sidebar />
+                  <div className=" ml-[10vw] flex overflow-y-auto w-full">
                   <Component {...pageProps} />
+                  </div>
                 </div>
                 </AppProvider>
               </ChakraBaseProvider>

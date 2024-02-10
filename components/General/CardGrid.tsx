@@ -3,7 +3,7 @@ import { readContract } from "@wagmi/core";
 import { NextPage } from "next";
 import { useCallback, useEffect, useState } from "react";
 import { useAccount } from "wagmi";
-import { NFT } from "../../../abi";
+import { NFT } from "../../abi";
 import MarketCard from "./MarketCard";
 
 type CardGridProps = {
