@@ -62,8 +62,7 @@ const AppProvider: NextPage<{ children: ReactNode }> = ({ children }) => {
     address: process.env.NEXT_PUBLIC_FACTORY_ADDRESS as `0x${string}`,
     abi: Factory,
     functionName: "getAllMemberships",
-    cacheTime: 1000 * 60 * 60 * 5,
-    staleTime: 1000 * 60 * 60 * 5,
+    watch: true,
   });
 
   const memberships = data?.length && data.length > 0 ? data : [];

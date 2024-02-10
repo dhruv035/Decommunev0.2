@@ -18,7 +18,6 @@ import { NextPage } from "next";
 const Create = () => {
   const toast = useToast();
   const [step, setStep] = useState<boolean>(false);
-  const [collectionId, setCollectionId] = useState<string | undefined>();
   const { address } = useAccount();
   const { pendingTx, setPendingTx, isTxDisabled, setIsTxDisabled } = useContext(
     AppContext
@@ -36,7 +35,7 @@ const Create = () => {
       image: "",
       attributes: {},
     },
-    onSubmit: async (values) => {
+    onSubmit: async () => {
       setStep(true);
     },
   });

@@ -3,7 +3,7 @@ import { AppContext, AppContextType } from "../contexts/appContext";
 import Search from "../components/Search";
 import CardGrid from "../components/General/CardGrid";
 const Network = () => {
-  const { memberships } = useContext(AppContext) as AppContextType;
+  const { memberships, pendingTx } = useContext(AppContext) as AppContextType;
   return (
     <div className=" pt-6 flex flex-col w-full max-w-[94vw] bg-cover">
       <div className="flex flex-col items-center">
@@ -12,7 +12,7 @@ const Network = () => {
         </div>
         <Search />
       </div>
-      <CardGrid memberships={memberships} isFilter={true} />
+      <CardGrid memberships={memberships} isFilter={true} pendingTx={pendingTx} />
     </div>
   );
 };

@@ -9,9 +9,14 @@ import MarketCard from "./MarketCard";
 type CardGridProps = {
   memberships: readonly `0x${string}`[];
   isFilter: boolean;
+  pendingTx?: string;
 };
-const CardGrid: NextPage<CardGridProps> = ({ memberships, isFilter }) => {
-  console.log("isFIlter")
+const CardGrid: NextPage<CardGridProps> = ({
+  memberships,
+  isFilter,
+  pendingTx,
+}) => {
+  console.log("isFIlter");
   const { address } = useAccount();
   const [membershipData, setMembershipData] = useState<any[]>([]);
   const getMembershipData = useCallback(async () => {
@@ -42,16 +47,38 @@ const CardGrid: NextPage<CardGridProps> = ({ memberships, isFilter }) => {
           functionName: "baseURI",
         });
         const tokenName = readContract({
-            address: membership,
-            abi: NFT,
-            functionName: "name",
-          });
-          const tokenSymbol = readContract({
-            address: membership,
-            abi: NFT,
-            functionName: "symbol",
-          });
-        return Promise.all([balance(), currentPrice, baseURI, membership,tokenName,tokenSymbol]);
+          address: membership,
+          abi: NFT,
+          functionName: "name",
+        });
+        const tokenSymbol = readContract({
+          address: membership,
+          abi: NFT,
+          functionName: "symbol",
+        });
+        const tokenURI = async () => {
+          let data;
+          try {
+            data = await readContract({
+              address: membership,
+              abi: NFT,
+              functionName: "tokenURI",
+              args: [BigInt(0)],
+            });
+            return data;
+          } catch (error) {
+            return "ax";
+          }
+        };
+        return Promise.all([
+          balance(),
+          currentPrice,
+          baseURI,
+          membership,
+          tokenName,
+          tokenSymbol,
+          tokenURI(),
+        ]);
       })
     ).then((res) => {
       if (isFilter)
@@ -98,15 +125,20 @@ const CardGrid: NextPage<CardGridProps> = ({ memberships, isFilter }) => {
 
   useEffect(() => {
     getMembershipData();
-  }, [memberships, isFilter, address]);
-  
+  }, [memberships, isFilter, address, pendingTx]);
+
+  console.log("M", membershipData);
   return (
     <div className="p-5">
-      <SimpleGrid columns={[1, null ,2, null, 3]} spacing={12} alignItems='center'>
+      <SimpleGrid
+        columns={[1, null, 2, null, 3]}
+        spacing={12}
+        alignItems="center"
+      >
         {membershipData.map((membership, index) => {
           return (
             <div key={index}>
-              <MarketCard membership={membership} owned={isFilter}/>
+              <MarketCard membership={membership} owned={isFilter} />
             </div>
           );
         })}

@@ -6,7 +6,7 @@ import { AppContext, AppContextType } from "../contexts/appContext";
 import CardGrid from "../components/General/CardGrid";
 
 const Home: NextPage = () => {
-  const { memberships } = useContext(AppContext) as AppContextType;
+  const { memberships, pendingTx } = useContext(AppContext) as AppContextType;
   return (
     <div className=" pt-6 flex flex-col w-full max-w-[94vw] bg-cover">
       <div className="flex flex-col items-center">
@@ -15,7 +15,7 @@ const Home: NextPage = () => {
         </div>
         <Search />
       </div>
-      <CardGrid memberships={memberships} isFilter={false} />
+      <CardGrid memberships={memberships} isFilter={false} pendingTx={pendingTx} />
     </div>
   );
 };
