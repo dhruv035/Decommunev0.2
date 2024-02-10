@@ -89,8 +89,9 @@ const CardGrid: NextPage<CardGridProps> = ({
         };
 
         //Return a Promise.all with each data operation to run data fetch concurrently as a Promise for each membership
-          balance(),
+          
         return Promise.all([      
+          balance(),
           currentPrice,
           baseURI,
           membership,
