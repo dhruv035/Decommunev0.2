@@ -128,8 +128,8 @@ const MarketCard = ({
       textColor="teal.400"
       rounded={26}
     >
-      <CardBody className="flex flex-col py-10 px-4">
-      <Heading fontWeight="bold" textAlign='center' fontSize={["md", "2xl", "4xl"]}>
+      <CardBody className="flex flex-col py-6 px-4">
+      <Heading fontWeight="bold" textAlign='center' noOfLines={2} minH={"120px"} fontSize={["md", "2xl", "4xl"]}>
             {membership.contractData[4]}
           </Heading>
         <div className="flex flex-wrap w-[90%] aspect-square overflow-clip rounded-full self-center justify-center">
@@ -177,7 +177,7 @@ const MarketCard = ({
             <Button
             width="full"
             rounded="full"
-              variant="outline"
+              variant="solid"
               colorScheme={"whatsapp"}
               onClick={() => {
                 handleBuy();
