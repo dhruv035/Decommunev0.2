@@ -9,9 +9,8 @@ type TagBoxProps = {
   removeTag: any;
 };
 const TagBox: NextPage<TagBoxProps> = ({ tags, removeTag }) => {
-
-  const [isHover] = useMediaQuery(`(hover:hover)`)
-  console.log("aGSF",isHover)
+  const [isHover] = useMediaQuery(`(hover:hover)`);
+  console.log("aGSF", isHover);
   return (
     <div className="justify-center flex flex-row text-black flex-wrap spacing-x-2 w-auto">
       {tags.map((element: string, index: number) => {
@@ -21,12 +20,15 @@ const TagBox: NextPage<TagBoxProps> = ({ tags, removeTag }) => {
             onClick={() => {
               removeTag(index);
             }}
-            _hover={{
-              cursor: "pointer",
-              backgroundColor:"red.400",
-              color:"white",
-            }}
-            
+            _hover={
+              !isHover
+                ? {}
+                : {
+                    cursor: "pointer",
+                    backgroundColor: "red.400",
+                    color: "white",
+                  }
+            }
             key={index}
           >
             {element}
