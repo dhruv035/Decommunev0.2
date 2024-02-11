@@ -8,7 +8,7 @@ const Network = () => {
   return (
     <div className=" pt-6 flex flex-col w-full max-w-[94vw] bg-cover">
       <div className="flex flex-col items-center">
-        <div className="text-transparent font-kenia bg-clip-text bg-velvetSun text-[44px] sm:text-[52px] text-center md:text-[60px] font-bold">
+        <div className="text-transparent bg-clip-text bg-velvetSun text-[44px] sm:text-[52px] text-center md:text-[60px] font-bold">
           Your Network
         </div>
         <Search tags={tags} setTags={setTags} />

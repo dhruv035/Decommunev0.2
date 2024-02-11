@@ -43,7 +43,6 @@ const Create: NextPage = () => {
       collectionName: "",
       desc: "",
       image: "",
-      attributes: {},
     },
     onSubmit: async () => {
       setStep(true);
@@ -71,7 +70,7 @@ const Create: NextPage = () => {
           process.env.NEXT_PUBLIC_BASE_URL + "/collection",
           {
             method: "POST",
-            body: JSON.stringify(metaFormik.values),
+            body: JSON.stringify({ ...metaFormik.values, tags }),
           }
         );
         const data = await res.json();
@@ -115,7 +114,7 @@ const Create: NextPage = () => {
 
   return (
     <div className=" pt-6 flex flex-col w-full max-w-[94vw] bg-cover items-center">
-      <div className="text-transparent font-kenia bg-clip-text bg-kyoto text-[30px] sm:text-[40px] text-center md:text-[50px] font-bold">
+      <div className="text-transparent bg-clip-text bg-kyoto text-[30px] sm:text-[40px] text-center md:text-[50px] font-bold">
         Create a New Membership
       </div>
 
@@ -144,19 +143,7 @@ const Create: NextPage = () => {
                 value={metaFormik.values.collectionName}
               ></Input>
             </FormControl>
-            <FormControl isRequired>
-              <FormLabel>Description</FormLabel>
-              <Textarea
-                id="desc"
-                name="desc"
-                variant="ghost"
-                placeholder={"Give us the incredible details!"}
-                onChange={metaFormik.handleChange}
-                backgroundColor="rgb(0,0,5,0.45)"
-                opacity={0.8}
-                value={metaFormik.values.desc}
-              ></Textarea>
-            </FormControl>
+            
             <FormControl isRequired>
               <FormLabel>ImageUrl</FormLabel>
               <Input
@@ -171,6 +158,19 @@ const Create: NextPage = () => {
                 onChange={metaFormik.handleChange}
                 value={metaFormik.values.image}
               ></Input>
+            </FormControl>
+            <FormControl isRequired>
+              <FormLabel>Description</FormLabel>
+              <Textarea
+                id="desc"
+                name="desc"
+                variant="ghost"
+                placeholder={"Give us the incredible details!"}
+                onChange={metaFormik.handleChange}
+                backgroundColor="rgb(0,0,5,0.45)"
+                opacity={0.8}
+                value={metaFormik.values.desc}
+              ></Textarea>
             </FormControl>
             <FormLabel alignSelf="start" fontSize={[18, 22, 26]}>
               Add some trending tags!
@@ -189,13 +189,13 @@ const Create: NextPage = () => {
                   ? {}
                   : {
                       borderColor: "white",
-                      backgroundColor:"teal.800",
+                      backgroundColor: "teal.800",
                       color: "white",
                     }
               }
               _active={{
                 borderColor: "white",
-                backgroundColor:"teal.800",
+                backgroundColor: "teal.800",
                 color: "white",
               }}
               color="white"
@@ -298,13 +298,13 @@ const Create: NextPage = () => {
                   ? {}
                   : {
                       borderColor: "white",
-                      backgroundColor:"teal.800",
+                      backgroundColor: "teal.800",
                       color: "white",
                     }
               }
               _active={{
                 borderColor: "white",
-                backgroundColor:"teal.800",
+                backgroundColor: "teal.800",
                 color: "white",
               }}
               color="white"
