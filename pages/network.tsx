@@ -6,7 +6,7 @@ const Network = () => {
   const { memberships, pendingTx } = useContext(AppContext) as AppContextType;
   const [tags,setTags]= useState<string[]>([])
   return (
-    <div className=" pt-6 flex flex-col w-full max-w-[94vw] bg-cover">
+    <div className=" pt-6 flex flex-col w-full max-w-[92vw] bg-cover">
       <div className="flex flex-col items-center">
         <div className="text-transparent bg-clip-text bg-velvetSun text-[44px] sm:text-[52px] text-center md:text-[60px] font-bold">
           Your Network

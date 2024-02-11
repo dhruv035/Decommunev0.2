@@ -6,7 +6,7 @@ import { MdGroupAdd } from "react-icons/md";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
-
+import {ElementSize} from "@zag-js/element-size"
 //Sidebar component, part of the hud and plugged directly to all rendered pages
 
 /*My Reference for NextAuth and Siwe 
@@ -48,32 +48,27 @@ import { motion } from "framer-motion";
         </p>
       </div>*/
 
-const Sidebar = () => {
+const Sidebar = ({ windowData }: { windowData: ElementSize|undefined }) => {
   const { data: session, status } = useSession();
   const router = useRouter();
   const loading = status === "loading";
   return (
-    <div className=" flex flex-col py-6 px-2 sm:px-4 bg-black h-full w-[100%] items-center">
+    <div className=" flex flex-col py-6 px-2 sm:px-4 bg-[rgba(10,21,20,0.8)]  h-full w-[100%] items-center">
       <IconButton
-      onClick={()=>{router.push('/')}}
+        onClick={() => {
+          router.push("/");
+        }}
         aria-label=""
         bg={"transparent"}
         rounded="full"
-        boxSize={[6, 10, 14]}
-        icon={
-          <Image
-            p={0}
-            
-            rounded='full'
-            src={Logo.src}
-          />
-        }
+        boxSize={[16, 20]}
+        icon={<Image p={0} rounded="full" src={Logo.src} />}
       ></IconButton>
 
       <div className="mt-32">
         <ul className="space-y-10">
           <li>
-            <ConnectButton />
+            <ConnectButton windowData={windowData} />
           </li>
           <li>
             <Tooltip label="My Network">
@@ -81,7 +76,7 @@ const Sidebar = () => {
                 <Icon
                   className={"hover:cursor-pointer rounded-full p-1 md:p-2"}
                   as={FaPeopleGroup}
-                  boxSize={[6, 10, 14]}
+                  boxSize={[16, 20]}
                   color={!session ? "red.400" : "teal.400"}
                   backgroundColor="gray.800"
                   onClick={() => {
@@ -97,7 +92,7 @@ const Sidebar = () => {
                 <Icon
                   className="hover:cursor-pointer rounded-full p-1 md:p-2"
                   as={MdGroupAdd}
-                  boxSize={[6, 10, 14]}
+                  boxSize={[16, 20]}
                   color={!session ? "red.400" : "teal.400"}
                   backgroundColor="gray.800"
                   onClick={() => {
@@ -111,7 +106,7 @@ const Sidebar = () => {
             <Icon
               className="hover:cursor-pointer rounded-full p-1 md:gip-2"
               as={MdGroupAdd}
-              boxSize={[6, 10, 14]}
+              boxSize={[16, 20]}
               color={!session ? "red.400" : "teal.400"}
               backgroundColor="gray.800"
               onClick={() => {}}

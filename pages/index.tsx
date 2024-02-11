@@ -9,9 +9,9 @@ const Home: NextPage = () => {
   const { memberships, pendingTx } = useContext(AppContext) as AppContextType;
   const [tags,setTags] = useState<string[]>([])
   return (
-    <div className=" pt-6 flex flex-col w-full max-w-[94vw] bg-cover">
+    <div className=" pt-6 flex flex-col w-full max-w-[92vw] bg-cover">
       <div className="flex flex-col items-center">
-        <div className="text-transparent bg-clip-text bg-pinkFlavor text-[44px] sm:text-[52px] text-center md:text-[60px] font-bold">
+        <div className="text-transparent bg-clip-text bg-pinkFlavor text-center text-4xl sm:text-5xl md:text-8xl font-bold">
           DeCommune
         </div>
         <div className=" w-[50vw] max-w-[700px]">

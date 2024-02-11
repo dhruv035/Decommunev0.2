@@ -2,9 +2,10 @@ import { Icon, Image, Tooltip } from "@chakra-ui/react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { RiWallet3Line } from "react-icons/ri";
 import { GiTerror } from "react-icons/gi";
+import {ElementSize} from "@zag-js/element-size"
 
 //I basically picked the example code for a stripped down wallet button and modified it
-export default function WalletButton() {
+export default function WalletButton({windowData}:{windowData:ElementSize|undefined}) {
   return (
     <ConnectButton.Custom>
       {({
@@ -24,7 +25,6 @@ export default function WalletButton() {
           account &&
           chain &&
           (!authenticationStatus || authenticationStatus === "authenticated");
-
         return (
           <div
             className="flex"
@@ -45,7 +45,7 @@ export default function WalletButton() {
                       <Icon
                         className="hover:cursor-pointer"
                         as={RiWallet3Line}
-                        boxSize={[6,10,14]}
+                        boxSize={[16, 20]}
                         borderRadius="50%"
                         color="red.400"
                         backgroundColor="gray.800"
@@ -64,7 +64,7 @@ export default function WalletButton() {
                       <Icon
                         className="hover:cursor-pointer"
                         as={GiTerror}
-                        boxSize={[6,10,14]}
+                        boxSize={[16, 20]}
                         borderRadius="full"
                         color="red.400"
                         backgroundColor="gray.800"
@@ -83,7 +83,7 @@ export default function WalletButton() {
                       <Icon
                         className="hover:cursor-pointer"
                         as={RiWallet3Line}
-                        boxSize={[6,10,14]}
+                        boxSize={[16, 20]}
                         color="teal.400"
                         padding={[1,1,2]}
                         rounded="full"
@@ -98,7 +98,7 @@ export default function WalletButton() {
                     <Image
                       alt={chain.name ?? "Chain icon"}
                       src={chain.iconUrl}
-                      boxSize={[6,10,14]}
+                      boxSize={[16, 20]}
                       _hover={{cursor:"pointer"}}
                       backgroundColor="gray.800"
                       onClick={openChainModal}

@@ -113,7 +113,7 @@ const Create: NextPage = () => {
   });
 
   return (
-    <div className=" pt-6 flex flex-col w-full max-w-[94vw] bg-cover items-center">
+    <div className=" pt-6 flex flex-col w-full max-w-[92vw] bg-cover items-center">
       <div className="text-transparent bg-clip-text bg-kyoto text-[30px] sm:text-[40px] text-center md:text-[50px] font-bold">
         Create a New Membership
       </div>

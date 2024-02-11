@@ -10,7 +10,6 @@ type TagBoxProps = {
 };
 const TagBox: NextPage<TagBoxProps> = ({ tags, removeTag }) => {
   const [isHover] = useMediaQuery(`(hover:hover)`);
-  console.log("aGSF", isHover);
   return (
     <div className="justify-center flex flex-row text-black flex-wrap spacing-x-2 w-auto">
       {tags.map((element: string, index: number) => {
