@@ -15,6 +15,7 @@ import {
   ChakraBaseProvider,
   extendBaseTheme,
   theme as chakraTheme,
+  useMediaQuery,
 } from "@chakra-ui/react";
 
 import AppProvider from "../contexts/appContext";
@@ -24,7 +25,7 @@ export enum Views {
   NETWORK = "network",
 }
 import { motion, useAnimate, useDragControls, useMotionValue } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const { Button, FormLabel, Input, Form, Textarea, Checkbox, Alert, Tooltip } =
   chakraTheme.components;
@@ -67,33 +68,31 @@ const getSiweMessageOptions: GetSiweMessageOptions = () => ({
 
 const sidebarVariants = {
   open: { x: 0 },
-  closed: { x: "-100%", transition: { delay: 0.5, duration: 0.8 } },
+  closed: { x: "-100%" },
 };
+
+const sideBarTransition = {
+   duration: 0.5 
+}
 function MyApp({ Component, pageProps }: AppProps) {
-  const [isDragging, setIsDragging] = useState(false);
+  const [isLargerThan768]= useMediaQuery(`(min-width:768px)`)
   const [isOpen, setIsOpen] = useState(false);
-  const [isDraggable,setIsDraggable] = useState(true)
   const [scope,animate]=useAnimate()
-  const controls = useDragControls();
-  const dragX = useMotionValue(0);
+  
+  const containerRef=useRef<HTMLDivElement|null>(null)
+  const closeSideBar=()=>{
+    setIsOpen(false);
+    //animate(scope.current,{...sidebarVariants.closed},{...sideBarTransition})
+    
+  }
+  const openSideBar=()=>{
+    console.log("ABC")
+    setIsOpen(true);
+    animate(scope.current,{...sidebarVariants.open},{...sideBarTransition})
+   
+  }
 
-  const handleDragStart = (e: React.PointerEvent<HTMLDivElement>) => {
-    setIsDragging(true);
-    if(isDraggable)
-    controls.start(e);
-  };
-  useEffect(() => {
-    if (!isDragging) {
-      console.log("TRIGER");
-      const timeout = setTimeout(() => {
-        console.log("TIMEOUT");
-        setIsOpen(false);
-        animate(scope.current,{...sidebarVariants.closed},{...sidebarVariants})
-      }, 1000);
-
-      return () => clearTimeout(timeout);
-    }
-  }, [isDragging, isOpen]);
+  console.log("isOpen",isOpen)
   return (
     <WagmiConfig config={wagmiConfig}>
       <SessionProvider refetchInterval={0} session={pageProps.session}>
@@ -104,28 +103,33 @@ function MyApp({ Component, pageProps }: AppProps) {
             <ChakraBaseProvider theme={theme}>
               <AppProvider>
                 <motion.div
+                style={{touchAction:"none"}}
                   className="fixed top-0 left-0 right-0 bottom-0 flex flex-row bg-[url('/background.jpg')] bg-cover overflow-hidden"
-                  onPointerDown={(e) => handleDragStart(e)}
-                  onTouchEnd={() => {
-                    
-                    setIsDragging(false);
+                  onPanStart={(e,pointInfo)=>{
+                    if(pointInfo.offset.x>0)
+                    openSideBar();
+                    else
+                    closeSideBar();
+                  }}
+                  
+                  onTouchEnd={(e)=>{
+                   
+                    if(isOpen)
+                    setTimeout(closeSideBar,2000)
                   }}
                 >
+                  
+                  <div ref={containerRef} className="fixed flex flex-row-reverse inset-x-[-8vw]  h-full w-[16vw]">
                   <motion.div
                  
                   ref={scope}
-                    className="fixed h-full min-w-[3vw]"
-                    dragControls={controls}
-                    dragElastic={1}
-                    drag={isDraggable?"x":undefined}
-                    onPointerEnter={()=>setIsDraggable(false)}
-                    onPointerLeave={()=>setIsDraggable(true)}
-                    dragConstraints={{ left: isOpen ? -200 : 0, right: 0 }}
-                    animate={isOpen ? "open" : "closed"}
-                    variants={sidebarVariants}
+                    className="relative h-full w-[8vw]"
+                    dragConstraints={containerRef}
+                    variants={isLargerThan768?undefined:sidebarVariants}
                   >
                     <Sidebar />
                   </motion.div>
+                  </div>
                   <div className=" pl-[6vw] scrollbar-hidden flex overflow-y-auto w-full">
                     <Component {...pageProps} />
                   </div>
