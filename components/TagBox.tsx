@@ -1,4 +1,4 @@
-import { Box, Icon, SimpleGrid } from "@chakra-ui/react";
+import { Box, Icon, SimpleGrid, useMediaQuery } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { IoClose } from "react-icons/io5";
 
@@ -9,6 +9,9 @@ type TagBoxProps = {
   removeTag: any;
 };
 const TagBox: NextPage<TagBoxProps> = ({ tags, removeTag }) => {
+
+  const [isHover] = useMediaQuery(`(hover:hover)`)
+  console.log("aGSF",isHover)
   return (
     <div className="justify-center flex flex-row text-black flex-wrap spacing-x-2 w-auto">
       {tags.map((element: string, index: number) => {
@@ -23,6 +26,7 @@ const TagBox: NextPage<TagBoxProps> = ({ tags, removeTag }) => {
               backgroundColor:"red.400",
               color:"white",
             }}
+            
             key={index}
           >
             {element}
