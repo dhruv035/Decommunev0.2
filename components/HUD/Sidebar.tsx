@@ -55,6 +55,7 @@ const Sidebar = () => {
   return (
     <div className=" flex flex-col py-6 px-2 sm:px-4 bg-black h-full w-[100%] items-center">
       <IconButton
+      onClick={()=>{router.push('/')}}
         aria-label=""
         bg={"transparent"}
         rounded="full"
