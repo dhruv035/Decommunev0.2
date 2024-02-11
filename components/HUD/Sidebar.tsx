@@ -58,10 +58,11 @@ const Sidebar = () => {
         aria-label=""
         bg={"transparent"}
         rounded="full"
-        
+        boxSize={[6, 10, 14]}
         icon={
           <Image
             p={0}
+            
             rounded='full'
             src={Logo.src}
           />
