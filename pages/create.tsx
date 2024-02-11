@@ -196,7 +196,7 @@ const Create: NextPage = () => {
           </form>
         ) : (
           <form
-            className="relative my-10 flex flex-col px-6 py-6 bg-[rgba(0,0,0,0.6)] items-center text-white min-h-[600px] rounded-[40px] space-y-14"
+            className="relative my-10 flex flex-col px-6 pb-10 bg-[rgba(0,0,0,0.6)] items-center text-white min-h-[600px] rounded-[40px] space-y-14"
             onSubmit={formik.handleSubmit}
           >
              <IconButton
@@ -204,9 +204,13 @@ const Create: NextPage = () => {
               aria-label={""}
               backgroundColor="transparent"
               color="white"
+              _hover={{
+                backgroundColor:"transparent",
+                color:"red.400"
+              }}
               position={'absolute'}
-              top={10}
-              left={10}
+              top={6}
+              left={4}
               fontSize={[16,24,32]}
               onClick={() => setStep(false)}
             />
