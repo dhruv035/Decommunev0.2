@@ -119,6 +119,7 @@ const MarketCard = ({
   };
   return (
     <Card
+      maxW="sm"
       backgroundColor="rgb(0, 0, 0,0.7)"
       paddingX={[2, 3, 4]}
       paddingBottom={[6, 8]}
