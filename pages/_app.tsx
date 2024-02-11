@@ -24,12 +24,7 @@ export enum Views {
   CREATE = "create",
   NETWORK = "network",
 }
-import {
-  motion,
-  useAnimate,
-  useDragControls,
-  useMotionValue,
-} from "framer-motion";
+import { motion, useAnimate, useDragControls, useMotionValue } from "framer-motion";
 import { useEffect, useState } from "react";
 
 const { Button, FormLabel, Input, Form, Textarea, Checkbox, Alert, Tooltip } =
@@ -70,40 +65,38 @@ const getSiweMessageOptions: GetSiweMessageOptions = () => ({
   statement: "Sign in to my RainbowKit app",
 });
 
+
 const sidebarVariants = {
   open: { x: 0 },
   closed: { x: "-100%", transition: { delay: 0.5, duration: 0.8 } },
 };
 function MyApp({ Component, pageProps }: AppProps) {
-  const [isLargerThan480] = useMediaQuery("(min-width: 480px)");
+
+  const [isLarger] = useMediaQuery('(min-width: 480px)')
   const [isDragging, setIsDragging] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [scope, animate] = useAnimate();
+  const [scope,animate]=useAnimate()
   const controls = useDragControls();
   const dragX = useMotionValue(0);
 
+  console.log("isLarger",isLarger)
   const handleDragStart = (e: React.PointerEvent<HTMLDivElement>) => {
     setIsDragging(true);
+    if(!isLarger)
     controls.start(e);
   };
   useEffect(() => {
-    if (isLargerThan480) {
-      setIsOpen(true);
-      return;
+    if (!isDragging) {
+      console.log("TRIGER");
+      const timeout = setTimeout(() => {
+        console.log("TIMEOUT");
+        setIsOpen(false);
+        animate(scope.current,{...sidebarVariants.closed},{...sidebarVariants.closed.transition})
+      }, 1000);
+
+      return () => clearTimeout(timeout);
     }
-    if (isDragging) return;
-    const timeout = setTimeout(() => {
-      setIsOpen(false);
-      animate(
-        scope.current,
-        { ...sidebarVariants.closed },
-        { ...sidebarVariants.closed.transition }
-      );
-    }, 1000);
-
-    return () => clearTimeout(timeout);
-  }, [isDragging, isOpen, isLargerThan480]);
-
+  }, [isDragging, isOpen]);
   return (
     <WagmiConfig config={wagmiConfig}>
       <SessionProvider refetchInterval={0} session={pageProps.session}>
@@ -115,19 +108,18 @@ function MyApp({ Component, pageProps }: AppProps) {
               <AppProvider>
                 <motion.div
                   className="fixed top-0 left-0 right-0 bottom-0 flex flex-row bg-[url('/background.jpg')] bg-cover overflow-hidden"
-                  onPointerDown={(e) => {
-                    if (isLargerThan480) handleDragStart(e);
-                  }}
+                  onPointerDown={(e) => handleDragStart(e)}
                   onTouchEnd={() => {
+                    
                     setIsDragging(false);
                   }}
                 >
                   <motion.div
-                    ref={scope}
-                    className="fixed h-full min-w-[3vw]"
+                  ref={scope}
+                    className="fixed h-full"
                     dragControls={controls}
                     dragElastic={1}
-                    drag={isLargerThan480 ? undefined : "x"}
+                    drag="x"
                     dragConstraints={{ left: isOpen ? -200 : 0, right: 0 }}
                     animate={isOpen ? "open" : "closed"}
                     variants={sidebarVariants}

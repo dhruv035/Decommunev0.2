@@ -58,7 +58,7 @@ const Sidebar=()=> {
   return (
     
       
-      <div className=" flex flex-col py-6 px-2 sm:px-4 bg-black h-full min-w-[3vw] items-center">
+      <div className=" flex flex-col py-6 px-2 sm:px-4 bg-black h-full items-center">
         <Image
           className="hover:cursor-pointer"
           onClick={() => router.push("/")}
