@@ -45,11 +45,11 @@ export default function WalletButton() {
                       <Icon
                         className="hover:cursor-pointer"
                         as={RiWallet3Line}
-                        boxSize={[8,10,14]}
+                        boxSize={[6,10,14]}
                         borderRadius="50%"
                         color="red.400"
                         backgroundColor="gray.800"
-                        padding={2}
+                        padding={[1,1,2]}
                         onClick={() => openConnectModal()}
                       />
                     </span>
@@ -64,11 +64,11 @@ export default function WalletButton() {
                       <Icon
                         className="hover:cursor-pointer"
                         as={GiTerror}
-                        boxSize={[8,10,14]}
+                        boxSize={[6,10,14]}
                         borderRadius="full"
                         color="red.400"
                         backgroundColor="gray.800"
-                        padding={2}
+                        padding={[1,1,2]}
                         onClick={() => openChainModal()}
                       />
                     </span>
@@ -83,9 +83,9 @@ export default function WalletButton() {
                       <Icon
                         className="hover:cursor-pointer"
                         as={RiWallet3Line}
-                        boxSize={[8,10,14]}
+                        boxSize={[6,10,14]}
                         color="teal.400"
-                        padding={2}
+                        padding={[1,1,2]}
                         rounded="full"
                         onClick={() => openAccountModal()}
                       />
@@ -98,12 +98,12 @@ export default function WalletButton() {
                     <Image
                       alt={chain.name ?? "Chain icon"}
                       src={chain.iconUrl}
-                      boxSize={[8,10,14]}
+                      boxSize={[6,10,14]}
                       _hover={{cursor:"pointer"}}
                       backgroundColor="gray.800"
                       onClick={openChainModal}
                       rounded="full"
-                      padding={2}
+                      padding={[1,1,2]}
                     />
                     </Tooltip>
                   )}

@@ -119,11 +119,11 @@ function MyApp({ Component, pageProps }: AppProps) {
                   }}
                 >
                   
-                  <div ref={containerRef} className="fixed flex flex-row-reverse inset-x-[-8vw]  h-full w-[16vw]">
+                  <div ref={containerRef} className="fixed flex flex-row-reverse inset-x-[-10vw]  h-full w-[20vw]">
                   <motion.div
                  
                   ref={scope}
-                    className="relative h-full w-[8vw]"
+                    className="relative h-full w-[10vw]"
                     dragConstraints={containerRef}
                     variants={isLargerThan768?undefined:sidebarVariants}
                   >

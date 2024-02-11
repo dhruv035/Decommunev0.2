@@ -55,14 +55,14 @@ const Sidebar = () => {
   return (
     <div className=" flex flex-col py-6 px-2 sm:px-4 bg-black h-full w-[100%] items-center">
       <IconButton
-        boxSize={[8, 10, 14]}
         aria-label=""
         bg={"transparent"}
+        rounded="full"
         
         icon={
           <Image
-            rounded="full"
-            className="hover:cursor-pointer"
+            p={0}
+            rounded='full'
             src={Logo.src}
           />
         }
@@ -77,9 +77,9 @@ const Sidebar = () => {
             <Tooltip label="My Network">
               <span>
                 <Icon
-                  className={"hover:cursor-pointer rounded-full p-2"}
+                  className={"hover:cursor-pointer rounded-full p-1 md:p-2"}
                   as={FaPeopleGroup}
-                  boxSize={[8, 10, 14]}
+                  boxSize={[6, 10, 14]}
                   color={!session ? "red.400" : "teal.400"}
                   backgroundColor="gray.800"
                   onClick={() => {
@@ -93,9 +93,9 @@ const Sidebar = () => {
             <Tooltip label="Create a Membership NFT">
               <span>
                 <Icon
-                  className="hover:cursor-pointer rounded-full p-2"
+                  className="hover:cursor-pointer rounded-full p-1 md:p-2"
                   as={MdGroupAdd}
-                  boxSize={[8, 10, 14]}
+                  boxSize={[6, 10, 14]}
                   color={!session ? "red.400" : "teal.400"}
                   backgroundColor="gray.800"
                   onClick={() => {
@@ -107,9 +107,9 @@ const Sidebar = () => {
           </li>
           <li>
             <Icon
-              className="hover:cursor-pointer rounded-full p-2"
+              className="hover:cursor-pointer rounded-full p-1 md:gip-2"
               as={MdGroupAdd}
-              boxSize={[8, 10, 14]}
+              boxSize={[6, 10, 14]}
               color={!session ? "red.400" : "teal.400"}
               backgroundColor="gray.800"
               onClick={() => {}}
