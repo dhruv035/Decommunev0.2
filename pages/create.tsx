@@ -58,7 +58,6 @@ const Create:NextPage = () => {
       if (!address) return;
       if (!process.env.NEXT_PUBLIC_BASE_URL) return;
 
-      console.log("ABC");
       setIsTxDisabled(true);
       let hash;
       try {
@@ -96,7 +95,6 @@ const Create:NextPage = () => {
           duration: 5000,
         });
       } catch (error: any) {
-        console.log("ERR", error);
         const firstLine = error.message.split(".")[0];
         toast({
           position: "top-right",

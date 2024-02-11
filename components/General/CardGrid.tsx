@@ -151,7 +151,6 @@ const CardGrid: NextPage<CardGridProps> = ({
     getMembershipData();
   }, [memberships, isFilter, address, pendingTx]);
 
-  console.log("M", membershipData);
   return (
     <div className="p-5">
       <SimpleGrid

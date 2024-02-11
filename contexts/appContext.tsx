@@ -55,7 +55,6 @@ const AppProvider: NextPage<{ children: ReactNode }> = ({ children }) => {
       localStorage.setItem("pendingTx", "");
     },
     onError: (error: any) => {
-      console.log("ERR", error);
       const firstLine = error.message.split(".")[0];
       toast({
         position: "top-right",
@@ -96,7 +95,6 @@ const AppProvider: NextPage<{ children: ReactNode }> = ({ children }) => {
       } else setIsTxDisabled(false);
     }
   }, [pendingTx]);
-  console.log("PendingTx");
   return (
     <AppContext.Provider
       value={{
