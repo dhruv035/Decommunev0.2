@@ -170,7 +170,7 @@ const Create: NextPage = () => {
                 value={metaFormik.values.image}
               ></Input>
             </FormControl>
-            <FormLabel alignSelf="start" fontSize={[12, 16, 20]}>
+            <FormLabel alignSelf="start" fontSize={[18, 22, 26]}>
               Add some trending tags!
             </FormLabel>
             <div className="flex w-full">
