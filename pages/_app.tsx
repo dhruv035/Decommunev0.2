@@ -75,14 +75,16 @@ const sideBarTransition = {
    duration: 0.5 
 }
 function MyApp({ Component, pageProps }: AppProps) {
-  const [isLargerThan768]= useMediaQuery(`(min-width:768px)`)
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const [scope,animate]=useAnimate()
   
   const containerRef=useRef<HTMLDivElement|null>(null)
   const closeSideBar=()=>{
-    setIsOpen(false);
-    //animate(scope.current,{...sidebarVariants.closed},{...sideBarTransition})
+  
+    
+      setIsOpen(false);
+      animate(scope.current,{...sidebarVariants.closed},{...sideBarTransition})
+    
     
   }
   const openSideBar=()=>{
@@ -92,6 +94,9 @@ function MyApp({ Component, pageProps }: AppProps) {
    
   }
 
+  useEffect(()=>{
+    setTimeout(closeSideBar,2000)
+  },[])
   console.log("isOpen",isOpen)
   return (
     <WagmiConfig config={wagmiConfig}>
@@ -119,18 +124,18 @@ function MyApp({ Component, pageProps }: AppProps) {
                   }}
                 >
                   
-                  <div ref={containerRef} className="fixed flex flex-row-reverse inset-x-[-10vw] h-full w-[20vw] max-w-[140px]">
+                  <div ref={containerRef} className="fixed flex flex-row-reverse h-full inset-x-[-10vw] md:inset-x-[-76.8px] w-[20vw] md:w-[153.6px]">
                   <motion.div
                  
                   ref={scope}
-                    className="relative h-full w-[10vw] max-w-[70px]"
+                    className="relative h-full w-[10vw] md:w-[76.8px]"
                     dragConstraints={containerRef}
-                    variants={isLargerThan768?undefined:sidebarVariants}
+                    variants={sidebarVariants}
                   >
                     <Sidebar />
                   </motion.div>
                   </div>
-                  <div className=" pl-[6vw] scrollbar-hidden flex overflow-y-auto w-full">
+                  <div className=" pl-[3vw] scrollbar-hidden flex overflow-y-auto w-full">
                     <Component {...pageProps} />
                   </div>
                 </motion.div>
