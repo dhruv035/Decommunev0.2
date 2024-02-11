@@ -119,23 +119,25 @@ const MarketCard = ({
   };
   return (
     <Card
-      maxW="sm"
       backgroundColor="rgb(0, 0, 0,0.7)"
       paddingX={[2, 3, 4]}
-      paddingY={[6, 8]}
+      paddingBottom={[6, 8]}
       textColor="teal.400"
       rounded={26}
     >
       <CardBody className="flex flex-col py-6 px-4">
+        <Flex display='flex' minH={"100px"} alignItems="center" justifyContent='center'>
         <Heading
           fontWeight="bold"
           textAlign="center"
           noOfLines={2}
-          minH={"120px"}
+          height={'fit-content'}
           fontSize={["9vw", "4xl"]}
+          lineHeight={1.2}
         >
           {membership.contractData[4]}
         </Heading>
+        </Flex>
         <div className="flex flex-wrap w-[100%] aspect-square overflow-clip rounded-full self-center justify-center">
           <Image
             loading="lazy"

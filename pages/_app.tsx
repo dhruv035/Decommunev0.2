@@ -15,7 +15,6 @@ import {
   ChakraBaseProvider,
   extendBaseTheme,
   theme as chakraTheme,
-  useMediaQuery,
 } from "@chakra-ui/react";
 
 import AppProvider from "../contexts/appContext";
@@ -71,18 +70,16 @@ const sidebarVariants = {
   closed: { x: "-100%", transition: { delay: 0.5, duration: 0.8 } },
 };
 function MyApp({ Component, pageProps }: AppProps) {
-
-  const [isLarger] = useMediaQuery('(min-width: 480px)')
   const [isDragging, setIsDragging] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isDraggable,setIsDraggable] = useState(true)
   const [scope,animate]=useAnimate()
   const controls = useDragControls();
   const dragX = useMotionValue(0);
 
-  console.log("isLarger",isLarger)
   const handleDragStart = (e: React.PointerEvent<HTMLDivElement>) => {
     setIsDragging(true);
-    if(!isLarger)
+    if(isDraggable)
     controls.start(e);
   };
   useEffect(() => {
@@ -91,7 +88,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       const timeout = setTimeout(() => {
         console.log("TIMEOUT");
         setIsOpen(false);
-        animate(scope.current,{...sidebarVariants.closed},{...sidebarVariants.closed.transition})
+        animate(scope.current,{...sidebarVariants.closed},{...sidebarVariants})
       }, 1000);
 
       return () => clearTimeout(timeout);
@@ -115,18 +112,21 @@ function MyApp({ Component, pageProps }: AppProps) {
                   }}
                 >
                   <motion.div
+                 
                   ref={scope}
-                    className="fixed h-full"
+                    className="fixed h-full min-w-[3vw]"
                     dragControls={controls}
                     dragElastic={1}
-                    drag="x"
+                    drag={isDraggable?"x":undefined}
+                    onPointerEnter={()=>setIsDraggable(false)}
+                    onPointerLeave={()=>setIsDraggable(true)}
                     dragConstraints={{ left: isOpen ? -200 : 0, right: 0 }}
                     animate={isOpen ? "open" : "closed"}
                     variants={sidebarVariants}
                   >
                     <Sidebar />
                   </motion.div>
-                  <div className=" pl-[20vw] md:pl-[10vw] scrollbar-hidden flex overflow-y-auto w-full">
+                  <div className=" pl-[6vw] scrollbar-hidden flex overflow-y-auto w-full">
                     <Component {...pageProps} />
                   </div>
                 </motion.div>

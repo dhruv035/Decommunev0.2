@@ -6,7 +6,6 @@ import { useAccount } from "wagmi";
 import { NFT } from "../../abi";
 import MarketCard from "./MarketCard";
 
-
 /*
   This component takes a list of memberships on the contract and extracts necessary 
   data to pass onto card component Renders a grid of cards.
@@ -23,19 +22,16 @@ const CardGrid: NextPage<CardGridProps> = ({
   isFilter,
   pendingTx,
 }) => {
-
   const { address } = useAccount();
   const [membershipData, setMembershipData] = useState<any[]>([]);
 
-  
   const getMembershipData = useCallback(async () => {
-
     //TODO:Fetch only balances first and perform filter before fetching the rest of the contract data.
 
     //Concurrently fetch membership data from all contracts.
-    const contracts = await Promise.all(      
+    const contracts = await Promise.all(
       memberships.map(async (membership) => {
-        const balance = async () => {       
+        const balance = async () => {
           let data;
 
           //This fetch may revert sometimes and therefore must be error handled
@@ -89,8 +85,8 @@ const CardGrid: NextPage<CardGridProps> = ({
         };
 
         //Return a Promise.all with each data operation to run data fetch concurrently as a Promise for each membership
-          
-        return Promise.all([      
+
+        return Promise.all([
           balance(),
           currentPrice,
           baseURI,
@@ -100,16 +96,16 @@ const CardGrid: NextPage<CardGridProps> = ({
           tokenURI(),
         ]);
       })
-    ).then((res) => { 
+    ).then((res) => {
       //The isFilter will trigger filter to leave only owned memberships
-      if (isFilter) 
+      if (isFilter)
         return res.filter((element) => {
           return Number(element[0]) > 0;
         });
       else return res;
     });
 
-    const metaDatas = await Promise.all(  
+    const metaDatas = await Promise.all(
       //Concurrently fetch metadata from database using baseURI from the contract
       contracts.map(async (contract) => {
         try {
@@ -135,7 +131,7 @@ const CardGrid: NextPage<CardGridProps> = ({
       })
       .then((res) => {
         //Compose all the collected data from contracts and database and set in the membershipData state
-        return res.map((element, index) => { 
+        return res.map((element, index) => {
           const data = contracts[index];
 
           return {
@@ -147,24 +143,30 @@ const CardGrid: NextPage<CardGridProps> = ({
     setMembershipData(metaDatas);
   }, [memberships, isFilter, address]);
 
-  useEffect(() => { 
+  useEffect(() => {
     getMembershipData();
   }, [memberships, isFilter, address, pendingTx]);
 
   return (
     <div className="p-5">
       <SimpleGrid
+        placeItems="center"
         columns={[1, null, 2, null, 3]}
         spacing="4vw"
         alignItems="center"
       >
-        {membershipData.slice(0).reverse().map((membership, index) => {
-          return (
-            <div key={index}>
-              <MarketCard membership={membership} owned={isFilter} />
-            </div>
-          );
-        })}
+        {membershipData
+          .slice(0)
+          .reverse()
+          .map((membership, index) => {
+            return (
+              <MarketCard
+                key={index}
+                membership={membership}
+                owned={isFilter}
+              />
+            );
+          })}
       </SimpleGrid>
     </div>
   );
