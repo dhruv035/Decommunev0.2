@@ -18,4 +18,4 @@ yarn dev
 ```
 
 ## Deployments
-Master branch is deployed at [master](https://https://coinvise-front.vercel.app) and the feature/postSubmit branch is deployed at [feature/postSubmit](https://coinvise-front-git-feature-postsubmit-dhruv035.vercel.app?_vercel_share=veGR0yBWi8BkerwtTfKeb2STGGB1KsLc)
+Master branch is deployed at [master](https://https://coinvise-front.vercel.app) and the feature/postSubmit branch is deployed at [feature/postSubmit](https://coinvise-front-git-feature-postsubmit-dhruv035.vercel.app)
