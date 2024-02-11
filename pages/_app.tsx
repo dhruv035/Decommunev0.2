@@ -109,7 +109,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               <AppProvider>
                 <motion.div
                 style={{touchAction:"none"}}
-                  className="fixed top-0 left-0 right-0 bottom-0 flex flex-row bg-[url('/background.jpg')] bg-cover overflow-hidden"
+                  className="fixed top-0 left-0 right-0 bottom-0 flex flex-row bg-[url('/backgroundNew.jpeg')] bg-cover overflow-hidden"
                   onPanStart={(e,pointInfo)=>{
                     if(pointInfo.offset.x>0)
                     openSideBar();

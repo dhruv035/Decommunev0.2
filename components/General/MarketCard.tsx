@@ -127,11 +127,11 @@ const MarketCard = ({
       rounded={26}
     >
       <CardBody className="flex flex-col py-6 px-4">
-        <Flex display='flex' minH={"100px"} alignItems="center" justifyContent='center'>
+        <Flex display='flex' minH={[null,null,"100px"]} marginBottom={[3,3,null]} alignItems="center" justifyContent='center'>
         <Heading
           fontWeight="bold"
           textAlign="center"
-          noOfLines={2}
+          noOfLines={[0,2]}
           height={'fit-content'}
           fontSize={["9vw", "4xl"]}
           lineHeight={1.2}
@@ -159,12 +159,9 @@ const MarketCard = ({
           >
             ${membership.contractData[5]}
           </Heading>
-          <FormLabel color="green.200" fontSize={["md", null, "3xl"]}>
-            Description
-          </FormLabel>
-          <Text noOfLines={3} minH={20} overflowY={"auto"}>
-            {membership?.metaData?.desc ??
-              "NAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaaNAaa"}
+          <Text textAlign={'justify'} noOfLines={3} minH={30} overflowY={"auto"}>
+            {membership?.metaData?.desc ??"This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image "
+              }
           </Text>
           <Text
             color="green.200"
@@ -182,7 +179,7 @@ const MarketCard = ({
             <Button
               width="full"
               rounded="full"
-              variant="solid"
+              variant="outline"
               colorScheme={"whatsapp"}
               onClick={() => {
                 handleBuy();

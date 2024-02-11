@@ -16,6 +16,10 @@ import { parseEther } from "viem";
 import { NextPage } from "next";
 import TagInput from "../components/TagInput";
 
+
+
+const FormClasses=""
+
 const Create:NextPage = () => {
 
 
@@ -120,11 +124,12 @@ const Create:NextPage = () => {
       </div>
 
       {!step ? (
+        <div className="h-full w-[80%] max-w-[600px]">
         <form
           onKeyDown={(e) => {
             if (e.key === "Enter") e.preventDefault(); //Make the enter key work for the filter box only
           }}
-          className="mt-10 flex flex-col p-4 py-10 w-4/5 bg-candy min-h-[20vh] max-w-[500px] rounded-[40px] space-y-4"
+          className="my-10 flex flex-col pl-8 py-10 bg-[rgba(0,0,0,0.6)] items-center text-white min-h-[20vh] rounded-[40px] space-y-4"
           onSubmit={metaFormik.handleSubmit}
         >
           <FormControl isRequired>
@@ -135,9 +140,13 @@ const Create:NextPage = () => {
               id="collectionName"
               name="collectionName"
               type="string"
-              backgroundColor="yellow.400"
-              onChange={metaFormik.handleChange}
+              variant='outline'
+              placeholder="Enter Collection Name..."
+              backgroundColor="transparent"
+              opacity={0.8}
               maxWidth={"400px"}
+              onChange={metaFormik.handleChange}
+             
               value={metaFormik.values.collectionName}
             ></Input>
           </FormControl>
@@ -148,9 +157,10 @@ const Create:NextPage = () => {
             <Textarea
               id="desc"
               name="desc"
-              backgroundColor="yellow.400"
               onChange={metaFormik.handleChange}
               maxWidth={"400px"}
+              backgroundColor="transparent"
+              opacity={0.8}
               value={metaFormik.values.desc}
             ></Textarea>
           </FormControl>
@@ -162,15 +172,19 @@ const Create:NextPage = () => {
               id="image"
               name="image"
               type="string"
-              backgroundColor="yellow.400"
+              backgroundColor="transparent"
+              opacity={0.8}
               onChange={metaFormik.handleChange}
               maxWidth={"400px"}
               value={metaFormik.values.image}
             ></Input>
           </FormControl>
+          <div className="flex self-start max-w-[400px]">
           <TagInput tags={tags} setTags={setTags} placeholder={"Add a Tag"} />
+          </div>
           <Button type="submit">Proceed</Button>
         </form>
+        </div>
       ) : (
         <form
           className="mt-10 flex flex-col p-4 py-10 w-4/5 bg-candy min-h-[20vh] max-w-[500px] rounded-[40px] space-y-4"
