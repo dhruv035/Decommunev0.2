@@ -7,6 +7,7 @@ import {
   IconButton,
   Input,
   Textarea,
+  useMediaQuery,
   useToast,
 } from "@chakra-ui/react";
 import { useContext, useState } from "react";
@@ -24,6 +25,7 @@ const Create: NextPage = () => {
 
   const [step, setStep] = useState<boolean>(false);
   const [tags, setTags] = useState<string[]>([]);
+  const [isHover] = useMediaQuery(`(hover:hover)`);
   const { address } = useAccount();
 
   const { setPendingTx, isTxDisabled, setIsTxDisabled } = useContext(
@@ -182,11 +184,21 @@ const Create: NextPage = () => {
             </div>
             <Button
               variant="outline"
-              _hover={{
-                borderColor: "rgb(220,190,50,1)",
-                color: "rgb(220,190,50,1)",
+              _hover={
+                !isHover
+                  ? {}
+                  : {
+                      borderColor: "white",
+                      backgroundColor:"teal.800",
+                      color: "white",
+                    }
+              }
+              _active={{
+                borderColor: "white",
+                backgroundColor:"teal.800",
+                color: "white",
               }}
-              colorScheme="whatsapp"
+              color="white"
               rounded="full"
               w="full"
               type="submit"
@@ -199,25 +211,26 @@ const Create: NextPage = () => {
             className="relative my-10 flex flex-col px-6 pb-10 bg-[rgba(0,0,0,0.6)] items-center text-white min-h-[600px] rounded-[40px] space-y-14"
             onSubmit={formik.handleSubmit}
           >
-             <IconButton
+            <IconButton
               icon={<IoIosArrowBack />}
               aria-label={""}
               backgroundColor="transparent"
               color="white"
               _hover={{
-                backgroundColor:"transparent",
-                color:"red.400"
+                backgroundColor: "transparent",
+                color: "red.400",
               }}
-              position={'absolute'}
+              position={"absolute"}
               top={6}
               left={4}
-              fontSize={[16,24,32]}
+              fontSize={[16, 24, 32]}
               onClick={() => setStep(false)}
             />
-          
-           
-              <Heading mt={0} fontSize={[20, 26, 34]}>Token Details</Heading>
-   
+
+            <Heading mt={0} fontSize={[20, 26, 34]}>
+              Token Details
+            </Heading>
+
             <FormControl isRequired>
               <FormLabel fontSize={[12, 18]} fontWeight={"bold"}>
                 Token Name
@@ -280,11 +293,21 @@ const Create: NextPage = () => {
             </div>
             <Button
               variant="outline"
-              _hover={{
-                borderColor: "rgb(220,190,50,1)",
-                color: "rgb(220,190,50,1)",
+              _hover={
+                !isHover
+                  ? {}
+                  : {
+                      borderColor: "white",
+                      backgroundColor:"teal.800",
+                      color: "white",
+                    }
+              }
+              _active={{
+                borderColor: "white",
+                backgroundColor:"teal.800",
+                color: "white",
               }}
-              colorScheme="whatsapp"
+              color="white"
               rounded="full"
               w="full"
               type="submit"

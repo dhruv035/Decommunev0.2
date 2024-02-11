@@ -29,6 +29,11 @@ const TagBox: NextPage<TagBoxProps> = ({ tags, removeTag }) => {
                     color: "white",
                   }
             }
+            _active={{
+                    cursor: "pointer",
+                    backgroundColor: "red.400",
+                    color: "white",
+                  }}
             key={index}
           >
             {element}

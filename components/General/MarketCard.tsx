@@ -13,6 +13,7 @@ import {
   FormLabel,
   Box,
   Flex,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import { useAccount, useContractReads, useContractWrite } from "wagmi";
 import { NFT } from "../../abi";
@@ -31,6 +32,8 @@ const MarketCard = ({
   owned?: boolean;
 }) => {
   const toast = useToast();
+
+  const [isHover] = useMediaQuery(`(hover:hover)`);
   const [imageError, setImageError] = useState(false);
   const { setPendingTx, isTxDisabled, setIsTxDisabled } = useContext(
     AppContext
@@ -127,17 +130,23 @@ const MarketCard = ({
       rounded={26}
     >
       <CardBody className="flex flex-col py-6 px-4">
-        <Flex display='flex' minH={[null,null,"100px"]} marginBottom={[3,3,null]} alignItems="center" justifyContent='center'>
-        <Heading
-          fontWeight="bold"
-          textAlign="center"
-          noOfLines={[0,2]}
-          height={'fit-content'}
-          fontSize={["9vw", "4xl"]}
-          lineHeight={1.2}
+        <Flex
+          display="flex"
+          minH={[null, null, "100px"]}
+          marginBottom={[3, 3, null]}
+          alignItems="center"
+          justifyContent="center"
         >
-          {membership.contractData[4]}
-        </Heading>
+          <Heading
+            fontWeight="bold"
+            textAlign="center"
+            noOfLines={[0, 2]}
+            height={"fit-content"}
+            fontSize={["9vw", "4xl"]}
+            lineHeight={1.2}
+          >
+            {membership.contractData[4]}
+          </Heading>
         </Flex>
         <div className="flex flex-wrap w-[100%] aspect-square overflow-clip rounded-full self-center justify-center">
           <Image
@@ -159,9 +168,14 @@ const MarketCard = ({
           >
             ${membership.contractData[5]}
           </Heading>
-          <Text textAlign={'justify'} noOfLines={3} minH={24} overflowY={"auto"}>
-            {membership?.metaData?.desc ??"This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image "
-              }
+          <Text
+            textAlign={"justify"}
+            noOfLines={3}
+            minH={24}
+            overflowY={"auto"}
+          >
+            {membership?.metaData?.desc ??
+              "This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image "}
           </Text>
           <Text
             color="green.200"
@@ -180,7 +194,22 @@ const MarketCard = ({
               width="full"
               rounded="full"
               variant="outline"
-              colorScheme={"whatsapp"}
+              _hover={
+                !isHover
+                  ? {}
+                  : {
+                      cursor: "pointer",
+                      backgroundColor: "teal.400",
+                      color: "white",
+                    }
+              }
+              _active={ {
+                cursor: "pointer",
+                backgroundColor: "teal.400",
+                color: "white",
+              }}
+              color="white"
+              backgroundColor="rgb(120,100,120,0.08)"
               onClick={() => {
                 handleBuy();
               }}
