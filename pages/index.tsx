@@ -14,7 +14,9 @@ const Home: NextPage = () => {
         <div className="text-transparent font-kenia bg-clip-text bg-pinkFlavor text-[44px] sm:text-[52px] text-center md:text-[60px] font-bold">
           DeCommune
         </div>
+        <div className=" w-[50vw] max-w-[700px]">
         <TagInput tags={tags} setTags={setTags} onSearch={()=>{console.log("TRIGGERED")}}/>
+        </div>
       </div>
       <CardGrid memberships={memberships} isFilter={false} pendingTx={pendingTx} />
     </div>

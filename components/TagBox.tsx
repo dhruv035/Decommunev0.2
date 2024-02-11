@@ -1,6 +1,6 @@
 import { Box, Icon, SimpleGrid } from "@chakra-ui/react";
 import { NextPage } from "next";
-import { IoMdCloseCircleOutline } from "react-icons/io";
+import { IoClose } from "react-icons/io5";
 
 //Simple box for maintaining a list of tags from an input.
 //The selected tags are listed with an remove button
@@ -10,11 +10,11 @@ type TagBoxProps = {
 };
 const TagBox: NextPage<TagBoxProps> = ({ tags, removeTag }) => {
   return (
-    <div className="w-[80%] justify-center flex flex-row text-black flex-wrap spacing-x-2">
+    <div className="justify-center flex flex-row text-black flex-wrap spacing-x-2 w-auto">
       {tags.map((element: string, index: number) => {
         return (
           <Box
-            className="flex flex-row border-[1px] mx-2 my-[2px] pl-2 bg-teal-500 rounded-full border-0 items-center"
+            className="flex flex-row border-[1px] mx-2 my-[0.8vh] pl-2 bg-gray-400 opacity-90 rounded-full border-0 items-center"
             onClick={() => {
               removeTag(index);
             }}
@@ -30,7 +30,7 @@ const TagBox: NextPage<TagBoxProps> = ({ tags, removeTag }) => {
               boxSize={4}
               m={1}
               aria-label={"Button" + index}
-              as={IoMdCloseCircleOutline}
+              as={IoClose}
             />
           </Box>
         );

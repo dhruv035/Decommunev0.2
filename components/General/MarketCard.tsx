@@ -159,7 +159,7 @@ const MarketCard = ({
           >
             ${membership.contractData[5]}
           </Heading>
-          <Text textAlign={'justify'} noOfLines={3} minH={30} overflowY={"auto"}>
+          <Text textAlign={'justify'} noOfLines={3} minH={24} overflowY={"auto"}>
             {membership?.metaData?.desc ??"This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image "
               }
           </Text>

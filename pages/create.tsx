@@ -3,6 +3,8 @@ import {
   Checkbox,
   FormControl,
   FormLabel,
+  Heading,
+  IconButton,
   Input,
   Textarea,
   useToast,
@@ -15,25 +17,19 @@ import { useFormik } from "formik";
 import { parseEther } from "viem";
 import { NextPage } from "next";
 import TagInput from "../components/TagInput";
+import { IoIosArrowBack } from "react-icons/io";
 
-
-
-const FormClasses=""
-
-const Create:NextPage = () => {
-
-
+const Create: NextPage = () => {
   const toast = useToast();
-  
+
   const [step, setStep] = useState<boolean>(false);
   const [tags, setTags] = useState<string[]>([]);
   const { address } = useAccount();
-  
-  
+
   const { setPendingTx, isTxDisabled, setIsTxDisabled } = useContext(
     AppContext
   ) as AppContextType;
-  
+
   const { writeAsync: deployNFT } = useContractWrite({
     address: process.env.NEXT_PUBLIC_FACTORY_ADDRESS as `0x${string}`,
     abi: Factory,
@@ -65,14 +61,12 @@ const Create:NextPage = () => {
       setIsTxDisabled(true);
       let hash;
       try {
-
         //Create database entry for metadata.
         //BUG:Sometimes the data will be uploaded and transaction will fail
         //TODO:Reuse previously uploaded collections for metadata in case of transaction reverts, handle uploaded metadata collections more elegantly
-        
-        
-        const res = await fetch(  
-          process.env.NEXT_PUBLIC_BASE_URL + "/collection", 
+
+        const res = await fetch(
+          process.env.NEXT_PUBLIC_BASE_URL + "/collection",
           {
             method: "POST",
             body: JSON.stringify(metaFormik.values),
@@ -123,132 +117,179 @@ const Create:NextPage = () => {
         Create a New Membership
       </div>
 
-      {!step ? (
-        <div className="h-full w-[80%] max-w-[600px]">
-        <form
-          onKeyDown={(e) => {
-            if (e.key === "Enter") e.preventDefault(); //Make the enter key work for the filter box only
-          }}
-          className="my-10 flex flex-col pl-8 py-10 bg-[rgba(0,0,0,0.6)] items-center text-white min-h-[20vh] rounded-[40px] space-y-4"
-          onSubmit={metaFormik.handleSubmit}
-        >
-          <FormControl isRequired>
-            <FormLabel fontSize={[12, 18]} fontWeight={"bold"}>
-              Collection Name
+      <div className="h-full w-[80%] max-w-[600px]">
+        {!step ? (
+          <form
+            onKeyDown={(e) => {
+              if (e.key === "Enter") e.preventDefault(); //Make the enter key work for the filter box only
+            }}
+            className="my-10 flex flex-col px-6 py-10 bg-[rgba(0,0,0,0.6)] items-center text-white min-h-[600px] rounded-[40px] space-y-14"
+            onSubmit={metaFormik.handleSubmit}
+          >
+            <FormLabel fontSize={[20, 26, 34]}>Welcome aboard!</FormLabel>
+            <FormControl isRequired>
+              <FormLabel>Collection Name</FormLabel>
+              <Input
+                mb={2}
+                id="collectionName"
+                name="collectionName"
+                type="string"
+                variant="flushed"
+                placeholder="My Super Awesome Collection..."
+                backgroundColor="transparent"
+                opacity={0.8}
+                onChange={metaFormik.handleChange}
+                value={metaFormik.values.collectionName}
+              ></Input>
+            </FormControl>
+            <FormControl isRequired>
+              <FormLabel>Description</FormLabel>
+              <Textarea
+                id="desc"
+                name="desc"
+                variant="ghost"
+                placeholder={"Give us the incredible details!"}
+                onChange={metaFormik.handleChange}
+                backgroundColor="rgb(0,0,5,0.45)"
+                opacity={0.8}
+                value={metaFormik.values.desc}
+              ></Textarea>
+            </FormControl>
+            <FormControl isRequired>
+              <FormLabel>ImageUrl</FormLabel>
+              <Input
+                mb={2}
+                id="image"
+                name="image"
+                type="string"
+                variant="flushed"
+                placeholder="https://picsum.photos/400/200"
+                backgroundColor="transparent"
+                opacity={0.8}
+                onChange={metaFormik.handleChange}
+                value={metaFormik.values.image}
+              ></Input>
+            </FormControl>
+            <FormLabel alignSelf="start" fontSize={[12, 16, 20]}>
+              Add some trending tags!
             </FormLabel>
-            <Input
-              id="collectionName"
-              name="collectionName"
-              type="string"
-              variant='outline'
-              placeholder="Enter Collection Name..."
+            <div className="flex w-full">
+              <TagInput
+                tags={tags}
+                setTags={setTags}
+                placeholder={"Add a Tag"}
+              />
+            </div>
+            <Button
+              variant="outline"
+              _hover={{
+                borderColor: "rgb(220,190,50,1)",
+                color: "rgb(220,190,50,1)",
+              }}
+              colorScheme="whatsapp"
+              rounded="full"
+              w="full"
+              type="submit"
+            >
+              Proceed
+            </Button>
+          </form>
+        ) : (
+          <form
+            className="relative my-10 flex flex-col px-6 py-6 bg-[rgba(0,0,0,0.6)] items-center text-white min-h-[600px] rounded-[40px] space-y-14"
+            onSubmit={formik.handleSubmit}
+          >
+             <IconButton
+              icon={<IoIosArrowBack />}
+              aria-label={""}
               backgroundColor="transparent"
-              opacity={0.8}
-              maxWidth={"400px"}
-              onChange={metaFormik.handleChange}
-             
-              value={metaFormik.values.collectionName}
-            ></Input>
-          </FormControl>
-          <FormControl isRequired>
-            <FormLabel fontSize={[12, 18]} fontWeight={"bold"}>
-              Description
-            </FormLabel>
-            <Textarea
-              id="desc"
-              name="desc"
-              onChange={metaFormik.handleChange}
-              maxWidth={"400px"}
-              backgroundColor="transparent"
-              opacity={0.8}
-              value={metaFormik.values.desc}
-            ></Textarea>
-          </FormControl>
-          <FormControl isRequired>
-            <FormLabel fontSize={[12, 18]} fontWeight={"bold"}>
-              Image URL
-            </FormLabel>
-            <Input
-              id="image"
-              name="image"
-              type="string"
-              backgroundColor="transparent"
-              opacity={0.8}
-              onChange={metaFormik.handleChange}
-              maxWidth={"400px"}
-              value={metaFormik.values.image}
-            ></Input>
-          </FormControl>
-          <div className="flex self-start max-w-[400px]">
-          <TagInput tags={tags} setTags={setTags} placeholder={"Add a Tag"} />
-          </div>
-          <Button type="submit">Proceed</Button>
-        </form>
-        </div>
-      ) : (
-        <form
-          className="mt-10 flex flex-col p-4 py-10 w-4/5 bg-candy min-h-[20vh] max-w-[500px] rounded-[40px] space-y-4"
-          onSubmit={formik.handleSubmit}
-        >
-          <FormControl isRequired>
-            <FormLabel fontSize={[12, 18]} fontWeight={"bold"}>
-              Token Name
-            </FormLabel>
-            <Input
-              id="name"
-              name="name"
-              type="string"
-              backgroundColor="yellow.400"
-              onChange={formik.handleChange}
-              maxWidth={"400px"}
-              value={formik.values.name}
-            ></Input>
-          </FormControl>
-          <FormControl isRequired>
-            <FormLabel fontSize={[12, 18]} fontWeight={"bold"}>
-              Token Symbol
-            </FormLabel>
-            <Input
-              id="symbol"
-              name="symbol"
-              type="string"
-              backgroundColor="yellow.400"
-              onChange={formik.handleChange}
-              maxWidth={"400px"}
-              value={formik.values.symbol}
-            ></Input>
-          </FormControl>
-          <FormControl isRequired>
-            <FormLabel fontSize={[12, 18]} fontWeight={"bold"}>
-              Price {"(in MATIC)"}
-            </FormLabel>
-            <Input
-              id="price"
-              name="price"
-              type="number"
-              backgroundColor="yellow.400"
-              onChange={formik.handleChange}
-              maxWidth={"400px"}
-              value={formik.values.price}
-            ></Input>
-          </FormControl>
-
-          <div className="flex flex-row">
-            <FormLabel fontSize={[12, 18]} fontWeight={"bold"} mb={0}>
-              Incremental Pricing:
-            </FormLabel>
-            <Checkbox
-              id="incremental"
-              name="incremental"
-              isChecked={formik.values.incremental}
-              onChange={formik.handleChange}
+              color="white"
+              position={'absolute'}
+              top={10}
+              left={10}
+              fontSize={[16,24,32]}
+              onClick={() => setStep(false)}
             />
-          </div>
-          <Button type="submit" isDisabled={isTxDisabled}>
-            Deploy
-          </Button>
-        </form>
-      )}
+          
+           
+              <Heading mt={0} fontSize={[20, 26, 34]}>Token Details</Heading>
+   
+            <FormControl isRequired>
+              <FormLabel fontSize={[12, 18]} fontWeight={"bold"}>
+                Token Name
+              </FormLabel>
+
+              <Input
+                id="name"
+                name="name"
+                type="string"
+                variant="flushed"
+                mb={4}
+                backgroundColor="transparent"
+                opacity={0.8}
+                onChange={formik.handleChange}
+                value={formik.values.name}
+              ></Input>
+            </FormControl>
+            <FormControl isRequired>
+              <FormLabel fontSize={[12, 18]} fontWeight={"bold"}>
+                Token Symbol
+              </FormLabel>
+              <Input
+                mb={4}
+                id="symbol"
+                name="symbol"
+                variant="flushed"
+                backgroundColor="transparent"
+                opacity={0.8}
+                onChange={formik.handleChange}
+                value={formik.values.symbol}
+              ></Input>
+            </FormControl>
+            <FormControl isRequired>
+              <FormLabel fontSize={[12, 18]} fontWeight={"bold"}>
+                Price {"(in MATIC)"}
+              </FormLabel>
+              <Input
+                mb={4}
+                id="price"
+                name="price"
+                type="number"
+                variant="flushed"
+                backgroundColor="transparent"
+                opacity={0.8}
+                onChange={formik.handleChange}
+                value={formik.values.price}
+              ></Input>
+            </FormControl>
+
+            <div className="flex flex-row mb-4 self-start">
+              <FormLabel fontSize={[12, 18]} fontWeight={"bold"} mb={0}>
+                Incremental Pricing:
+              </FormLabel>
+              <Checkbox
+                id="incremental"
+                name="incremental"
+                isChecked={formik.values.incremental}
+                onChange={formik.handleChange}
+              />
+            </div>
+            <Button
+              variant="outline"
+              _hover={{
+                borderColor: "rgb(220,190,50,1)",
+                color: "rgb(220,190,50,1)",
+              }}
+              colorScheme="whatsapp"
+              rounded="full"
+              w="full"
+              type="submit"
+            >
+              Deploy
+            </Button>
+          </form>
+        )}
+      </div>
     </div>
   );
 };

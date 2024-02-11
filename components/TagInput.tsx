@@ -55,17 +55,18 @@ const TagInput: NextPage<TagInputProps> = ({
     setTags([...copy]);
   };
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col w-full items-center">
       <TagBox tags={tags} removeTag={removeTag} />
-        <InputGroup height="full" alignContent="center" marginTop={4}>
+        <InputGroup height="full" maxWidth="400px" alignContent="center" marginTop={4}>
           <Input
             type="text"
             placeholder={placeholder??"Search"}
             value={query}
             color="white"
             rounded="full"
+            
             minHeight={"20px"}
-            bgColor={'rgba(0,0,0,0.6)'}
+            bgColor={'rgba(43,0,35,0.3)'}
             onChange={handleChange}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
