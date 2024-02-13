@@ -93,7 +93,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     if(!isOpen)
     return;
     {
-      console.log("ENTERED")
       setIsOpen(false);
       animate(
         scope.current,
@@ -155,15 +154,11 @@ function MyApp({ Component, pageProps }: AppProps) {
                   style={{ touchAction: "none" }}
                   className="fixed top-0 left-0 right-0 bottom-0 flex flex-row bg-[url('/backgroundNew.jpeg')] bg-cover overflow-hidden w-full"
                   onScroll={(e) => {
-                    console.log("E", e);
                   }}
                   onTouchStart={(e) => {
-                    //  console.log("E",e)
-                    console.log("E1", e);
                     setDeltaX(e.changedTouches[0].pageX);
                   }}
                   onTouchMove={(e) => {
-                    // console.log("E2",e)
                     //  return;
                     if (deltaX === 0) return;
 

@@ -15,7 +15,7 @@ const Home: NextPage = () => {
           DeCommune
         </div>
         <div className=" w-[50vw] max-w-[700px]">
-        <TagInput tags={tags} setTags={setTags} onSearch={()=>{console.log("TRIGGERED")}}/>
+        <TagInput tags={tags} setTags={setTags} onSearch={()=>{}}/>
         </div>
       </div>
       <CardGrid memberships={memberships} isFilter={false} />

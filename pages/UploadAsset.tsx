@@ -26,7 +26,6 @@ import { useDropzone } from "react-dropzone";
   const encryptData = async () => {
     if(!video)
     {
-        console.log("FAILED")
         return;}
 
     const key = await window.crypto.subtle.generateKey(
@@ -100,7 +99,6 @@ const encryptedKeyData = await window.crypto.subtle.encrypt(
 const encryptedKeyBase64 = btoa(
   String.fromCharCode(...new Uint8Array(encryptedKeyData)),
 );
-console.log("HEREUPLOADING",)
 const response = await fetch(
     "https://livepeer.studio/api/asset/request-upload",
     {

@@ -40,7 +40,6 @@ const BrowseCard = ({
   const toast = useToast();
 
   const [hasHover] = useMediaQuery(`(hover:hover)`);
-  console.log("HASHOVER",hasHover)
   const [imageError, setImageError] = useState(false);
   const [hover, setHover] = useState(false);
   const { setPendingTx, isTxDisabled, setIsTxDisabled } = useContext(
@@ -94,10 +93,12 @@ const BrowseCard = ({
   });
 
   const handleBuy = async () => {
+    console.log("A")
     //TODO: Add specific alerts for each of the missing data
     if (!address) return;
     if (!data || !data[1]) return;
     if (typeof data[1].result !== "bigint") return;
+    console.log("AB")
     setIsTxDisabled(true);
     let hash;
     try {
