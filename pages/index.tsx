@@ -6,7 +6,7 @@ import { AppContext, AppContextType } from "../contexts/appContext";
 import CardGrid from "../components/General/CardGrid";
 
 const Home: NextPage = () => {
-  const { memberships, pendingTx } = useContext(AppContext) as AppContextType;
+  const { memberships} = useContext(AppContext) as AppContextType;
   const [tags,setTags] = useState<string[]>([])
   return (
     <div className=" pt-6 flex flex-col w-full max-w-[92vw] bg-cover">
@@ -18,7 +18,7 @@ const Home: NextPage = () => {
         <TagInput tags={tags} setTags={setTags} onSearch={()=>{console.log("TRIGGERED")}}/>
         </div>
       </div>
-      <CardGrid memberships={memberships} isFilter={false} pendingTx={pendingTx} />
+      <CardGrid memberships={memberships} isFilter={false} />
     </div>
   );
 };

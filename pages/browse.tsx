@@ -1,7 +1,8 @@
 import { useContext, useState } from "react";
 import { AppContext, AppContextType } from "../contexts/appContext";
 import Search from "../components/TagInput";
-import CardGrid from "../components/General/CardGrid";
+
+import CardsRow from "../components/General/CardsRow";
 const Network = () => {
   const { memberships } = useContext(AppContext) as AppContextType;
   const [tags,setTags]= useState<string[]>([])
@@ -13,7 +14,7 @@ const Network = () => {
         </div>
         <Search tags={tags} setTags={setTags} />
       </div>
-      <CardGrid memberships={memberships} isFilter={true}/>
+      <CardsRow memberships={memberships} isFilter={false} />
     </div>
   );
 };

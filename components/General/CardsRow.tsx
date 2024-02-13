@@ -1,11 +1,12 @@
 import { SimpleGrid } from "@chakra-ui/react";
 import { readContract } from "@wagmi/core";
 import { NextPage } from "next";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 import { NFT } from "../../abi";
 import MarketCard from "./MarketCard";
-import { AppContext, AppContextType } from "../../contexts/appContext";
+import BrowseCard from "./BrowseCard";
+import { motion } from "framer-motion";
 
 /*
   This component takes a list of memberships on the contract and extracts necessary 
@@ -15,12 +16,17 @@ import { AppContext, AppContextType } from "../../contexts/appContext";
 type CardGridProps = {
   memberships: readonly `0x${string}`[];
   isFilter: boolean;
+  pendingTx?: string;
 };
 
-const CardGrid: NextPage<CardGridProps> = ({ memberships, isFilter }) => {
+const CardsRow: NextPage<CardGridProps> = ({
+  memberships,
+  isFilter,
+  pendingTx,
+}) => {
   const { address } = useAccount();
   const [membershipData, setMembershipData] = useState<any[]>([]);
-  const { pendingTx } = useContext(AppContext) as AppContextType;
+
   const getMembershipData = useCallback(async () => {
     //TODO:Fetch only balances first and perform filter before fetching the rest of the contract data.
 
@@ -143,29 +149,28 @@ const CardGrid: NextPage<CardGridProps> = ({ memberships, isFilter }) => {
     getMembershipData();
   }, [memberships, isFilter, address, pendingTx]);
 
-  return (
-    <div className="p-5">
-      <SimpleGrid
-        placeItems="center"
-        columns={[1, null, 2, null, 3]}
-        spacing="4vw"
-        alignItems="center"
-      >
+  return (  
+    <motion.div layout className="flex items-top h-full">
+    
+      <motion.div layout transition={{ type: "spring", bounce: 0.3, duration: 0.7 }} onPanStart={(e)=>{
+        e.preventDefault();
+        e.stopPropagation();
+      }} className="flex overflow-x-scroll z-[400] h-fit space-x-8 py-16 mt-20">
         {membershipData
           .slice(0)
           .reverse()
           .map((membership, index) => {
             return (
-              <MarketCard
+              <BrowseCard
                 key={index}
                 membership={membership}
                 owned={isFilter}
               />
             );
           })}
-      </SimpleGrid>
-    </div>
+      </motion.div>
+      </motion.div>
   );
 };
 
-export default CardGrid;
+export default CardsRow;
