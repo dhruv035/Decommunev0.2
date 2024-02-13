@@ -145,6 +145,18 @@ const BrowseCard = ({
         "min-w-[400px] bg-[rgba(0,0,0,0.7)] text-blue-400 rounded-xl relative h-fit hover:z-[400]"
       }
     >
+         <Heading
+         position={"absolute"}
+                textAlign="center"
+                color={"yellow.300"}
+                fontWeight="bold"
+                top={2}
+                left={2}
+                fontSize={["sm", "md", "xl"]}
+              >
+                ${membership.contractData[5]}
+              </Heading>
+              
       {hasHover===true &&
         (
         <div className="absolute right-12 top-2 aspect-square rounded-full">
@@ -263,15 +275,7 @@ const BrowseCard = ({
               >
                 {membership.contractData[4]}
               </Heading>
-              <Heading
-                textAlign="center"
-                color={"yellow.300"}
-                fontWeight="bold"
-                fontSize={["sm", "md", "xl"]}
-              >
-                ${membership.contractData[5]}
-              </Heading>
-              
+             
             </div>
             <div className="flex flex-col">
             <Text

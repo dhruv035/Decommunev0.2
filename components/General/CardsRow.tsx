@@ -152,7 +152,7 @@ const CardsRow: NextPage<CardGridProps> = ({
   return (
     <motion.div initial={false} onPanStart={(e) => {
       
-      }} layout className="flex items-top h-full overflow-x-scroll pb-60">
+      }} layout className="flex items-top h-full overflow-x-scroll pl-14 pb-60">
       <motion.div
         className="flex z-[10] hover:z-[400] h-[305px] space-x-8  mt-20"
         layout
