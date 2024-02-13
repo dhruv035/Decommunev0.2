@@ -147,7 +147,7 @@ const BrowseCard = ({
     >
       {hasHover===true &&
         (
-        <motion.div className="absolute right-12 top-2 aspect-square rounded-full">
+        <div className="absolute right-12 top-2 aspect-square rounded-full">
           {hover === true ? (
             <IconButton
               icon={<IoIosArrowUp />}
@@ -177,12 +177,10 @@ const BrowseCard = ({
               }}
             />
           )}
-        </motion.div>
+        </div>
         )
       }
-      <motion.div
-        layout
-        transition={{ type: "spring", duration: 0.7 }}
+      <div
         className="flex flex-col"
       >
         <motion.div
@@ -194,8 +192,7 @@ const BrowseCard = ({
             _before={{
               src: DC2.src,
             }}
-            width="full"
-            height="full"
+           
             src={
               !imageError
                 ? membership.metaData?.image
@@ -297,7 +294,7 @@ const BrowseCard = ({
             
           </motion.div>
         )}
-      </motion.div>
+      </div>
       <Divider />
     </motion.div>
   );

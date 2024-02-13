@@ -152,9 +152,9 @@ const CardsRow: NextPage<CardGridProps> = ({
   return (
     <motion.div initial={false} onPanStart={(e) => {
       
-      }} layout className="flex items-top h-full">
+      }} layout className="flex items-top h-full overflow-x-scroll pb-60">
       <motion.div
-        className="flex z-[10] hover:z-[400] h-[305px] overflow-y-visible space-x-8 p-10 mt-20"
+        className="flex z-[10] hover:z-[400] h-[305px] space-x-8  mt-20"
         layout
         
         transition={{ type: "spring", bounce: 0.3, duration: 0.7 }}

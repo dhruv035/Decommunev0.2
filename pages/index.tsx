@@ -14,11 +14,14 @@ const Network = () => {
         </div>
         <Search tags={tags} setTags={setTags} />
       </div>
-      <div className="space-y-4">
+    
+     <div className="overflow-x-hidden">
+      <div className="">
       <CardsRow memberships={memberships} isFilter={false} />
-      
       </div>
-      <CardsRow memberships={memberships} isFilter={false} />
+    <div className="mt-[-15rem]">
+      <CardsRow memberships={memberships} isFilter={false} /></div>
+    </div>
     </div>
   );
 };
