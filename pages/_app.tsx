@@ -90,31 +90,46 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const closeSideBar = () => {
+    if(!isOpen)
+    return;
     {
+      console.log("ENTERED")
       setIsOpen(false);
-      debounce(animate(
+      animate(
         scope.current,
         { ...sidebarVariants.closed },
         { ...sideBarTransition }
-      ),200)
+      );
     }
   };
 
   const openSideBar = (skip?: boolean) => {
+    if(isOpen)
+    return;
     setIsOpen(true);
-   debounce(animate(
+    animate(
       scope.current,
       { ...sidebarVariants.open },
       { ...sideBarTransition }
-    ),600);
-    if (!skip)
+    );
+    if (!skip){
+      
       setTimeout(() => {
-        closeSideBar();
-      }, 3000);
+      //  closeSideBar();
+      }, 3000);}
   };
   useEffect(() => {
+   
+   if(isOpen)
+    {
+      setTimeout(() => {
+      closeSideBar();
+      }, 3000);
+    }
+  }, [isOpen]);
+  useEffect(()=>{
     openSideBar();
-  }, []);
+  },[])
 
   function debounce(func: any, delay: any) {
     let timeoutId: any;
@@ -152,12 +167,10 @@ function MyApp({ Component, pageProps }: AppProps) {
                     //  return;
                     if (deltaX === 0) return;
 
-                    if (e.changedTouches[0].pageX - deltaX > 10) {
-                      debounce(openSideBar(),300)
-                  
-                    } else if (e.changedTouches[0].pageX - deltaX < -10) {
-                      debounce(closeSideBar(),2000)
-                
+                    if (e.changedTouches[0].pageX - deltaX > 30) {
+                      openSideBar();
+                    } else if (e.changedTouches[0].pageX - deltaX < -30) {
+                      closeSideBar();
                     }
                   }}
                   onTouchEnd={(e) => {
