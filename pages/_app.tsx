@@ -18,8 +18,8 @@ import {
   useMediaQuery,
   useDimensions,
 } from "@chakra-ui/react";
-import { useSize, } from "@chakra-ui/react-use-size"
-import {ElementSize} from "@zag-js/element-size"
+import { useSize } from "@chakra-ui/react-use-size";
+import { ElementSize } from "@zag-js/element-size";
 import AppProvider from "../contexts/appContext";
 export enum Views {
   HOME = "home",
@@ -84,12 +84,12 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [isLarger] = useMediaQuery(`(min-width:768)`);
   const [isOpen, setIsOpen] = useState(false);
   const [scope, animate] = useAnimate();
-  const outerRef = useRef<HTMLDivElement|null>(null);
+  const outerRef = useRef<HTMLDivElement | null>(null);
   const data = useSize(outerRef);
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const closeSideBar = () => {
-  {
+    {
       setIsOpen(false);
       animate(
         scope.current,
@@ -99,21 +99,21 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
   };
 
-  const openSideBar = (skip?:boolean) => {
+  const openSideBar = (skip?: boolean) => {
     setIsOpen(true);
     animate(
       scope.current,
       { ...sidebarVariants.open },
       { ...sideBarTransition }
     );
-    if(!skip)
-    setTimeout(()=>{
-      closeSideBar();
-    },3000)
+    if (!skip)
+      setTimeout(() => {
+        closeSideBar();
+      }, 3000);
   };
-  useEffect(()=>{
+  useEffect(() => {
     openSideBar();
-  },[])
+  }, []);
   return (
     <WagmiConfig config={wagmiConfig}>
       <SessionProvider refetchInterval={0} session={pageProps.session}>
@@ -124,14 +124,13 @@ function MyApp({ Component, pageProps }: AppProps) {
             <ChakraBaseProvider theme={theme}>
               <AppProvider>
                 <motion.div
-                ref={outerRef}
+                  ref={outerRef}
                   style={{ touchAction: "none" }}
-                  className="fixed top-0 left-0 right-0 bottom-0 flex flex-row bg-[url('/backgroundNew.jpeg')] bg-cover overflow-hidden"
+                  className="fixed top-0 left-0 right-0 bottom-0 flex flex-row bg-[url('/backgroundNew.jpeg')] bg-cover overflow-hidden w-full"
                   onPanStart={(e, pointInfo) => {
                     if (pointInfo.offset.x > 0) openSideBar();
                     else closeSideBar();
                   }}
-                  
                 >
                   <div
                     ref={containerRef}
@@ -146,13 +145,13 @@ function MyApp({ Component, pageProps }: AppProps) {
                     <motion.div
                       ref={scope}
                       className="relative h-full w-20 xs:w-24 sm:w-28 z-[100]" // md:w-[76.8px]
-                     initial="closed"
+                      initial="closed"
                       variants={sidebarVariants}
                     >
-                      <Sidebar windowData={data}/>
+                      <Sidebar windowData={data} />
                     </motion.div>
                   </div>
-                  <div className=" scrollbar-hidden flex overflow-y-auto w-full z-[0] justify-center">
+                  <div className=" scrollbar-hidden flex overflow-y-auto z-[0] justify-center w-full">
                     <Component {...pageProps} />
                   </div>
                 </motion.div>

@@ -137,7 +137,8 @@ const BrowseCard = ({
       onMouseLeave={(e) => {
         setHover(false);
       }}
-      className="min-w-[400px] bg-[rgba(0,0,0,0.7)] text-blue-400 rounded-xl relative h-fit"
+      
+      className={"min-w-[400px] bg-[rgba(0,0,0,0.7)] text-blue-400 rounded-xl relative h-fit hover:z-[400]"}
     >
         {!isHover&&<motion.div layout transition={{ type: "spring", duration: 0.7 }} className="absolute left-0">
        {hover===true && isHover? <IconButton
