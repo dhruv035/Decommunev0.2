@@ -14,6 +14,10 @@ const Network = () => {
         </div>
         <Search tags={tags} setTags={setTags} />
       </div>
+      <div className="space-y-4">
+      <CardsRow memberships={memberships} isFilter={false} />
+      
+      </div>
       <CardsRow memberships={memberships} isFilter={false} />
     </div>
   );

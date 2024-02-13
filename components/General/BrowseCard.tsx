@@ -24,6 +24,8 @@ import { formatEther } from "viem";
 import { AppContext, AppContextType } from "../../contexts/appContext";
 import { motion } from "framer-motion";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import DC2 from "../../public/DC2.jpg";
+
 type Membership = {
   contractData: any;
   metaData: any;
@@ -37,7 +39,8 @@ const BrowseCard = ({
 }) => {
   const toast = useToast();
 
-  const [isHover] = useMediaQuery(`(hover:hover)`);
+  const [hasHover] = useMediaQuery(`(hover:hover)`);
+  console.log("HASHOVER",hasHover)
   const [imageError, setImageError] = useState(false);
   const [hover, setHover] = useState(false);
   const { setPendingTx, isTxDisabled, setIsTxDisabled } = useContext(
@@ -128,47 +131,55 @@ const BrowseCard = ({
   return (
     <motion.div
       layout
+      
       initial={{ scale: 1 }}
       animate={hover ? { scale: 1.2 } : { scale: 1 }}
       transition={{ type: "spring", duration: 0.7 }}
       onMouseEnter={(e) => {
-        setHover(true);
+        if (!hover) setHover(true);
       }}
       onMouseLeave={(e) => {
-        setHover(false);
+        if (hover) setHover(false);
       }}
-      
-      className={"min-w-[400px] bg-[rgba(0,0,0,0.7)] text-blue-400 rounded-xl relative h-fit hover:z-[400]"}
+      className={
+        "min-w-[400px] bg-[rgba(0,0,0,0.7)] text-blue-400 rounded-xl relative h-fit hover:z-[400]"
+      }
     >
-        {!isHover&&<motion.div layout transition={{ type: "spring", duration: 0.7 }} className="absolute left-0">
-       {hover===true && isHover? <IconButton
+      {hasHover===true &&
+        (
+        <motion.div className="absolute right-12 top-2 aspect-square rounded-full">
+          {hover === true ? (
+            <IconButton
               icon={<IoIosArrowUp />}
               aria-label={""}
               backgroundColor="transparent"
-              rounded='full'
+              rounded="full"
               color="white"
-              _hover={{
-                backgroundColor: "transparent",
-                color: "red.400",
+              border="1px"
+              position={"absolute"}
+              fontSize={[26, 32, 38]}
+              onClick={() => {
+                if (hover) setHover(false);
               }}
-              
-             
-              fontSize={[16, 24, 32]}
-              onClick={() => setHover(true)}
-            />: <IconButton
+            />
+          ) : (
+            <IconButton
               icon={<IoIosArrowDown />}
               aria-label={""}
+              rounded="full"
               backgroundColor="transparent"
               color="white"
-              _hover={{
-                backgroundColor: "transparent",
-                color: "red.400",
-              }}
+              border="1px"
               position={"absolute"}
-              fontSize={[16, 24, 32]}
-              onClick={() => setHover(true)}
-            />}
-        </motion.div>}
+              fontSize={[26, 32, 38]}
+              onClick={() => {
+                if (!hover) setHover(true);
+              }}
+            />
+          )}
+        </motion.div>
+        )
+      }
       <motion.div
         layout
         transition={{ type: "spring", duration: 0.7 }}
@@ -180,26 +191,36 @@ const BrowseCard = ({
           className="flex flex-wrap aspect-video overflow-clip rounded-xl self-center justify-center"
         >
           <Image
+            _before={{
+              src: DC2.src,
+            }}
+            width="full"
+            height="full"
             src={
               !imageError
                 ? membership.metaData?.image
                 : "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
             }
-            alt="Green double couch with wooden legs"
+            alt=""
           />
         </motion.div>
 
         {hover && !owned && (
           <motion.div
-            transition={{ type: "spring", duration: 0.7 }}
-            className="flex justify-content-center mt-[-60px] ml-4 w-1/12 h-[60px]"
+            initial={{ opacity: 0 }}
+            animate={
+              hover
+                ? { opacity: 1, transition: { delay: 0.3, duration: 0.2 } }
+                : { opacity: 0, transition: { delay: 0.3, duration: 0.2 } }
+            }
+            className="flex flex-row-reverse mt-[-60px] pr-6 w-[100%] h-[60px]"
           >
             <Button
-              width="full"
+              w={1 / 12}
               rounded="full"
               variant="outline"
               _hover={
-                !isHover
+                !hasHover
                   ? {}
                   : {
                       cursor: "pointer",
@@ -226,15 +247,15 @@ const BrowseCard = ({
 
         {hover && (
           <motion.div
-            className="flex flex-col"
-            initial={{ scaleY: 0 }}
+            className="flex flex-col px-2"
+            initial={{ opacity: 0 }}
             animate={
               hover
-                ? { scaleY: 1, transition: { duration: 0.8 } }
-                : { scaleY: 0, transition: { duration: 0.8 } }
+                ? { opacity: 1, transition: { delay: 0.3, duration: 0.1 } }
+                : { opacity: 0, transition: { delay: 0.3, duration: 0.1 } }
             }
           >
-            <div className="flex flex-row">
+            <div className="flex flex-row mt-4 z-[200]">
               <Heading
                 fontWeight="bold"
                 textAlign="center"
@@ -253,11 +274,13 @@ const BrowseCard = ({
               >
                 ${membership.contractData[5]}
               </Heading>
-            </div>{" "}
+              
+            </div>
+            <div className="flex flex-col">
             <Text
               textAlign={"justify"}
               noOfLines={3}
-              minH={8}
+              minH={14}
               overflowY={"auto"}
             >
               {membership?.metaData?.desc ??
@@ -270,6 +293,8 @@ const BrowseCard = ({
             >
               {formatEther(membership.contractData[1])} MATIC
             </Text>
+            </div>
+            
           </motion.div>
         )}
       </motion.div>

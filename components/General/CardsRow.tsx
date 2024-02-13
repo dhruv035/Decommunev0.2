@@ -150,12 +150,13 @@ const CardsRow: NextPage<CardGridProps> = ({
   }, [memberships, isFilter, address, pendingTx]);
 
   return (
-    <motion.div onPanStart={(e) => {
+    <motion.div initial={false} onPanStart={(e) => {
       
       }} layout className="flex items-top h-full">
       <motion.div
-        className="flex overflow-x-scroll z-[400] h-fit space-x-8 p-16 mt-20"
+        className="flex z-[10] hover:z-[400] h-[305px] overflow-y-visible space-x-8 p-10 mt-20"
         layout
+        
         transition={{ type: "spring", bounce: 0.3, duration: 0.7 }}
         onTouchStart={(e)=>{
             e.stopPropagation();
