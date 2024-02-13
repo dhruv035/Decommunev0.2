@@ -1,27 +1,22 @@
-import dynamic from "next/dynamic";
-import type { NextPage } from "next";
 import { useContext, useState } from "react";
-import TagInput from "../components/TagInput";
 import { AppContext, AppContextType } from "../contexts/appContext";
-import CardGrid from "../components/General/CardGrid";
+import Search from "../components/TagInput";
 
-const Home: NextPage = () => {
-  const { memberships} = useContext(AppContext) as AppContextType;
-  const [tags,setTags] = useState<string[]>([])
+import CardsRow from "../components/General/CardsRow";
+const Network = () => {
+  const { memberships } = useContext(AppContext) as AppContextType;
+  const [tags,setTags]= useState<string[]>([])
   return (
     <div className=" pt-6 flex flex-col w-full max-w-[92vw] bg-cover">
       <div className="flex flex-col items-center">
-        <div className="text-transparent bg-clip-text bg-pinkFlavor text-center text-4xl sm:text-5xl md:text-8xl font-bold">
-          DeCommune
+        <div className="text-transparent bg-clip-text bg-velvetSun text-[44px] sm:text-[52px] text-center md:text-[60px] font-bold">
+          Decommune
         </div>
-        <div className=" w-[50vw] max-w-[700px]">
-        <TagInput tags={tags} setTags={setTags} onSearch={()=>{console.log("TRIGGERED")}}/>
-        </div>
+        <Search tags={tags} setTags={setTags} />
       </div>
-      <CardGrid memberships={memberships} isFilter={false} />
+      <CardsRow memberships={memberships} isFilter={false} />
     </div>
   );
 };
-export default dynamic(() => Promise.resolve(Home), {
-  ssr: false,
-});
+
+export default Network;

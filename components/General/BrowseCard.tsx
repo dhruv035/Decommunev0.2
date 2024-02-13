@@ -15,6 +15,7 @@ import {
   Flex,
   useMediaQuery,
   transition,
+  IconButton,
 } from "@chakra-ui/react";
 import { useAccount, useContractReads, useContractWrite } from "wagmi";
 import { NFT } from "../../abi";
@@ -22,6 +23,7 @@ import { useContext, useEffect, useState } from "react";
 import { formatEther } from "viem";
 import { AppContext, AppContextType } from "../../contexts/appContext";
 import { motion } from "framer-motion";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 type Membership = {
   contractData: any;
   metaData: any;
@@ -135,8 +137,37 @@ const BrowseCard = ({
       onMouseLeave={(e) => {
         setHover(false);
       }}
-      className="min-w-[400px] bg-[rgba(0,0,0,0.7)] text-blue-400 rounded-xl"
+      className="min-w-[400px] bg-[rgba(0,0,0,0.7)] text-blue-400 rounded-xl relative"
     >
+        {!isHover&&<motion.div layout transition={{ type: "spring", duration: 0.7 }} className="absolute left-0">
+       {hover===true && isHover? <IconButton
+              icon={<IoIosArrowUp />}
+              aria-label={""}
+              backgroundColor="transparent"
+              rounded='full'
+              color="white"
+              _hover={{
+                backgroundColor: "transparent",
+                color: "red.400",
+              }}
+              
+             
+              fontSize={[16, 24, 32]}
+              onClick={() => setHover(true)}
+            />: <IconButton
+              icon={<IoIosArrowDown />}
+              aria-label={""}
+              backgroundColor="transparent"
+              color="white"
+              _hover={{
+                backgroundColor: "transparent",
+                color: "red.400",
+              }}
+              position={"absolute"}
+              fontSize={[16, 24, 32]}
+              onClick={() => setHover(true)}
+            />}
+        </motion.div>}
       <motion.div
         layout
         transition={{ type: "spring", duration: 0.7 }}

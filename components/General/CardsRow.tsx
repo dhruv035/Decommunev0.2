@@ -149,13 +149,18 @@ const CardsRow: NextPage<CardGridProps> = ({
     getMembershipData();
   }, [memberships, isFilter, address, pendingTx]);
 
-  return (  
+  return (
     <motion.div layout className="flex items-top h-full">
-    
-      <motion.div layout transition={{ type: "spring", bounce: 0.3, duration: 0.7 }} onPanStart={(e)=>{
-        e.preventDefault();
-        e.stopPropagation();
-      }} className="flex overflow-x-scroll z-[400] h-fit space-x-8 py-16 mt-20">
+      <motion.div
+        className="flex overflow-x-scroll z-[400] h-fit space-x-8 py-16 mt-20"
+        layout
+        transition={{ type: "spring", bounce: 0.3, duration: 0.7 }}
+        onPanStart={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+        }}
+      >
         {membershipData
           .slice(0)
           .reverse()
@@ -169,7 +174,7 @@ const CardsRow: NextPage<CardGridProps> = ({
             );
           })}
       </motion.div>
-      </motion.div>
+    </motion.div>
   );
 };
 
