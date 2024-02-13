@@ -83,6 +83,7 @@ const sideBarTransition = {
 function MyApp({ Component, pageProps }: AppProps) {
   const [isLarger] = useMediaQuery(`(min-width:768)`);
   const [isOpen, setIsOpen] = useState(false);
+  const [deltaX, setDeltaX] = useState<number>(0);
   const [scope, animate] = useAnimate();
   const outerRef = useRef<HTMLDivElement | null>(null);
   const data = useSize(outerRef);
@@ -91,21 +92,21 @@ function MyApp({ Component, pageProps }: AppProps) {
   const closeSideBar = () => {
     {
       setIsOpen(false);
-      animate(
+      debounce(animate(
         scope.current,
         { ...sidebarVariants.closed },
         { ...sideBarTransition }
-      );
+      ),200)
     }
   };
 
   const openSideBar = (skip?: boolean) => {
     setIsOpen(true);
-    animate(
+   debounce(animate(
       scope.current,
       { ...sidebarVariants.open },
       { ...sideBarTransition }
-    );
+    ),600);
     if (!skip)
       setTimeout(() => {
         closeSideBar();
@@ -114,6 +115,17 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     openSideBar();
   }, []);
+
+  function debounce(func: any, delay: any) {
+    let timeoutId: any;
+    return function (...args: any) {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        func(...args);
+      }, delay);
+    };
+  }
+
   return (
     <WagmiConfig config={wagmiConfig}>
       <SessionProvider refetchInterval={0} session={pageProps.session}>
@@ -127,9 +139,29 @@ function MyApp({ Component, pageProps }: AppProps) {
                   ref={outerRef}
                   style={{ touchAction: "none" }}
                   className="fixed top-0 left-0 right-0 bottom-0 flex flex-row bg-[url('/backgroundNew.jpeg')] bg-cover overflow-hidden w-full"
-                  onPanStart={(e, pointInfo) => {
-                    if (pointInfo.offset.x > 0) openSideBar();
-                    else closeSideBar();
+                  onScroll={(e) => {
+                    console.log("E", e);
+                  }}
+                  onTouchStart={(e) => {
+                    //  console.log("E",e)
+                    console.log("E1", e);
+                    setDeltaX(e.changedTouches[0].pageX);
+                  }}
+                  onTouchMove={(e) => {
+                    // console.log("E2",e)
+                    //  return;
+                    if (deltaX === 0) return;
+
+                    if (e.changedTouches[0].pageX - deltaX > 10) {
+                      debounce(openSideBar(),300)
+                  
+                    } else if (e.changedTouches[0].pageX - deltaX < -10) {
+                      debounce(closeSideBar(),2000)
+                
+                    }
+                  }}
+                  onTouchEnd={(e) => {
+                    setDeltaX(0);
                   }}
                 >
                   <div
