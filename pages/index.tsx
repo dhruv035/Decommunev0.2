@@ -18,10 +18,10 @@ const Network = () => {
     
      <div className="overflow-x-hidden pt-40">
       <div className="">
-      <CardsRow memberships={memberships} isFilter={true} filter="member" />
+      <CardsRow memberships={memberships} isFilter={false}  />
       </div>
-    <div className="">
-      <CardsRow memberships={memberships} isFilter={true} filter="owner" /></div>
+    <div className="mt-[-15rem]">
+      <CardsRow memberships={memberships} isFilter={false} /></div>
     </div>
     </div>
   );
