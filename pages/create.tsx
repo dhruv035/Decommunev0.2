@@ -19,6 +19,7 @@ import { parseEther } from "viem";
 import { NextPage } from "next";
 import TagInput from "../components/TagInput";
 import { IoIosArrowBack } from "react-icons/io";
+import { createCollection } from "../frontend-services/collections";
 
 const Create: NextPage = () => {
   const toast = useToast();
@@ -28,7 +29,7 @@ const Create: NextPage = () => {
   const [isHover] = useMediaQuery(`(hover:hover)`);
   const { address } = useAccount();
 
-  const { setPendingTx, isTxDisabled, setIsTxDisabled } = useContext(
+  const { setPendingTx, isTxDisabled, setIsTxDisabled, setCollectionId } = useContext(
     AppContext
   ) as AppContextType;
 
@@ -61,19 +62,14 @@ const Create: NextPage = () => {
 
       setIsTxDisabled(true);
       let hash;
+      let id;
       try {
         //Create database entry for metadata.
         //BUG:Sometimes the data will be uploaded and transaction will fail
         //TODO:Reuse previously uploaded collections for metadata in case of transaction reverts, handle uploaded metadata collections more elegantly
 
-        const res = await fetch(
-          process.env.NEXT_PUBLIC_BASE_URL + "/collection",
-          {
-            method: "POST",
-            body: JSON.stringify({ ...metaFormik.values, tags }),
-          }
-        );
-        const data = await res.json();
+        const data = await createCollection({ ...metaFormik.values, tags })
+
         const { hash: txHash } = await deployNFT({
           args: [
             address,
@@ -85,6 +81,7 @@ const Create: NextPage = () => {
           ],
         });
         hash = txHash;
+        id=data.id;
         toast({
           position: "top-right",
           title: "Transaction Submitted",
@@ -104,11 +101,14 @@ const Create: NextPage = () => {
           duration: 5000,
         });
         setIsTxDisabled(false);
+        
         return;
       }
 
       setPendingTx(hash);
+      setCollectionId(id);
       localStorage.setItem("pendingTx", hash as string);
+      localStorage.setItem("collectionId", id);
     },
   });
 

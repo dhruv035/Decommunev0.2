@@ -25,6 +25,7 @@ import { AppContext, AppContextType } from "../../contexts/appContext";
 import { motion } from "framer-motion";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import DC2 from "../../public/DC2.jpg";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 type Membership = {
   contractData: any;
@@ -48,7 +49,7 @@ const BrowseCard = ({
 
   const { address } = useAccount();
   const nftContract = {
-    address: membership.contractData[3],
+    address: membership.contractData.contractAddress,
     abi: NFT,
   };
 
@@ -93,12 +94,10 @@ const BrowseCard = ({
   });
 
   const handleBuy = async () => {
-    console.log("A")
     //TODO: Add specific alerts for each of the missing data
     if (!address) return;
     if (!data || !data[1]) return;
     if (typeof data[1].result !== "bigint") return;
-    console.log("AB")
     setIsTxDisabled(true);
     let hash;
     try {
@@ -132,7 +131,6 @@ const BrowseCard = ({
   return (
     <motion.div
       layout
-      
       initial={{ scale: 1 }}
       animate={hover ? { scale: 1.2 } : { scale: 1 }}
       transition={{ type: "spring", duration: 0.7 }}
@@ -146,20 +144,19 @@ const BrowseCard = ({
         "min-w-[400px] bg-[rgba(0,0,0,0.7)] text-blue-400 rounded-xl relative h-fit hover:z-[400]"
       }
     >
-         <Heading
-         position={"absolute"}
-                textAlign="center"
-                color={"yellow.300"}
-                fontWeight="bold"
-                top={2}
-                left={2}
-                fontSize={["sm", "md", "xl"]}
-              >
-                ${membership.contractData[5]}
-              </Heading>
-              
-      {hasHover===true &&
-        (
+      <Heading
+        position={"absolute"}
+        textAlign="center"
+        color={"yellow.300"}
+        fontWeight="bold"
+        top={2}
+        left={2}
+        fontSize={["sm", "md", "xl"]}
+      >
+        ${membership.contractData.tokenSymbol}
+      </Heading>
+
+      {hasHover === true && (
         <div className="absolute right-12 top-2 aspect-square rounded-full">
           {hover === true ? (
             <IconButton
@@ -191,11 +188,8 @@ const BrowseCard = ({
             />
           )}
         </div>
-        )
-      }
-      <div
-        className="flex flex-col"
-      >
+      )}
+      <div className="flex flex-col">
         <motion.div
           layout
           transition={{ type: "spring", duration: 0.7 }}
@@ -205,7 +199,6 @@ const BrowseCard = ({
             _before={{
               src: DC2.src,
             }}
-           
             src={
               !imageError
                 ? membership.metaData?.image
@@ -225,33 +218,40 @@ const BrowseCard = ({
             }
             className="flex flex-row-reverse mt-[-60px] pr-6 w-[100%] h-[60px]"
           >
-            <Button
-              w={1 / 12}
-              rounded="full"
-              variant="outline"
-              _hover={
-                !hasHover
-                  ? {}
-                  : {
+            <ConnectButton.Custom>
+              {({ openConnectModal }) => {
+                return (
+                  <Button
+                    w={1 / 12}
+                    rounded="full"
+                    variant="outline"
+                    _hover={
+                      !hasHover
+                        ? {}
+                        : {
+                            cursor: "pointer",
+                            backgroundColor: "teal.400",
+                            color: "white",
+                          }
+                    }
+                    _active={{
                       cursor: "pointer",
                       backgroundColor: "teal.400",
                       color: "white",
-                    }
-              }
-              _active={{
-                cursor: "pointer",
-                backgroundColor: "teal.400",
-                color: "white",
+                    }}
+                    color="white"
+                    backgroundColor="rgb(120,100,120,0.08)"
+                    onClick={() => {
+                      if (!address) openConnectModal();
+                      else handleBuy();
+                    }}
+                    isDisabled={isTxDisabled}
+                  >
+                    Buy
+                  </Button>
+                );
               }}
-              color="white"
-              backgroundColor="rgb(120,100,120,0.08)"
-              onClick={() => {
-                handleBuy();
-              }}
-              isDisabled={isTxDisabled}
-            >
-              Buy
-            </Button>
+            </ConnectButton.Custom>
           </motion.div>
         )}
 
@@ -274,29 +274,27 @@ const BrowseCard = ({
                 fontSize={["9vw", "4xl"]}
                 lineHeight={1.2}
               >
-                {membership.contractData[4]}
+                {membership.contractData.tokenName}
               </Heading>
-             
             </div>
             <div className="flex flex-col">
-            <Text
-              textAlign={"justify"}
-              noOfLines={3}
-              minH={14}
-              overflowY={"auto"}
-            >
-              {membership?.metaData?.desc ??
-                "This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image "}
-            </Text>
-            <Text
-              color="green.200"
-              fontSize={["sm", "lg", "2xl"]}
-              fontWeight={"bold"}
-            >
-              {formatEther(membership.contractData[1])} MATIC
-            </Text>
+              <Text
+                textAlign={"justify"}
+                noOfLines={3}
+                minH={14}
+                overflowY={"auto"}
+              >
+                {membership?.metaData?.desc ??
+                  "This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image This is a Lorem Ipsum Membership Token, everyone will see a different Image "}
+              </Text>
+              <Text
+                color="green.200"
+                fontSize={["sm", "lg", "2xl"]}
+                fontWeight={"bold"}
+              >
+                {formatEther(membership.contractData.currentPrice)} MATIC
+              </Text>
             </div>
-            
           </motion.div>
         )}
       </div>

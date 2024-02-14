@@ -36,6 +36,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const updateOp = await db
       .collection("Collections")
       .updateOne({ _id: object }, { $set: { ...body } });
+      console.log("UPDATEOP",updateOp)
     res.status(200).json({ message: "Updated" });
   }
   return;

@@ -102,16 +102,7 @@ const Sidebar = ({ windowData }: { windowData: ElementSize|undefined }) => {
               </span>
             </Tooltip>
           </li>
-          <li>
-            <Icon
-              className="hover:cursor-pointer rounded-full p-1 md:gip-2"
-              as={MdGroupAdd}
-              boxSize={[16, 20]}
-              color={!session ? "red.400" : "teal.400"}
-              backgroundColor="gray.800"
-              onClick={() => {}}
-            />
-          </li>
+          
         </ul>
       </div>
     </div>

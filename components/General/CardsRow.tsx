@@ -7,6 +7,7 @@ import { NFT } from "../../abi";
 import MarketCard from "./MarketCard";
 import BrowseCard from "./BrowseCard";
 import { motion } from "framer-motion";
+import { element } from "@rainbow-me/rainbowkit/dist/css/reset.css";
 
 /*
   This component takes a list of memberships on the contract and extracts necessary 
@@ -17,22 +18,91 @@ type CardGridProps = {
   memberships: readonly `0x${string}`[];
   isFilter: boolean;
   pendingTx?: string;
+  filter?: string;
+  filterData?: any[];
 };
 
 const CardsRow: NextPage<CardGridProps> = ({
   memberships,
   isFilter,
   pendingTx,
+  filter,
+  filterData,
 }) => {
   const { address } = useAccount();
   const [membershipData, setMembershipData] = useState<any[]>([]);
 
   const getMembershipData = useCallback(async () => {
     //TODO:Fetch only balances first and perform filter before fetching the rest of the contract data.
+    let data: readonly `0x${string}`[] = [];
+    if (isFilter) {
+      switch (filter) {
+        default:
+          break;
+        case "owner":
+          const ownerships = await Promise.all(
+            memberships.map(async (membership) => {
+              const owner = async () => {
+                //This fetch may revert sometimes and therefore must be error handled
+                try {
+                  const data = await readContract({
+                    address: membership,
+                    abi: NFT,
+                    functionName: "owner",
+                  });
+                  return data;
+                } catch (error) {
+                  return "" as `0x${string}`;
+                }
+              };
+
+              return owner();
+            })
+          ).then((res) => {
+            
+           let inData = memberships.filter((element, index) => {
+              return res[index] === address;
+            });
+            return inData;
+          });
+          data = [...ownerships]
+          break;
+
+        case "member":
+          const subscriptions = await Promise.all(
+            memberships.map(async (membership) => {
+              const balance = async () => {
+                let innerData;
+
+                //This fetch may revert sometimes and therefore must be error handled
+                try {
+                  innerData = await readContract({
+                    address: membership,
+                    abi: NFT,
+                    functionName: "balanceOf",
+                    args: [address ?? ("" as `0x${string}`)],
+                  });
+                  return innerData;
+                } catch (error) {
+                  return BigInt(0);
+                }
+              };
+              return balance();
+            })
+          ).then((res) => {
+            let inData =memberships.filter((element, index) => res[index]>BigInt(0)
+              
+            );
+            return inData;
+          });
+          data = [...subscriptions]
+          break;
+      }
+    } else data = memberships;
 
     //Concurrently fetch membership data from all contracts.
     const contracts = await Promise.all(
-      memberships.map(async (membership) => {
+      data.map(async (membership) => {
         const balance = async () => {
           let data;
 
@@ -89,29 +159,30 @@ const CardsRow: NextPage<CardGridProps> = ({
         //Return a Promise.all with each data operation to run data fetch concurrently as a Promise for each membership
 
         return Promise.all([
-          balance(),
           currentPrice,
           baseURI,
           membership,
           tokenName,
           tokenSymbol,
           tokenURI(),
-        ]);
-      })
-    ).then((res) => {
-      //The isFilter will trigger filter to leave only owned memberships
-      if (isFilter)
-        return res.filter((element) => {
-          return Number(element[0]) > 0;
+        ]).then((res) => {
+          return {
+            currentPrice: res[0],
+            baseURI: res[1],
+            contractAddress: res[2],
+            tokenName: res[3],
+            tokenSymbol: res[4],
+            tokenURI: res[5],
+          };
         });
-      else return res;
-    });
+      })
+    );
 
     const metaDatas = await Promise.all(
       //Concurrently fetch metadata from database using baseURI from the contract
       contracts.map(async (contract) => {
         try {
-          const data = await fetch(contract[2]);
+          const data = await fetch(contract.baseURI);
           return data;
         } catch (error) {
           return undefined;
@@ -150,18 +221,19 @@ const CardsRow: NextPage<CardGridProps> = ({
   }, [memberships, isFilter, address, pendingTx]);
 
   return (
-    <motion.div initial={false} onPanStart={(e) => {
-      
-      }} layout className="flex items-top h-full overflow-x-scroll pl-14 pb-60">
+    <motion.div
+      initial={false}
+      onPanStart={(e) => {}}
+      layout
+      className="flex items-top h-full overflow-x-scroll pl-14 pb-60"
+    >
       <motion.div
         className="flex z-[10] hover:z-[400] h-[305px] space-x-8  mt-20"
         layout
-        
         transition={{ type: "spring", bounce: 0.3, duration: 0.7 }}
-        onTouchStart={(e)=>{
-            e.stopPropagation();
-            
-        }}  
+        onTouchStart={(e) => {
+          e.stopPropagation();
+        }}
       >
         {membershipData
           .slice(0)

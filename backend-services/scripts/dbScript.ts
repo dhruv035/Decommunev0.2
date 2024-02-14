@@ -27,6 +27,5 @@ const abc = async () => {
     },
   ]).toArray();
   //const data2 = await db.collection("Collections").list().toArray();
-  console.log("DATA",data)
 };
 abc();
