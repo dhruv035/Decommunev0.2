@@ -21,7 +21,7 @@ const vod = {
     },
   },
 }
-export default (props:{src:Src[]|null}) => {
+const PlayerReact = (props:{src:Src[]|null}) => {
 if(props?.src===null)
 return(<></>)
   return (
@@ -49,3 +49,5 @@ return(<></>)
   );
 };
 
+
+export default PlayerReact
