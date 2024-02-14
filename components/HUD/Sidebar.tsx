@@ -67,6 +67,17 @@ const Sidebar = ({ windowData }: { windowData: ElementSize|undefined }) => {
 
       <div className="mt-32">
         <ul className="space-y-10">
+        <li>
+            <Icon
+              className="hover:cursor-pointer rounded-full p-1 md:gip-2"
+              as={MdGroupAdd}
+              boxSize={[16, 20]}
+              color={!session ? "red.400" : "teal.400"}
+              backgroundColor="gray.800"
+              onClick={() => {router.push("/UploadAsset")}}
+            />
+          </li>
+
           <li>
             <ConnectButton windowData={windowData} />
           </li>

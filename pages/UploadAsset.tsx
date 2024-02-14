@@ -1,4 +1,4 @@
-import { Heading } from "@chakra-ui/react";
+import { Button, Heading } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDropzone } from "react-dropzone";
@@ -111,23 +111,31 @@ const CreateAndViewAsset: NextPage = () => {
       method: "PUT",
       body: blob,
     });
-    console.log("UPLOADRESPONSE",uploadResponse)
-    setVideo(undefined)
+    console.log("UPLOADRESPONSE", await uploadResponse.json());
+    setVideo(undefined);
   };
   return (
     <>
-      {video===undefined&&(<div
-        className="flex text-black bg-white w-[60vw] h-[60vh] mt-10 items-center justify-center border-2 border-black border-dashed text-[80x]"
-        {...getRootProps()}
-        style={{}}
-      >
-        <input {...getInputProps()} />
-        <Heading color={`rgba(125,125,125,0.6)`} fontSize={[32, 40, 48]}>
-          Drag and Drop here or Click
-        </Heading>
-      </div>
-)}
-      {video ? <p className="">{video.name}</p> : <p>Select a video file to upload.</p>}
+      {video === undefined && (
+        <div
+          className="flex text-black bg-white w-[60vw] h-[60vh] mt-10 items-center justify-center border-2 border-black border-dashed text-[80x]"
+          {...getRootProps()}
+          style={{}}
+        >
+          <input {...getInputProps()} />
+          <Heading color={`rgba(125,125,125,0.6)`} fontSize={[32, 40, 48]}>
+            Drag and Drop here or Click
+          </Heading>
+        </div>
+      )}
+      {video ? (
+        <div>
+          <p className="">{video.name}</p>
+          <Button className="" onClick={()=>{encryptData()}}>Upload</Button>
+        </div>
+      ) : (
+        <p>Select a video file to upload.</p>
+      )}
     </>
   );
 };

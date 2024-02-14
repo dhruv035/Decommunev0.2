@@ -219,7 +219,7 @@ const CardsRow: NextPage<CardGridProps> = ({
   useEffect(() => {
     getMembershipData();
   }, [memberships, isFilter, address, pendingTx]);
-
+if(membershipData?.length>0)
   return (
     <motion.div
       initial={false}
@@ -250,6 +250,8 @@ const CardsRow: NextPage<CardGridProps> = ({
       </motion.div>
     </motion.div>
   );
+  else
+  return(<div></div>)
 };
 
 export default CardsRow;
