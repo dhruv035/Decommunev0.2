@@ -59,6 +59,7 @@ const CreateAndViewAsset: NextPage = () => {
 
     const blob = new Blob([resultBuffer], { type: "application/octet-stream" });
     const publicKeyData = await getPublicKey();
+    console.log("PUBLICKEYDATA",publicKeyData)
     const spkiPublicKey = atob(publicKeyData.spki_public_key);
     const publicKeyBuffer = Uint8Array.from(atob(spkiPublicKey), (c) =>
       c.charCodeAt(0)
@@ -76,6 +77,8 @@ const CreateAndViewAsset: NextPage = () => {
       ["encrypt"]
     );
 
+    console.log("PublicKey",publicKey)
+
     // Encrypt the key data with the public key
     const encryptedKeyData = await window.crypto.subtle.encrypt(
       {
@@ -89,17 +92,31 @@ const CreateAndViewAsset: NextPage = () => {
     const encryptedKeyBase64 = btoa(
       String.fromCharCode(...new Uint8Array(encryptedKeyData))
     );
-    const response = await requestUpload({
-      name: "File name",
-      encryption: {
-        encryptedKey: encryptedKeyBase64,
-      },
-      playbackPolicy: {
-        type: "public",
-      },
-    });
+    console.log("BASE64",encryptedKeyBase64)
+    const response = await fetch(
+      "https://livepeer.studio/api/asset/request-upload",
+      {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + process.env.NEXT_PUBLIC_LIVEPEER_API,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: "ABC",
+          encryption: {
+            encryptedKey: encryptedKeyBase64,
+          },
+          playbackPolicy: {
+           type:"jwt"
+          },
+        }),
+      }
+    );
 
+    
     if (!response.ok) {
+      const data=await response.json()
+      console.log("ABC",...data)
       alert("Error requesting upload URL");
       return;
     }
@@ -131,7 +148,14 @@ const CreateAndViewAsset: NextPage = () => {
       {video ? (
         <div>
           <p className="">{video.name}</p>
-          <Button className="" onClick={()=>{encryptData()}}>Upload</Button>
+          <Button
+            className=""
+            onClick={() => {
+              encryptData();
+            }}
+          >
+            Upload
+          </Button>
         </div>
       ) : (
         <p>Select a video file to upload.</p>

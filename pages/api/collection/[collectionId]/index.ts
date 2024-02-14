@@ -27,17 +27,28 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     } else {
       res.status(200).json(data);
     }
-  } else if (req.method === "PUT") {
+  } else {
     const body = JSON.parse(req.body);
     const token = await getToken({ req });
-    if (!token) return res.status(403).json({ message: "Auth Token Missing" });
-    if (token.sub !== data?.owner)
-      return res.status(403).json({ message: "Access Denied" });
-    const updateOp = await db
+    if (!token)
+        return res.status(403).json({ message: "Auth Token Missing" });
+      if (token.sub !== data?.owner)
+        return res.status(403).json({ message: "Access Denied" });
+    if (req.method === "POST") {
+      const updateOp = await db
+        .collection("Collections")
+        .updateOne({ _id: object }, { $set: { ...body } });
+      console.log("UPDATEOP", updateOp);
+      res.status(200).json({ message: "Updated" });
+    } else if (req.method === "PUT") {
+      const body = JSON.parse(req.body);
+      const contractAddress = body.contractAddress;
+      const updateOp = await db
       .collection("Collections")
-      .updateOne({ _id: object }, { $set: { ...body } });
-      console.log("UPDATEOP",updateOp)
+      .updateOne({ _id: object }, { $push: { contractAddress } });
+    console.log("UPDATEOP", updateOp);
     res.status(200).json({ message: "Updated" });
+    }
   }
   return;
 };

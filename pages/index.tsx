@@ -3,10 +3,21 @@ import { AppContext, AppContextType } from "../contexts/appContext";
 import Search from "../components/TagInput";
 
 import CardsRow from "../components/General/CardsRow";
+import { addContractAddress } from "../frontend-services/collections";
 const Network = () => {
   const { memberships } = useContext(AppContext) as AppContextType;
   const [tags,setTags]= useState<string[]>([])
 
+  useEffect(()=>{
+    const test = async()=>{
+      const data = await addContractAddress('65ccec6751f70fafe7298ea1','0xedD200fBaD2A63F7D619E0aC1a44dafE6897222b' as `0x${string}`);
+      let result
+      if(data.status===200)
+       result = await data.json();
+      console.log("RESULT",result);
+    }
+    test();
+  },[])
   return (
     <div className=" pt-6 flex flex-col w-full bg-cover">
       <div className="flex flex-col items-center">

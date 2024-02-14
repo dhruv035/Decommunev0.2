@@ -1496,39 +1496,39 @@
   dependencies:
     "@lit-labs/ssr-dom-shim" "^1.0.0"
 
-"@livepeer/core-react@3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@livepeer/core-react/-/core-react-3.1.0.tgz#1ab9522ea0da4b7e7f9f3573edb6d4496c8c4bf5"
-  integrity sha512-PmD0ZFXmuRDBTeSG9vnNOyJa2emQ5/STnr11IbI5r+pGv72K52q8+zJQRuNhhxYH3kydxupv4swVDFamKGUHXw==
+"@livepeer/core-react@3.1.2":
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/@livepeer/core-react/-/core-react-3.1.2.tgz#360d376f3f117a62dcadfec6b4c05e8e5d72238c"
+  integrity sha512-DBIwhLO48BlcbjqeY+bBG9+tQ9sTkdjv3FflS2KSRvbP+CB4e3hsdI1EBjkKRhl2+6vDDfzmg1cDpSj4iII9iA==
   dependencies:
-    "@livepeer/core" "3.1.0"
+    "@livepeer/core" "3.1.2"
     zustand "^4.5.0"
 
-"@livepeer/core-web@4.1.0":
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/@livepeer/core-web/-/core-web-4.1.0.tgz#f196b068619b59eb461f03075c6127f090f969ad"
-  integrity sha512-FMVYNZBbxY2faoUqIZxaE0VT+1cHhx/AclVdF5b2aQnw5M7bRmdOTvSWUz3+HSG1W0yI4KHerVeJJuhjb8wiLA==
+"@livepeer/core-web@4.1.2":
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/@livepeer/core-web/-/core-web-4.1.2.tgz#99af2ab736d3d55ae8fb18ae6b9092c5d95216f0"
+  integrity sha512-iH1hCzeDGvsW7PkvDhXWlsZ8CJw5n3c9RAhYjtLf4V14v3nGRlqrfnwEjuC7X6N19pNmOFOr1qpX4mt9IyNEqA==
   dependencies:
-    "@livepeer/core" "3.1.0"
+    "@livepeer/core" "3.1.2"
     hls.js "^1.5.2"
     zustand "^4.5.0"
 
-"@livepeer/core@3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@livepeer/core/-/core-3.1.0.tgz#9ff61c0a13649fe3adf775cecd395f7ad465497f"
-  integrity sha512-7jbNtx5xCtdeb1Ut21bx3A3s+Vfu/p30rBs1rD4xuY4I69JdMZopWPz46ZwdnH99YDhkkXhgrIACgwLrK1tDFA==
+"@livepeer/core@3.1.2":
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/@livepeer/core/-/core-3.1.2.tgz#6a5fbc990c8d135691f43449d71c0e6c72ae7264"
+  integrity sha512-CJM9iqP0Ws+7836y1gqL5DqrACfJluy3/8RGGyZFYSa42o2wYzytdB8HWHDv4L+vpNW8wtYKD/hXld8PPaNvhw==
   dependencies:
     multiformats "^13.0.1"
     zustand "^4.5.0"
 
-"@livepeer/react@^4.1.0":
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/@livepeer/react/-/react-4.1.0.tgz#eea894cfcbb38b29d3ac99b360ec1da1b3e3ed92"
-  integrity sha512-XK/yYB+J2l/JEa43nWou1pNtQrk9bn38EXhV9QNzWcseBfYdX8jPQAGbm5MtDHuuOVbT1fLGRwgoOnNWdJAkNA==
+"@livepeer/react@^4.1.2":
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/@livepeer/react/-/react-4.1.2.tgz#8050045a309a3408ce7ef72ec3fc93ddf46dcb05"
+  integrity sha512-qsBxOIVxKZQ7BJnN2X2JA2KVdJ7P9ya1AZsf4Bpnz0QnnWsAz9quQZ+C02xy6SfE4MwG3BjLQZR76hgNjAHy2g==
   dependencies:
-    "@livepeer/core" "3.1.0"
-    "@livepeer/core-react" "3.1.0"
-    "@livepeer/core-web" "4.1.0"
+    "@livepeer/core" "3.1.2"
+    "@livepeer/core-react" "3.1.2"
+    "@livepeer/core-web" "4.1.2"
     "@radix-ui/primitive" "^1.0.1"
     "@radix-ui/react-aspect-ratio" "^1.0.3"
     "@radix-ui/react-compose-refs" "^1.0.1"
@@ -4816,9 +4816,9 @@ hey-listen@^1.0.8:
   integrity sha512-COpmrF2NOg4TBWUJ5UVyaCU2A88wEMkUPK4hNqyCkqHbxT92BbvfjoSozkAIIm6XhicGlJHhFdullInrdhwU8Q==
 
 hls.js@^1.5.2:
-  version "1.5.4"
-  resolved "https://registry.yarnpkg.com/hls.js/-/hls.js-1.5.4.tgz#74eec8d3f9bb249044173754d81efe5cdb298a0d"
-  integrity sha512-MB+e+tcBl+A/EamWvsvx7d/3m9JOLi3wbLaXyZdHlscgXkhiX5zajJxnt7lzn/w9ONxs5qaFTp/kkIMI9fD4KA==
+  version "1.5.5"
+  resolved "https://registry.yarnpkg.com/hls.js/-/hls.js-1.5.5.tgz#8791a1d9e88d0d3f0bb023b573cfd54dea68bff7"
+  integrity sha512-IMio4uloZNDoBLXUMup2dW0/wOSe+0lHL9qYfRV4oUcPQ/nkTBQibG5h4OPTXOTXSI3iUwcon7TFgNb6uEoKIQ==
 
 hmac-drbg@^1.0.1:
   version "1.0.1"
@@ -5512,6 +5512,11 @@ lru-cache@^6.0.0:
   integrity sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==
   dependencies:
     yallist "^4.0.0"
+
+lucide-react@^0.330.0:
+  version "0.330.0"
+  resolved "https://registry.yarnpkg.com/lucide-react/-/lucide-react-0.330.0.tgz#6e17ade4953ac3ca322f9564f2fd900f21829244"
+  integrity sha512-CQwY+Fpbt2kxCoVhuN0RCZDCYlbYnqB870Bl/vIQf3ER/cnDDQ6moLmEkguRyruAUGd4j3Lc4mtnJosXnqHheA==
 
 media-query-parser@^2.0.2:
   version "2.0.2"
@@ -6682,6 +6687,11 @@ sonic-boom@^2.2.1:
   integrity sha512-kuonw1YOYYNOve5iHdSahXPOK49GqwA+LZhI6Wz/l0rP57iKyXXIHaRagOBHAPmGwJC6od2Z9zgvZ5loSgMlVg==
   dependencies:
     atomic-sleep "^1.0.0"
+
+sonner@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/sonner/-/sonner-1.4.0.tgz#f71b0576909043f6b32f05ff796c86ef6b97350a"
+  integrity sha512-nvkTsIuOmi9e5Wz5If8ldasJjZNVfwiXYijBi2dbijvTQnQppvMcXTFNxL/NUFWlI2yJ1JX7TREDsg+gYm9WyA==
 
 source-map-js@^1.0.2:
   version "1.0.2"

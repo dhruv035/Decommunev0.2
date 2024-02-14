@@ -8,12 +8,21 @@ import {
   useMemo,
   useState,
 } from "react";
-import { PublicClient, useAccount, useContractRead, usePublicClient, useWaitForTransaction } from "wagmi";
+import {
+  PublicClient,
+  useAccount,
+  useContractRead,
+  usePublicClient,
+  useWaitForTransaction,
+} from "wagmi";
 import { Views } from "../pages/_app";
 import { useToast } from "@chakra-ui/react";
 import { Factory } from "../abi";
-import { updateCollectionData } from "../frontend-services/collections";
-import { getContractAddress } from "viem";
+import {
+  addContractAddress,
+  updateCollectionData,
+} from "../frontend-services/collections";
+import { getContractAddress,decodeEventLog } from "viem";
 //Global contexts may be persisted and managed here
 
 export type AppContextType = {
@@ -24,7 +33,7 @@ export type AppContextType = {
   memberships: readonly `0x${string}`[];
   collectionId?: string;
   setCollectionId: Dispatch<SetStateAction<string | undefined>>;
-  publicClient:PublicClient
+  publicClient: PublicClient;
 };
 
 export const AppContext = createContext<AppContextType | null>(null);
@@ -32,7 +41,7 @@ export const AppContext = createContext<AppContextType | null>(null);
 const AppProvider: NextPage<{ children: ReactNode }> = ({ children }) => {
   const toast = useToast();
   const publicClient = usePublicClient({ chainId: 80001 });
-  const {address} = useAccount();
+  const { address } = useAccount();
   //Running transaction state, managed locally to ensure multiple transactions are not queued
   //Can be updated to manage a queue instead
   const [pendingTx, setPendingTx] = useState<`0x${string}` | undefined>();
@@ -44,20 +53,26 @@ const AppProvider: NextPage<{ children: ReactNode }> = ({ children }) => {
   //Hook that waits for a transaction to complete, watches whenever pendingTx is defined
   useWaitForTransaction({
     hash: pendingTx,
-    onReplaced: async (data: any) => {},
-    onSuccess: async (data: any) => {
-      console.log("ABC",collectionId,address)
-      if(collectionId&&address)
-      {
-        const nonce = await publicClient.getTransactionCount({
-          address: address,
-        });
-        const b = BigInt(nonce - 1);
-        const contractAddress = await getContractAddress({
-          from: address,
-          nonce: b,
-        });
-        updateCollectionData(collectionId,{contractAddress:contractAddress})
+    onReplaced: async (data) => {},
+    onSuccess: async (data) => {
+      console.log("TxReceipt",data)
+      const events = data.logs.map((log)=>{
+        try {
+          return decodeEventLog({
+            abi:Factory,
+            data:log.data,
+            topics:log.topics,
+          })
+        }catch(error){
+          return undefined
+        }
+      }).filter((log)=>{
+        return log
+      })
+      console.log("EVENTS",events)
+      if (collectionId && address) {
+        
+        addContractAddress(collectionId, events[0]?.args._contractAddress as `0x${string}`);
       }
       toast({
         position: "top-right",
@@ -108,11 +123,11 @@ const AppProvider: NextPage<{ children: ReactNode }> = ({ children }) => {
     } else {
       //Using localStorage to persist pending transactions on refresh as well
       const localTx = localStorage.getItem("pendingTx");
-      const  localCollection= localStorage.getItem("collectionId");
+      const localCollection = localStorage.getItem("collectionId");
       if (localTx && localTx !== "") {
         setPendingTx(localTx as `0x${string}`);
-        if(localCollection && localCollection!=="")
-        setCollectionId(localCollection)
+        if (localCollection && localCollection !== "")
+          setCollectionId(localCollection);
         setIsTxDisabled(true);
       } else setIsTxDisabled(false);
     }

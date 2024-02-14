@@ -311,6 +311,7 @@ const Create: NextPage = () => {
               rounded="full"
               w="full"
               type="submit"
+              isDisabled={isTxDisabled}
             >
               Deploy
             </Button>
