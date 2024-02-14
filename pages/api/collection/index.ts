@@ -15,7 +15,7 @@ export default async function handler(
   } else if (req.method === "POST") {
     const token = await getToken({ req });
     const body = JSON.parse(req.body);
-    if (!token) return res.status(403).json({ message: "Auth Token Missing" });
+    if (!token) return res.status(401).json({ message: "Auth Token Missing" });
 
     const insertOp = await db
       .collection("Collections")

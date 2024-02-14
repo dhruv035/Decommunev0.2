@@ -31,7 +31,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const body = JSON.parse(req.body);
     const token = await getToken({ req });
     if (!token)
-        return res.status(403).json({ message: "Auth Token Missing" });
+        return res.status(401).json({ message: "Auth Token Missing" });
       if (token.sub !== data?.owner)
         return res.status(403).json({ message: "Access Denied" });
     if (req.method === "POST") {
