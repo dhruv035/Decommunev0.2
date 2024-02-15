@@ -11,6 +11,12 @@ export const requestUpload = async (body:any) => {
           body: JSON.stringify(body),
         },
       );
-      console.log("DATA",data,data.status)
       return data;
+}
+
+export const getJWT = async (playbackId:string) => {
+    const data = await fetch( process.env.NEXT_PUBLIC_BASE_URL+"/asset/"+playbackId,{
+        method:"POST"
+    })
+    return data;
 }

@@ -8,14 +8,7 @@ export default async function handler(
 ) {
   if (req.method === "OPTIONS") return res.status(200).send("ok");
   else if (req.method === "POST"){
-    console.log("ABC",{
-        method: "POST",
-        headers: {
-          Authorization: "Bearer "+ process.env.NEXT_PUBLIC_LIVEPEER_API,
-          "Content-Type": "application/json",
-        },
-       body:req.body,
-      })
+    
     const data = await fetch(
         "https://livepeer.studio/api/asset/request-upload",
         {

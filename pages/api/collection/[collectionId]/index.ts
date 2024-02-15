@@ -38,7 +38,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       const updateOp = await db
         .collection("Collections")
         .updateOne({ _id: object }, { $set: { ...body } });
-      console.log("UPDATEOP", updateOp);
       res.status(200).json({ message: "Updated" });
     } else if (req.method === "PUT") {
       const body = JSON.parse(req.body);
@@ -46,7 +45,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       const updateOp = await db
       .collection("Collections")
       .updateOne({ _id: object }, { $push: { contractAddress } });
-    console.log("UPDATEOP", updateOp);
     res.status(200).json({ message: "Updated" });
     }
   }

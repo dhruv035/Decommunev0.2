@@ -2,7 +2,8 @@ import { Button, Heading } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { getPublicKey, requestUpload } from "../frontend-services/livepeer";
+import { getPublicKey, } from "../frontend-services/livepeer";
+import { requestUpload } from "../frontend-services/assets";
 const CreateAndViewAsset: NextPage = () => {
   const [video, setVideo] = useState<File | undefined>();
   const [eKey, setEKey] = useState<CryptoKey | null>(null);
@@ -26,6 +27,7 @@ const CreateAndViewAsset: NextPage = () => {
     if (!video) {
       return;
     }
+    console.log("A")
 
     const key = await window.crypto.subtle.generateKey(
       {
@@ -35,7 +37,7 @@ const CreateAndViewAsset: NextPage = () => {
       true,
       ["encrypt", "decrypt"]
     );
-
+    console.log("A2")
     // Export the key as raw data
     const keyData = await window.crypto.subtle.exportKey("raw", key);
 
@@ -51,6 +53,7 @@ const CreateAndViewAsset: NextPage = () => {
       key, // from generateKey or importKey above
       await video.arrayBuffer() // ArrayBuffer of data you want to encrypt
     );
+    console.log("A3")
 
     // Concatenate IV and encrypted file into a new ArrayBuffer
     const resultBuffer = new ArrayBuffer(iv.length + encrypted.byteLength);
@@ -59,11 +62,11 @@ const CreateAndViewAsset: NextPage = () => {
 
     const blob = new Blob([resultBuffer], { type: "application/octet-stream" });
     const publicKeyData = await getPublicKey();
-    console.log("PUBLICKEYDATA",publicKeyData)
     const spkiPublicKey = atob(publicKeyData.spki_public_key);
     const publicKeyBuffer = Uint8Array.from(atob(spkiPublicKey), (c) =>
       c.charCodeAt(0)
     ).buffer;
+    console.log("A4")
 
     // Import the public key
     const publicKey = await window.crypto.subtle.importKey(
@@ -76,8 +79,7 @@ const CreateAndViewAsset: NextPage = () => {
       false,
       ["encrypt"]
     );
-
-    console.log("PublicKey",publicKey)
+    console.log("A5")
 
     // Encrypt the key data with the public key
     const encryptedKeyData = await window.crypto.subtle.encrypt(
@@ -92,44 +94,32 @@ const CreateAndViewAsset: NextPage = () => {
     const encryptedKeyBase64 = btoa(
       String.fromCharCode(...new Uint8Array(encryptedKeyData))
     );
-    console.log("BASE64",encryptedKeyBase64)
-    const response = await fetch(
-      "https://livepeer.studio/api/asset/request-upload",
-      {
-        method: "POST",
-        headers: {
-          Authorization: "Bearer " + process.env.NEXT_PUBLIC_LIVEPEER_API,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: "ABC",
-          encryption: {
-            encryptedKey: encryptedKeyBase64,
-          },
-          playbackPolicy: {
-           type:"jwt"
-          },
-        }),
-      }
-    );
-
+    const response = await requestUpload({
+      name: "ABC",
+      encryption: {
+        encryptedKey: encryptedKeyBase64,
+      },
+      playbackPolicy: {
+       type:"jwt"
+      },
+    })
+    
+    console.log("A6")
     
     if (!response.ok) {
       const data=await response.json()
-      console.log("ABC",...data)
       alert("Error requesting upload URL");
       return;
     }
-
+    
     const data = await response.json();
-
     // Upload the encrypted file to the returned URL
     const uploadResponse = await fetch(data.url, {
       method: "PUT",
       body: blob,
     });
-    console.log("UPLOADRESPONSE", await uploadResponse.json());
     setVideo(undefined);
+    console.log("A7")
   };
   return (
     <>

@@ -14,12 +14,15 @@ import {
 import * as Player from "@livepeer/react/player";
 import { Clip } from "./Clip";
 import { Settings } from "./Settings";
+import { useEffect, useState } from "react";
 
 export function PlayerWithControls({
-  src,
+  src,token
 }: {
   src: Src[] | null;
+  token:string;
 }) {
+
   if (!src) {
     return (
       <PlayerLoading>
@@ -35,7 +38,7 @@ export function PlayerWithControls({
 
   return (
     <div className="w-full max-w-2xl mx-auto">
-      <Player.Root autoPlay aspectRatio={16 / 9} clipLength={30} src={src}>
+      <Player.Root autoPlay aspectRatio={16 / 9} clipLength={30} src={src} jwt={token}>
         <Player.Container className="h-full w-full overflow-hidden rounded-md bg-gray-950 outline-white/50 outline outline-1 data-[playing=true]:outline-white/80 data-[playing=true]:outline-2 data-[fullscreen=true]:outline-none data-[fullscreen=true]:rounded-none transition-all">
           <Player.Video
             title="Live stream"

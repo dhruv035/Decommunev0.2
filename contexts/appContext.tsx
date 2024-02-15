@@ -55,7 +55,6 @@ const AppProvider: NextPage<{ children: ReactNode }> = ({ children }) => {
     hash: pendingTx,
     onReplaced: async (data) => {},
     onSuccess: async (data) => {
-      console.log("TxReceipt",data)
       const events = data.logs.map((log)=>{
         try {
           return decodeEventLog({
@@ -69,7 +68,6 @@ const AppProvider: NextPage<{ children: ReactNode }> = ({ children }) => {
       }).filter((log)=>{
         return log
       })
-      console.log("EVENTS",events)
       if (collectionId && address) {
         
         addContractAddress(collectionId, events[0]?.args._contractAddress as `0x${string}`);

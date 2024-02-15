@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import clientPromise from "../../../backend-services/db/database";
 import { ObjectId } from "mongodb";
 import { getToken } from "next-auth/jwt";
+import { getServerSession } from "next-auth";
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
@@ -9,6 +10,7 @@ export default async function handler(
   if (req.method === "OPTIONS") return res.status(200).send("ok");
   const client = await clientPromise;
   const db = client.db("Coinvise");
+  const session = await getServerSession(req,res,{})
   if (req.method === "GET") {
     const data = await db.collection("Collections").find({}).toArray();
     res.status(200).json({ collections: data });

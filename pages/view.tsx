@@ -1,21 +1,23 @@
 import {PlayerWithControls} from "../components/Player/Player";
+import { getJWT } from "../frontend-services/livepeer";
 import { livepeer } from "../lib/utils";
 import { getSrc } from "@livepeer/react/external";
 
 import type { InferGetServerSidePropsType } from "next";
 
-const playbackId = "3d1b1wj1glcvthq5"
+const playbackId = "0365lt0bf0ddjl0r"
 
 export const getServerSideProps = async () => {
+    
+    
   const playbackInfo = await livepeer.playback.get(playbackId);
-    console.log("playbackInfo", playbackInfo.playbackInfo)
+
   const src = getSrc(playbackInfo.playbackInfo);
-    console.log("SRC",playbackInfo?.playbackInfo?.meta.source)
-  return { props: { src } };
+  return { props: { src,token: ""} };
 };
 
 export default function Page({
-  src,
+  src,token
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <div className=" pt-6 flex flex-col w-full max-w-[92vw] bg-cover">
@@ -24,7 +26,7 @@ export default function Page({
           Your Network
         </div>
         
-        <PlayerWithControls src={src} />
+        <PlayerWithControls src={src} token={token} />
       </div>
      
    

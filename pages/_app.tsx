@@ -20,7 +20,7 @@ import {
 } from "@chakra-ui/react";
 import { useSize } from "@chakra-ui/react-use-size";
 import { ElementSize } from "@zag-js/element-size";
-import AppProvider from "../contexts/appContext";
+import GlobalProvider from "../contexts/appContext";
 export enum Views {
   HOME = "home",
   CREATE = "create",
@@ -148,7 +148,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         >
           <RainbowKitProvider chains={chains}>
             <ChakraBaseProvider theme={theme}>
-              <AppProvider>
+              <GlobalProvider>
                 <motion.div
                   ref={outerRef}
                   style={{ touchAction: "none" }}
@@ -195,7 +195,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                     <Component {...pageProps} />
                   </div>
                 </motion.div>
-              </AppProvider>
+              </GlobalProvider>
             </ChakraBaseProvider>
           </RainbowKitProvider>
         </RainbowKitSiweNextAuthProvider>
