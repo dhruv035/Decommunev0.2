@@ -129,6 +129,7 @@ export const Settings = React.forwardRef(
     );
   },
 );
+Settings.displayName="Settings"
 
 const RateSelectItem = React.forwardRef<
   HTMLDivElement,
@@ -150,6 +151,7 @@ const RateSelectItem = React.forwardRef<
     </Player.RateSelectItem>
   );
 });
+RateSelectItem.displayName="RateSelectItem"
 
 const VideoQualitySelectItem = React.forwardRef<
   HTMLDivElement,
@@ -170,4 +172,10 @@ const VideoQualitySelectItem = React.forwardRef<
       </Player.SelectItemIndicator>
     </Player.VideoQualitySelectItem>
   );
-});
+}
+
+);
+
+VideoQualitySelectItem.displayName="VideoQualitySelectItem"
+
+  

@@ -83,7 +83,7 @@ export function PlayerWithControls({
             <div className="flex flex-col gap-1">
               <div className="text-2xl font-bold">Stream is private</div>
               <div className="text-sm text-gray-100">
-                It looks like you don't have permission to view this content
+                It looks like you don&apos;t have permission to view this content
               </div>
             </div>
           </Player.ErrorIndicator>
