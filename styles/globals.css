@@ -5,8 +5,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Outfit&display=swap");
 
 @font-face {
-  font-family: "KENIA";
-  src: url("/fonts/KENIA/Kenia-Regular.ttf");
+  font-family: "Kenia";
+  src: url("/fonts/Kenia/Kenia-Regular.ttf");
 }
 @font-face {
   font-family: "Comfortaa";
@@ -17,8 +17,14 @@
   font-family: "SixCaps";
   src: url("/fonts/Six_Caps/SixCaps-Regular.ttf");
 }
+@font-face {
+  font-family: "Existence";
+  src: url("/fonts/existence/Existence.ttf");
+}
 html,
 body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   padding: 0;
   margin: 0;
   font-family:
@@ -33,11 +39,22 @@ body {
     Droid Sans,
     Helvetica Neue,
     sans-serif;
+    
+}
+::-webkit-scrollbar {
+  display: none;
 }
 
 a {
   color: inherit;
   text-decoration: none;
+}
+
+* {
+  font-family: Existence;
+}
+p, input,textarea {
+  font-family: Outline;
 }
 
 * {

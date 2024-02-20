@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
-import clientPromise from "../../../../db/database";
+import clientPromise from "../../../../backend-services/db/database";
 import { ObjectId } from "mongodb";
 import { getToken } from "next-auth/jwt";
 // For more information on each option (and a full list of options) go to
@@ -27,16 +27,26 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     } else {
       res.status(200).json(data);
     }
-  } else if (req.method === "PUT") {
+  } else {
     const body = JSON.parse(req.body);
     const token = await getToken({ req });
-    if (!token) return res.status(403).json({ message: "Auth Token Missing" });
-    if (token.sub !== data?.owner)
-      return res.status(403).json({ message: "Access Denied" });
-    const updateOp = await db
+    if (!token)
+        return res.status(401).json({ message: "Auth Token Missing" });
+      if (token.sub !== data?.owner)
+        return res.status(403).json({ message: "Access Denied" });
+    if (req.method === "POST") {
+      const updateOp = await db
+        .collection("Collections")
+        .updateOne({ _id: object }, { $set: { ...body } });
+      res.status(200).json({ message: "Updated" });
+    } else if (req.method === "PUT") {
+      const body = JSON.parse(req.body);
+      const contractAddress = body.contractAddress;
+      const updateOp = await db
       .collection("Collections")
-      .updateOne({ _id: object }, { $set: { ...body } });
+      .updateOne({ _id: object }, { $push: { contractAddress } });
     res.status(200).json({ message: "Updated" });
+    }
   }
   return;
 };

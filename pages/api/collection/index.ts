@@ -1,7 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import clientPromise from "../../../db/database";
+import clientPromise from "../../../backend-services/db/database";
 import { ObjectId } from "mongodb";
 import { getToken } from "next-auth/jwt";
+import { getServerSession } from "next-auth";
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
@@ -9,13 +10,14 @@ export default async function handler(
   if (req.method === "OPTIONS") return res.status(200).send("ok");
   const client = await clientPromise;
   const db = client.db("Coinvise");
+  const session = await getServerSession(req,res,{})
   if (req.method === "GET") {
     const data = await db.collection("Collections").find({}).toArray();
     res.status(200).json({ collections: data });
   } else if (req.method === "POST") {
     const token = await getToken({ req });
     const body = JSON.parse(req.body);
-    if (!token) return res.status(403).json({ message: "Auth Token Missing" });
+    if (!token) return res.status(401).json({ message: "Auth Token Missing" });
 
     const insertOp = await db
       .collection("Collections")

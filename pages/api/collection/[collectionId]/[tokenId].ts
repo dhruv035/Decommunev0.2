@@ -8,6 +8,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const query = req.query;
   const session = getServerSession(req, res, {});
   const token = getToken({ req });
-  res.status(200).json({});
-  return;
+  if(req.method==="GET")
+ {
+  return res.status(200).json({});
+}
 };

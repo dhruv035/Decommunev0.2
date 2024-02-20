@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+const plugin = require('tailwindcss/plugin')
 module.exports = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
@@ -10,6 +11,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens:{
+        xs:'480px'
+      },
       backgroundImage: {
         buttonGradient: `linear-gradient(94deg, #1387D5 -5.94%, #1A91FA 115.34%)`,
         redStrain: `linear-gradient(to right, #870000, #190a05);`,
@@ -32,11 +36,16 @@ module.exports = {
       fontFamily: {
         poppins: ["Poppins"],
         outfit: ["Outfit"],
-        kenia: ["KENIA"],
+        kenia: ["Kenia"],
         comfort: ["Comfortaa"],
         caps: ["SixCaps"],
+        existence:["Existence"],
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function({addVariant}){
+      addVariant('scrollbar',['&::-webkit-scrollbar','&::scrollbar'])
+    })
+  ],
 };

@@ -1,98 +1,105 @@
 const abi = [
   {
-    inputs: [],
-    name: "getAllMemberships",
-    outputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        internalType: "address[]",
-        name: "",
-        type: "address[]",
-      },
+        "indexed": false,
+        "internalType": "address",
+        "name": "_contractAddress",
+        "type": "address"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
+    "name": "Deploy",
+    "type": "event"
   },
   {
-    inputs: [
+    "inputs": [],
+    "name": "getAllMemberships",
+    "outputs": [
       {
-        internalType: "address",
-        name: "creator",
-        type: "address",
-      },
+        "internalType": "address[]",
+        "name": "",
+        "type": "address[]"
+      }
     ],
-    name: "getCreatorStack",
-    outputs: [
-      {
-        internalType: "address[]",
-        name: "",
-        type: "address[]",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
+        "internalType": "address",
+        "name": "creator",
+        "type": "address"
+      }
     ],
-    name: "memberships",
-    outputs: [
+    "name": "getCreatorStack",
+    "outputs": [
       {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
+        "internalType": "address[]",
+        "name": "",
+        "type": "address[]"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "address",
-        name: "initialOwner",
-        type: "address",
-      },
-      {
-        internalType: "string",
-        name: "name",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "symbol",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "baseUrl",
-        type: "string",
-      },
-      {
-        internalType: "uint256",
-        name: "basePrice",
-        type: "uint256",
-      },
-      {
-        internalType: "bool",
-        name: "switchValue",
-        type: "bool",
-      },
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
     ],
-    name: "newMembership",
-    outputs: [
+    "name": "memberships",
+    "outputs": [
       {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
     ],
-    stateMutability: "nonpayable",
-    type: "function",
+    "stateMutability": "view",
+    "type": "function"
   },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "initialOwner",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "symbol",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "baseUrl",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "basePrice",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "switchValue",
+        "type": "bool"
+      }
+    ],
+    "name": "newMembership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
 ] as const;
 export { abi };
